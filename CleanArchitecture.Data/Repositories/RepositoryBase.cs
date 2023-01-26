@@ -1,0 +1,85 @@
+﻿using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Contracts.Specification;
+using CleanArchitecture.Domain.Commom;
+using CleanArchitecture.Infrastructure.Persistence;
+using CleanArchitecture.Infrastructure.Specification;
+using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
+using System.Linq.Expressions;
+
+namespace CleanArchitecture.Infrastructure.Repositories
+{
+    public class RepositoryBase<T> : IAsyncRepository<T> where T : BaseDomainModel
+    {
+        public AfiliacionesDbContext context;
+
+        public RepositoryBase(AfiliacionesDbContext context)
+        {
+            this.context = context;
+        }
+
+        public async Task<T> AddAsync(T Entity)
+        {
+            context.Set<T>().Add(Entity);
+            await context.SaveChangesAsync();
+
+            return Entity;
+        }
+
+        public async Task DeleteAsync(T Entity)
+        {
+            context.Set<T>().Remove(Entity);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<IReadOnlyList<T>> GetAllAsync()
+        {
+            return await context.Set<T>().ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<T>> GetAllWithSpecsAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).ToListAsync();
+        }
+
+        public virtual async Task<T> GetByIdAsync(int id)
+        {
+            return await context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<T> UpdateAsync(T Entity)
+        {
+            context.Set<T>().Attach(Entity);
+            context.Entry(Entity).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+
+            return Entity;
+        }
+
+        public void AddEntity(T Entity)
+        {
+            context.Set<T>().Add(Entity);
+        }
+
+        public void DeleteEntity(T Entity)
+        {
+            context.Set<T>().Attach(Entity);
+            context.Entry(Entity).State = EntityState.Modified;
+        }
+
+        public void UpdateEntity(T Entity)
+        {
+            context.Set<T>().Remove(Entity);
+        }
+
+        public async Task<int> CountAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
+        }
+
+        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        {
+            return SpecificationEvaluator<T>.GetQuery(context.Set<T>().AsQueryable(), spec);
+        }
+    }
+}

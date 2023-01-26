@@ -1,0 +1,31 @@
+﻿using AutoMapper;
+using CleanArchitecture.Application.Features.Actividad.Queries;
+using CleanArchitecture.Application.Features.Padron.Queries;
+using CleanArchitecture.Application.Features.Sexo.Queries;
+using CleanArchitecture.Domain;
+
+namespace CleanArchitecture.Application.Mappings
+{
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            CreateMap<Sexo, SexoVm>();
+            CreateMap<Actividad, ActividadVm>();
+            CreateMap<Padron, PadronVm>()
+                .ForMember(a => a.EstadoSolicitud, x => x.MapFrom(b => b.EstadoSolicitud.Descripcion))
+                .ForMember(a => a.Sexo, x => x.MapFrom(b => b.Sexo.Codigo))
+                .ForMember(a => a.Actividad, x => x.MapFrom(b => b.Actividad.Descripcion))
+                .ForMember(a => a.Seccional, x => x.MapFrom(b => b.Seccional.Descripcion))
+                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Provincia.Nombre))
+                .ForMember(a => a.Puesto, x => x.MapFrom(b => b.Puesto.Descripcion))
+                ;
+            //CreateMap<Video, VideosVm>();
+
+            //CreateMap<CreateStreamerCommand, Streamer>();
+            //CreateMap<UpdateStreamerCommand, Streamer>();
+
+            //CreateMap<CreateDirectorCommand, Director>();
+        }
+    }
+}
