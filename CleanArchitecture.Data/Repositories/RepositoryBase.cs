@@ -6,6 +6,7 @@ using CleanArchitecture.Infrastructure.Specification;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Mail;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CleanArchitecture.Infrastructure.Repositories
 {
@@ -37,8 +38,11 @@ namespace CleanArchitecture.Infrastructure.Repositories
             return await context.Set<T>().ToListAsync();
         }
 
-        public async Task<IReadOnlyList<T>> GetAllWithSpecsAsync(ISpecification<T> spec)
+        public async Task<IReadOnlyList<T>> GetAllWithSpecsAsync(ISpecification<T> spec, bool disableTracking = true)
         {
+            if (disableTracking)
+                return await ApplySpecification(spec).AsNoTracking().ToListAsync();
+
             return await ApplySpecification(spec).ToListAsync();
         }
 

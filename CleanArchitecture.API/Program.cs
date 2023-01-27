@@ -27,11 +27,8 @@ builder.Host.UseSerilog(((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuratio
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<ExcepcionMiddleware>();
 

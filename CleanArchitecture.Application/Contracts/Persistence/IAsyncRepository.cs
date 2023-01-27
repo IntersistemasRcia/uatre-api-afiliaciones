@@ -16,7 +16,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         //    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
         //    List<Expression<Func<T, object>>> includes = null,
         //    bool disableTracking = true);
-        Task<IReadOnlyList<T>> GetAllWithSpecsAsync(ISpecification<T> spec);
+        Task<IReadOnlyList<T>> GetAllWithSpecsAsync(ISpecification<T> spec, bool disableTracking = true);
         Task<T> GetByIdAsync (int id);
         Task<T> AddAsync(T Entity);
         Task<T> UpdateAsync(T Entity);
