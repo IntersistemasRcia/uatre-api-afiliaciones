@@ -13,13 +13,17 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private ISexoRepository sexoRepository;
         private IActividadRepository actividadRepository;
         private IPadronRepository padronRepository;
+        private IPuestoRepository puestoRepository;
+        private ISeccionalRepository seccionalRepository;
+        private IProvinciaRepository provinciaRepository;
 
         //Repositorios especiales no se inyectan, de definen x propiedades
-        //public IVideoRepository VideoRepository => videoRepository ??= new VideoRepository(context);
-        //public IStreamerRepository StreamerRepository => streamerRepository ??= new StreamerRepository(context);
         public ISexoRepository SexoRepository => sexoRepository ??= new SexoRepository(context);
         public IActividadRepository ActividadRepository => actividadRepository ??= new ActividadRepository(context);
         public IPadronRepository PadronRepository => padronRepository ??= new PadronRepository(context);
+        public IPuestoRepository PuestoRepository => puestoRepository ??= new PuestoRepository(context);
+        public ISeccionalRepository SeccionalRepository => seccionalRepository ??= new SeccionalRepository(context);
+        public IProvinciaRepository ProvinciaRepository => provinciaRepository ??= new ProvinciaRepository(context);
 
         public UnitOfWork(AfiliacionesDbContext context)
         {

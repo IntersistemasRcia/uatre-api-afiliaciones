@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Features.Actividad.Queries;
-using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Sexo.Queries.GetSexoList

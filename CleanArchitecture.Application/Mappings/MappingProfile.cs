@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Features.Actividad.Queries;
 using CleanArchitecture.Application.Features.Padron.Queries;
+using CleanArchitecture.Application.Features.Provincia.Queries;
+using CleanArchitecture.Application.Features.Puesto.Queries;
+using CleanArchitecture.Application.Features.Seccional.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
 using CleanArchitecture.Domain;
 
@@ -20,7 +23,9 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Provincia.Nombre))
                 .ForMember(a => a.Puesto, x => x.MapFrom(b => b.Puesto.Descripcion))
                 ;
-            //CreateMap<Video, VideosVm>();
+            CreateMap<Puesto, PuestoVm>();
+            CreateMap<Seccional, SeccionalVm>();
+            CreateMap<Provincia, ProvinciaVm>();
 
             //CreateMap<CreateStreamerCommand, Streamer>();
             //CreateMap<UpdateStreamerCommand, Streamer>();

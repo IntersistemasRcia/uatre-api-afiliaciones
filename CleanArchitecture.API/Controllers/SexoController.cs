@@ -20,10 +20,10 @@ namespace CleanArchitecture.API.Controllers
         }
 
         // GET: api/<SexoController>
-        [HttpGet(Name = "GetSexoAll")]
+        [HttpGet("GetAll")]
         //[Authorize]
         [ProducesResponseType(typeof(IEnumerable<SexoVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<SexoVm>>> GetSexoAll()
+        public async Task<ActionResult<IEnumerable<SexoVm>>> GetAll()
         {
             var query = new GetSexoListQuery();
             var videos = await _mediator.Send(query);
@@ -32,10 +32,10 @@ namespace CleanArchitecture.API.Controllers
         }
 
         // GET: api/<SexoController>/1
-        [HttpGet("{id}", Name = "GetSexoById")]
+        [HttpGet("{pId}", Name = "GetById")]
         //[Authorize]
         [ProducesResponseType(typeof(SexoVm), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<SexoVm>>> GetSexoById(int pId)
+        public async Task<ActionResult<IEnumerable<SexoVm>>> GetById(int pId)
         {
             var query = new GetSexoSingleQuery(pId);
             var videos = await _mediator.Send(query);
@@ -43,22 +43,22 @@ namespace CleanArchitecture.API.Controllers
             return Ok(videos);
         }
 
-        // POST api/<SexoController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //// POST api/<SexoController>
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
 
-        // PUT api/<SexoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/<SexoController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE api/<SexoController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/<SexoController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

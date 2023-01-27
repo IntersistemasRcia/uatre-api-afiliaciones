@@ -2,9 +2,9 @@
 
 namespace CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList
 {
-    public class GetActividadListQuery : IRequest<List<ActividadVm>>
+    public class GetActividadesListQuery : IRequest<List<ActividadVm>>
     {        
-        public GetActividadListQuery()
+        public GetActividadesListQuery()
         {
             //Id = pId ?? throw new ArgumentNullException(nameof(pId));
         }

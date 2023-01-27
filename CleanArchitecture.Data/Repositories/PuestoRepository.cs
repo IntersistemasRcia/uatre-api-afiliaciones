@@ -4,9 +4,9 @@ using CleanArchitecture.Infrastructure.Persistence;
 
 namespace CleanArchitecture.Infrastructure.Repositories
 {
-    public class ActividadRepository : RepositoryBase<Actividad>, IActividadRepository
+    public class PuestoRepository : RepositoryBase<Puesto>, IPuestoRepository
     {
-        public ActividadRepository(AfiliacionesDbContext context) : base(context)
+        public PuestoRepository(AfiliacionesDbContext context) : base(context)
         {
         }
     }
