@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Features.Actividad.Queries;
-using CleanArchitecture.Application.Features.Padron.Queries;
+using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.Provincia.Queries;
 using CleanArchitecture.Application.Features.Puesto.Queries;
 using CleanArchitecture.Application.Features.Seccional.Queries;
@@ -15,12 +15,12 @@ namespace CleanArchitecture.Application.Mappings
         {
             CreateMap<Sexo, SexoVm>();
             CreateMap<Actividad, ActividadVm>();
-            CreateMap<Padron, PadronVm>()
+            CreateMap<Afiliado, AfiliadoVm>()
                 .ForMember(a => a.EstadoSolicitud, x => x.MapFrom(b => b.EstadoSolicitud.Descripcion))
                 .ForMember(a => a.Sexo, x => x.MapFrom(b => b.Sexo.Codigo))
                 .ForMember(a => a.Actividad, x => x.MapFrom(b => b.Actividad.Descripcion))
                 .ForMember(a => a.Seccional, x => x.MapFrom(b => b.Seccional.Descripcion))
-                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Provincia.Nombre))
+                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Seccional.SeccionalLocalidad.Select(y => y.Localidad.Provincia.Nombre)))
                 .ForMember(a => a.Puesto, x => x.MapFrom(b => b.Puesto.Descripcion))
                 ;
             CreateMap<Puesto, PuestoVm>();

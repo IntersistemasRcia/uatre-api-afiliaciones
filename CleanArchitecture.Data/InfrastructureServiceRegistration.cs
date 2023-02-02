@@ -25,7 +25,7 @@ namespace CleanArchitecture.Infrastructure
 
             services.Configure<EmailSettings>(e => configuration.GetSection("EmailSettings"));
             services.AddTransient<IEmailService, EmailService>();
-
+                        
             return services;
         }
     }

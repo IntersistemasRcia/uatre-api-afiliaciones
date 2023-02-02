@@ -1,11 +1,11 @@
-﻿using CleanArchitecture.Application.Features.Padron.Queries.GetPadronList;
+﻿using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
 
 namespace CleanArchitecture.Application.Specification
 {
-    public class PadronSpecification : BaseSpecification<Padron>
+    public class AfiliadoSpecification : BaseSpecification<Afiliado>
     {
-        public PadronSpecification(GetPadronListQuery pParams)
+        public AfiliadoSpecification(GetAfiliadoListQuery pParams)
             : base(x =>
                 (!pParams.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == pParams.EstadoSolicitudId)
             )
@@ -44,7 +44,7 @@ namespace CleanArchitecture.Application.Specification
             }
         }
 
-        public PadronSpecification(int pId) : base(x => x.Id == pId)
+        public AfiliadoSpecification(int pId) : base(x => x.Id == pId)
         {
             //Agrego tablas relacionadas
             AgregarIncludes(a => a.EstadoSolicitud);

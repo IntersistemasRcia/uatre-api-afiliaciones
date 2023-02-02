@@ -1,11 +1,11 @@
 ﻿using CleanArchitecture.Domain;
 
-namespace CleanArchitecture.Application.Features.Padron.Queries
+namespace CleanArchitecture.Application.Features.Afiliado.Queries
 {
-    public class PadronVm
+    public class AfiliadoVm
     {
         public int Id { get; set; }
-        public Int64 CUIL { get; set; }
+        public long CUIL { get; set; }
         public int Secuencia { get; set; }
         public int Afiliado { get; set; }
         public string Nombre { get; set; }
@@ -15,19 +15,19 @@ namespace CleanArchitecture.Application.Features.Padron.Queries
         public DateTime? FechaEgreso { get; set; }
         public string Nacionalidad { get; set; }
         public string NombreAnexo { get; set; }
-        public Int64 CUIT { get; set; }
+        public long CUIT { get; set; }
         public int ProvinciaId { get; set; }
         public string Provincia { get; set; }
         public int SeccionalId { get; set; }
         public string Seccional { get; set; }
         public int SexoId { get; set; }
         public string Sexo { get; set; }
-        public Int64 DNI { get; set; }
+        public long DNI { get; set; }
         public int ActividadId { get; set; }
         public string Actividad { get; set; }
         public int EstadoSolicitudId { get; set; }
         public string EstadoSolicitud { get; set; }
-        public Int64? AFIPCUIL { get; set; }
+        public long? AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         public string? AFIPNombre { get; set; }
         public string? AFIPApellido { get; set; }
@@ -37,7 +37,7 @@ namespace CleanArchitecture.Application.Features.Padron.Queries
         public string? AFIPTipoPersona { get; set; }
         public string? AFIPTipoClave { get; set; }
         public string? AFIPEstadoClave { get; set; }
-        public Int64? AFIPClaveInactivaAsociada { get; set; }
+        public long? AFIPClaveInactivaAsociada { get; set; }
         public DateTime? AFIPFechaFallecimiento { get; set; }
         public string? AFIPFormaJuridica { get; set; }
         public string? AFIPActividadPrincipal { get; set; }

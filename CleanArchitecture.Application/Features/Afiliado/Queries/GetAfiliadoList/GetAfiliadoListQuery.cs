@@ -1,10 +1,10 @@
 ﻿using CleanArchitecture.Application.Models;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.Padron.Queries.GetPadronList
+namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList
 {
-    public class GetPadronListQuery : IRequest<Pagination<PadronVm>>
-    {        
+    public class GetAfiliadoListQuery : IRequest<Pagination<AfiliadoVm>>
+    {
         private int _pageIndex { get; set; } = 1;
         private const int maxPageSize = 50;
         private int _pageSize = 20;
@@ -20,10 +20,10 @@ namespace CleanArchitecture.Application.Features.Padron.Queries.GetPadronList
         {
             get => _pageSize;
             set => _pageSize = value >= maxPageSize ? maxPageSize : value;
-        }        
+        }
 
         public string? Search { get; set; }
-        public GetPadronListQuery()
+        public GetAfiliadoListQuery()
         {
             //Id = pId ?? throw new ArgumentNullException(nameof(pId));
         }

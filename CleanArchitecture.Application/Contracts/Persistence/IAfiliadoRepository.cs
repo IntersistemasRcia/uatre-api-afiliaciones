@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Application.Contracts.Persistence
 {
-    public interface IPadronRepository : IAsyncRepository<Padron>
+    public interface IAfiliadoRepository : IAsyncRepository<Afiliado>
     {
     }
 }

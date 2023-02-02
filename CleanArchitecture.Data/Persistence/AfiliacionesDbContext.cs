@@ -41,7 +41,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
-        public DbSet<Padron>? Padrones { get; set; }
+        public DbSet<Afiliado>? Afiliados { get; set; }
         public DbSet<Actividad>? Actividades { get; set; }
         public DbSet<Localidad>? Localidades { get; set; }
         public DbSet<Provincia>? Provincias { get; set; }
@@ -49,5 +49,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public DbSet<Seccional>? Seccionales { get; set; }
         public DbSet<Sexo> Sexos { get; set; }
         public DbSet<EstadoSolicitud> EstadosSolicitud { get; set; }
+        public DbSet<Nacionalidad> Nacionalidades { get; set; }
+        public DbSet<SeccionalLocalidad> SeccionalesLocalidades { get; set; }
     }
 }

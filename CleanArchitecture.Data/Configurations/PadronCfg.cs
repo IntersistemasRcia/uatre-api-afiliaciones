@@ -4,9 +4,9 @@ using CleanArchitecture.Domain;
 
 namespace CleanArchitecture.Infrastructure.Configurations
 {
-    public class PadronCfg : IEntityTypeConfiguration<Padron>
+    public class PadronCfg : IEntityTypeConfiguration<Afiliado>
     {
-        public void Configure(EntityTypeBuilder<Padron> builder)
+        public void Configure(EntityTypeBuilder<Afiliado> builder)
         {
             builder
                 .Property(a => a.Id)

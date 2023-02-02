@@ -12,7 +12,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         private ISexoRepository sexoRepository;
         private IActividadRepository actividadRepository;
-        private IPadronRepository padronRepository;
+        private IAfiliadoRepository afiliadoRepository;
         private IPuestoRepository puestoRepository;
         private ISeccionalRepository seccionalRepository;
         private IProvinciaRepository provinciaRepository;
@@ -20,7 +20,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
         //Repositorios especiales no se inyectan, de definen x propiedades
         public ISexoRepository SexoRepository => sexoRepository ??= new SexoRepository(context);
         public IActividadRepository ActividadRepository => actividadRepository ??= new ActividadRepository(context);
-        public IPadronRepository PadronRepository => padronRepository ??= new PadronRepository(context);
+        public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context);
         public IPuestoRepository PuestoRepository => puestoRepository ??= new PuestoRepository(context);
         public ISeccionalRepository SeccionalRepository => seccionalRepository ??= new SeccionalRepository(context);
         public IProvinciaRepository ProvinciaRepository => provinciaRepository ??= new ProvinciaRepository(context);

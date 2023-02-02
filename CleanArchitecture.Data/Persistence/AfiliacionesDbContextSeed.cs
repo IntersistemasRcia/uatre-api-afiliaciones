@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CleanArchitecture.Infrastructure.Persistence
 {
-    public class AfiliacionesDbContextSeed
+    public static class AfiliacionesDbContextSeed
     {
         public static async Task SeedAsync(AfiliacionesDbContext context)
         {
@@ -20,8 +20,8 @@ namespace CleanArchitecture.Infrastructure.Persistence
         {
             return new List<EstadoSolicitud>
             {
-                new EstadoSolicitud { Descripcion = "Pendiente" },
-                new EstadoSolicitud { Descripcion = "Aprobado" },
+                new EstadoSolicitud { Descripcion = "Activo" },
+                new EstadoSolicitud { Descripcion = "Baja" },
                 new EstadoSolicitud { Descripcion = "Rechazado" },
             };
         }
