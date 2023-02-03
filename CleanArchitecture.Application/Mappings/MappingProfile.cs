@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
-using CleanArchitecture.Application.Features.Actividad.Queries;
+using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
+using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
-using CleanArchitecture.Application.Features.Provincia.Queries;
+using CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidadesList;
+using CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList;
 using CleanArchitecture.Application.Features.Puesto.Queries;
 using CleanArchitecture.Application.Features.Seccional.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
@@ -26,11 +28,9 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<Puesto, PuestoVm>();
             CreateMap<Seccional, SeccionalVm>();
             CreateMap<Provincia, ProvinciaVm>();
+            CreateMap<Nacionalidad, NacionalidadVm>();
 
-            //CreateMap<CreateStreamerCommand, Streamer>();
-            //CreateMap<UpdateStreamerCommand, Streamer>();
-
-            //CreateMap<CreateDirectorCommand, Director>();
+            CreateMap<CreateAfiliadoCommand, Afiliado>();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvincias
         }
         public async Task<List<ProvinciaVm>> Handle(GetProvinciasListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitOfWork.ProvinciaRepository.GetAllAsync();
+            var list = await _unitOfWork.Repository<Domain.Provincia>().GetAllAsync();
 
             return _mapper.Map<List<ProvinciaVm>>(list);
         }

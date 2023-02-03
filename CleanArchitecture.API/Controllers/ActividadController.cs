@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Application.Features.Actividad.Queries;
-using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
+﻿using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

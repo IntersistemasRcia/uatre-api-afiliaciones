@@ -1,5 +1,5 @@
-﻿using CleanArchitecture.Application.Features.Provincia.Queries;
-using CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList;
+﻿using CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList;
+using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -17,7 +17,7 @@ namespace CleanArchitecture.API.Controllers
 
         [HttpGet(Name = "GetProvinciasAll")]
         //[Authorize]
-        [ProducesResponseType(typeof(IReadOnlyList<ProvinciaVm>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IReadOnlyList<Provincia>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IReadOnlyCollection<ProvinciaVm>>> GetProvinciasAll()
         {
             var query = new GetProvinciasListQuery();

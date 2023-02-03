@@ -16,7 +16,7 @@ namespace CleanArchitecture.Application.Features.Sexo.Queries.GetSexoSingle
         }
         public async Task<SexoVm> Handle(GetSexoSingleQuery request, CancellationToken cancellationToken)
         {
-            var sexoList = await _unitOfWork.SexoRepository.GetByIdAsync(request.Id);
+            var sexoList = await _unitOfWork.Repository<Domain.Sexo>().GetByIdAsync(request.Id);
 
             return _mapper.Map<SexoVm>(sexoList);
         }

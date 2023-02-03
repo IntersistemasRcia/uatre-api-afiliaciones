@@ -10,20 +10,10 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private readonly AfiliacionesDbContext context;
         private Hashtable repositories;
 
-        private ISexoRepository sexoRepository;
-        private IActividadRepository actividadRepository;
         private IAfiliadoRepository afiliadoRepository;
-        private IPuestoRepository puestoRepository;
-        private ISeccionalRepository seccionalRepository;
-        private IProvinciaRepository provinciaRepository;
 
         //Repositorios especiales no se inyectan, de definen x propiedades
-        public ISexoRepository SexoRepository => sexoRepository ??= new SexoRepository(context);
-        public IActividadRepository ActividadRepository => actividadRepository ??= new ActividadRepository(context);
         public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context);
-        public IPuestoRepository PuestoRepository => puestoRepository ??= new PuestoRepository(context);
-        public ISeccionalRepository SeccionalRepository => seccionalRepository ??= new SeccionalRepository(context);
-        public IProvinciaRepository ProvinciaRepository => provinciaRepository ??= new ProvinciaRepository(context);
 
         public UnitOfWork(AfiliacionesDbContext context)
         {

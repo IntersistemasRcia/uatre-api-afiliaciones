@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Constants\" />
-    <Folder Include="Features\Afiliado\Commands\" />
     <Folder Include="Features\Actividad\Commands\" />
     <Folder Include="Features\Sexo\Commands\" />
   </ItemGroup>

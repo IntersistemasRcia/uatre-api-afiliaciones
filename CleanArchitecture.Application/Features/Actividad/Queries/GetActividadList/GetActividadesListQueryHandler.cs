@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Domain;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList
@@ -16,7 +17,7 @@ namespace CleanArchitecture.Application.Features.Actividad.Queries.GetActividadL
         }
         public async Task<List<ActividadVm>> Handle(GetActividadesListQuery request, CancellationToken cancellationToken)
         {
-            var actividadList = await _unitOfWork.ActividadRepository.GetAllAsync();
+            var actividadList = await _unitOfWork.Repository<Domain.Actividad>().GetAllAsync();
 
             return _mapper.Map<List<ActividadVm>>(actividadList);
         }

@@ -16,7 +16,7 @@ namespace CleanArchitecture.Application.Features.Puesto.Queries.GetPuestosList
         }
         public async Task<List<PuestoVm>> Handle(GetPuestosListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitOfWork.PuestoRepository.GetAllAsync();
+            var list = await _unitOfWork.Repository<Domain.Puesto>().GetAllAsync();
 
             return _mapper.Map<List<PuestoVm>>(list);
         }

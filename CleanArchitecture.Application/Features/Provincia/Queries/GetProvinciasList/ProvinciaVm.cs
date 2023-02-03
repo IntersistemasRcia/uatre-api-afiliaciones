@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Application.Features.Provincia.Queries
+﻿namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList
 {
     public class ProvinciaVm
     {
