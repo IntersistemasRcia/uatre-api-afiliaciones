@@ -15,7 +15,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -32,7 +32,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -49,7 +49,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -66,7 +66,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IdProvinciaAFIP = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -83,7 +84,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -100,8 +101,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Codigo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Codigo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -118,8 +119,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Codigo = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: true),
-                    Descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Codigo = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -136,7 +137,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CP = table.Column<int>(type: "int", nullable: false),
                     ProvinciaId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -163,12 +165,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     CUIL = table.Column<long>(type: "bigint", nullable: false),
                     Secuencia = table.Column<int>(type: "int", nullable: false),
                     NroAfiliado = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PuestoId = table.Column<int>(type: "int", nullable: false),
                     FechaIngreso = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaEgreso = table.Column<DateTime>(type: "datetime2", nullable: true),
                     NacionalidadId = table.Column<int>(type: "int", nullable: false),
-                    NombreAnexo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    NombreAnexo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CUIT = table.Column<long>(type: "bigint", nullable: false),
                     SeccionalId = table.Column<int>(type: "int", nullable: false),
                     SexoId = table.Column<int>(type: "int", nullable: false),
@@ -179,7 +181,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     AFIPFechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AFIPNombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     AFIPApellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPRazonSocial = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AFIPRazonSocial = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     AFIPTipoDocumento = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     AFIPNumeroDocumento = table.Column<int>(type: "int", nullable: true),
                     AFIPTipoPersona = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -193,7 +195,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     AFIPPeriodoActividadPrincipal = table.Column<int>(type: "int", nullable: true),
                     AFIPFechaContratoSocial = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AFIPMesCierre = table.Column<int>(type: "int", nullable: true),
-                    AFIPDomicilioDireccion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    AFIPDomicilioDireccion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     AFIPDomicilioCalle = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     AFIPDomicilioNumero = table.Column<int>(type: "int", nullable: true),
                     AFIPDomicilioPiso = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),

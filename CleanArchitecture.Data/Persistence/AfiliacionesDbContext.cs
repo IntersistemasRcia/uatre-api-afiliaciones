@@ -47,9 +47,9 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public DbSet<Provincia>? Provincias { get; set; }
         public DbSet<Puesto>? Puestos { get; set; }
         public DbSet<Seccional>? Seccionales { get; set; }
-        public DbSet<Sexo> Sexos { get; set; }
-        public DbSet<EstadoSolicitud> EstadosSolicitud { get; set; }
-        public DbSet<Nacionalidad> Nacionalidades { get; set; }
-        public DbSet<SeccionalLocalidad> SeccionalesLocalidades { get; set; }
+        public DbSet<Sexo>? Sexos { get; set; }
+        public DbSet<EstadoSolicitud>? EstadosSolicitud { get; set; }
+        public DbSet<Nacionalidad>? Nacionalidades { get; set; }
+        public DbSet<SeccionalLocalidad>? SeccionalesLocalidades { get; set; }
     }
 }

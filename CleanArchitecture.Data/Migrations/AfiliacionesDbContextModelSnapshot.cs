@@ -37,6 +37,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -220,10 +221,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NombreAnexo")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -274,6 +277,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -296,6 +300,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CP")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -309,6 +316,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -337,6 +345,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
@@ -364,6 +373,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdProvinciaAFIP")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -371,6 +383,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -394,6 +407,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -417,6 +431,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Codigo")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -427,6 +442,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -485,6 +501,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Codigo")
+                        .IsRequired()
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)");
 
@@ -495,6 +512,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 

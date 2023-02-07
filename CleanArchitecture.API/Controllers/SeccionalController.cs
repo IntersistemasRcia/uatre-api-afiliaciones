@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Features.Seccional.Queries;
+using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesByCPList;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,16 @@ namespace CleanArchitecture.API.Controllers
         public async Task<ActionResult<IReadOnlyCollection<SeccionalVm>>> GetSeccionalesAll()
         {
             var query = new GetSeccionalesListQuery();
+            var list = await _mediator.Send(query);
+
+            return Ok(list);
+        }
+
+        [HttpGet("GetSeccionalesByCP", Name = "GetSeccionalesByCP")]
+        //[Authorize]
+        [ProducesResponseType(typeof(IReadOnlyList<SeccionalVm>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IReadOnlyCollection<SeccionalVm>>> GetSeccionalesByCP([FromQuery] GetSeccionalesByCPListQuery query)
+        {
             var list = await _mediator.Send(query);
 
             return Ok(list);
