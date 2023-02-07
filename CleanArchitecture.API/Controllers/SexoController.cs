@@ -20,7 +20,7 @@ namespace CleanArchitecture.API.Controllers
         }
 
         // GET: api/<SexoController>
-        [HttpGet("GetAll")]
+        [HttpGet(Name = "GetSexosAll")]
         //[Authorize]
         [ProducesResponseType(typeof(IEnumerable<SexoVm>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<SexoVm>>> GetAll()
