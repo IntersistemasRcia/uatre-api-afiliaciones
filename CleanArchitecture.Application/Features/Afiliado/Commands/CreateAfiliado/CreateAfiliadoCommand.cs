@@ -9,16 +9,17 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         public int NroAfiliado { get; set; }
         public string? Nombre { get; set; }
         public int PuestoId { get; set; }
-        public DateTime FechaIngreso { get; set; }
+        public DateTime? FechaIngreso { get; set; }
         public DateTime? FechaEgreso { get; set; }
         public int NacionalidadId { get; set; }
-        public string? NombreAnexo { get; set; }
-        public Int64 CUIT { get; set; }
+        public int EmpresaId { get; set; }
         public int SeccionalId { get; set; }
         public int SexoId { get; set; }
-        public Int64 DNI { get; set; }
+        public Int64 Documento { get; set; }
         public int ActividadId { get; set; }
         public int EstadoSolicitudId { get; set; }
+        public int EstadoCivilId { get; set; }
+        public int ProvinciaId { get; set; }
         public Int64 AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         public string? AFIPNombre { get; set; }

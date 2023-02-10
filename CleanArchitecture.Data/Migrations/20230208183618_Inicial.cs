@@ -27,7 +27,24 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EstadosSolicitud",
+                name: "EstadosCiviles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EstadosCiviles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EstadosSolicitudes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -40,7 +57,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EstadosSolicitud", x => x.Id);
+                    table.PrimaryKey("PK_EstadosSolicitudes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,18 +182,20 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     CUIL = table.Column<long>(type: "bigint", nullable: false),
                     Secuencia = table.Column<int>(type: "int", nullable: false),
                     NroAfiliado = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     PuestoId = table.Column<int>(type: "int", nullable: false),
                     FechaIngreso = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaEgreso = table.Column<DateTime>(type: "datetime2", nullable: true),
                     NacionalidadId = table.Column<int>(type: "int", nullable: false),
-                    NombreAnexo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CUIT = table.Column<long>(type: "bigint", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", maxLength: 100, nullable: false),
                     SeccionalId = table.Column<int>(type: "int", nullable: false),
                     SexoId = table.Column<int>(type: "int", nullable: false),
                     DNI = table.Column<long>(type: "bigint", nullable: false),
                     ActividadId = table.Column<int>(type: "int", nullable: false),
                     EstadoSolicitudId = table.Column<int>(type: "int", nullable: false),
+                    EstadoCivilId = table.Column<int>(type: "int", nullable: false),
+                    ProvinciaId = table.Column<int>(type: "int", nullable: false),
+                    DireccionReal = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AFIPCUIL = table.Column<long>(type: "bigint", nullable: true),
                     AFIPFechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AFIPNombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -226,15 +245,27 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Afiliados_EstadosSolicitud_EstadoSolicitudId",
+                        name: "FK_Afiliados_EstadosCiviles_EstadoCivilId",
+                        column: x => x.EstadoCivilId,
+                        principalTable: "EstadosCiviles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Afiliados_EstadosSolicitudes_EstadoSolicitudId",
                         column: x => x.EstadoSolicitudId,
-                        principalTable: "EstadosSolicitud",
+                        principalTable: "EstadosSolicitudes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Afiliados_Nacionalidades_NacionalidadId",
                         column: x => x.NacionalidadId,
                         principalTable: "Nacionalidades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Afiliados_Provincias_ProvinciaId",
+                        column: x => x.ProvinciaId,
+                        principalTable: "Provincias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -293,6 +324,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 column: "ActividadId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Afiliados_CUIL",
+                table: "Afiliados",
+                column: "CUIL",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Afiliados_EstadoCivilId",
+                table: "Afiliados",
+                column: "EstadoCivilId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Afiliados_EstadoSolicitudId",
                 table: "Afiliados",
                 column: "EstadoSolicitudId");
@@ -301,6 +343,11 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 name: "IX_Afiliados_NacionalidadId",
                 table: "Afiliados",
                 column: "NacionalidadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Afiliados_ProvinciaId",
+                table: "Afiliados",
+                column: "ProvinciaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Afiliados_PuestoId",
@@ -345,7 +392,10 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 name: "Actividades");
 
             migrationBuilder.DropTable(
-                name: "EstadosSolicitud");
+                name: "EstadosCiviles");
+
+            migrationBuilder.DropTable(
+                name: "EstadosSolicitudes");
 
             migrationBuilder.DropTable(
                 name: "Nacionalidades");

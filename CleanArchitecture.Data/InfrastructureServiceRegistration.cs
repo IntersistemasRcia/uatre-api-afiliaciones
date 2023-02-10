@@ -24,8 +24,8 @@ namespace CleanArchitecture.Infrastructure
             //services.AddScoped<IStreamerRepository, StreamerRepository>();
 
             services.Configure<EmailSettings>(e => configuration.GetSection("EmailSettings"));
-            services.AddTransient<IEmailService, EmailService>();
-                        
+            services.AddTransient<IEmailService, EmailService>();            
+
             return services;
         }
     }

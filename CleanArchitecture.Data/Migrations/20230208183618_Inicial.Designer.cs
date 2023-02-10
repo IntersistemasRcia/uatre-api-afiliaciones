@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    partial class AfiliacionesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230208183618_Inicial")]
+    partial class Inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,20 +192,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<long>("CUIL")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Correo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("DNI")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("DireccionReal")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Documento")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("EmpresaId")
                         .HasMaxLength(100)
@@ -252,12 +251,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int>("SexoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TipoDocumentoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ActividadId");
@@ -278,8 +271,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("SeccionalId");
 
                     b.HasIndex("SexoId");
-
-                    b.HasIndex("TipoDocumentoId");
 
                     b.ToTable("Afiliados");
                 });
@@ -313,6 +304,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<double>("CUIT")
                         .HasColumnType("float");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DiasTrabajados")
                         .HasColumnType("int");
 
@@ -324,6 +321,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Property<double>("HsExtrasImporte")
                         .HasColumnType("float");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Modalidad")
                         .HasColumnType("int");
@@ -422,6 +425,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("ContratoSocialFecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DomicilioCPA")
                         .HasColumnType("nvarchar(max)");
 
@@ -466,6 +475,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("LocalidadId")
                         .HasColumnType("int")
@@ -777,34 +792,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.ToTable("Sexos");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.TipoDocumento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TiposDocumentos");
-                });
-
             modelBuilder.Entity("CleanArchitecture.Domain.Afiliado", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Actividad", "Actividad")
@@ -855,12 +842,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CleanArchitecture.Domain.TipoDocumento", "TipoDocumento")
-                        .WithMany()
-                        .HasForeignKey("TipoDocumentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Actividad");
 
                     b.Navigation("EstadoCivil");
@@ -876,8 +857,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("Seccional");
 
                     b.Navigation("Sexo");
-
-                    b.Navigation("TipoDocumento");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Empresa", b =>

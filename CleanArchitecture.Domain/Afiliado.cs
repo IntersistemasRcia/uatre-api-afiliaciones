@@ -5,29 +5,40 @@ namespace CleanArchitecture.Domain
 {
     public class Afiliado : BaseDomainModel
     {
+        [Required]
         public Int64 CUIL { get; set; }
         public int Secuencia { get; set; }
         public int NroAfiliado { get; set; }
         [StringLength(100)]
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
         public int PuestoId { get; set; }
-        public Puesto Puesto { get; set; }
+        public Puesto? Puesto { get; set; }
         public DateTime? FechaIngreso { get; set; }
         public DateTime? FechaEgreso { get; set; }        
         public int NacionalidadId { get; set; }
-        public Nacionalidad Nacionalidad { get; set; }
+        public Nacionalidad? Nacionalidad { get; set; }
         [StringLength(100)]
-        public string NombreAnexo { get; set; }
-        public Int64 CUIT { get; set; }        
+        public int EmpresaId { get; set; }
+        public Empresas? Empresa { get; set; }
         public int SeccionalId { get; set; }
-        public Seccional Seccional { get; set; }
+        public Seccional? Seccional { get; set; }
         public int SexoId { get; set; }
-        public Sexo Sexo { get; set; }
-        public Int64 DNI { get; set; }
+        public Sexo? Sexo { get; set; }
+        public int TipoDocumentoId { get; set; }
+        public TipoDocumento? TipoDocumento { get; set; }
+        public Int64 Documento { get; set; }
         public int ActividadId { get; set; }
-        public Actividad Actividad { get; set; }
+        public Actividad? Actividad { get; set; }
         public int EstadoSolicitudId { get; set; }
-        public EstadoSolicitud EstadoSolicitud { get; set; }
+        public EstadoSolicitud? EstadoSolicitud { get; set; }
+        public int EstadoCivilId { get; set; }
+        public EstadoCivil? EstadoCivil { get; set; }
+        public int ProvinciaId { get; set; }
+        public Provincia? Provincia { get; set; }
+        [StringLength(200)]
+        public string? DireccionReal { get; set; }
+        public string? Telefono { get; set; }
+        public string? Correo { get; set; }
         public Int64? AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         [StringLength(50)]

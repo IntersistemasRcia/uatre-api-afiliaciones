@@ -21,7 +21,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
             var spec = new AfiliadoSpecification(request);
             var padronList = await _unitOfWork.AfiliadoRepository.GetAllWithSpecsAsync(spec);
 
-            var totalRecords = await _unitOfWork.AfiliadoRepository.CountAsync(new BaseSpecification<Domain.Afiliado>());
+            var totalRecords = await _unitOfWork.AfiliadoRepository.CountAsync(new BaseSpecification<Domain.Afiliado>(spec.Criteria));
             var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
 
             var data = _mapper.Map<List<AfiliadoVm>>(padronList);

@@ -6,11 +6,11 @@ using System.Net;
 
 namespace CleanArchitecture.API.Controllers
 {
-    public class ProvinciasController : BaseApiController
+    public class ProvinciaController : BaseApiController
     {
         private readonly IMediator _mediator;
 
-        public ProvinciasController(IMediator mediator)
+        public ProvinciaController(IMediator mediator)
         {
             _mediator = mediator;
         }

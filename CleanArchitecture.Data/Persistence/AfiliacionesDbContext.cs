@@ -1,9 +1,6 @@
 ﻿using CleanArchitecture.Domain;
 using CleanArchitecture.Domain.Commom;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Logging;
-using System.IO;
 using System.Reflection;
 
 namespace CleanArchitecture.Infrastructure.Persistence
@@ -39,6 +36,9 @@ namespace CleanArchitecture.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //excluidas de migrations
+            modelBuilder.Entity<DDJJUatre>().ToTable(nameof(DDJJUatre), t => t.ExcludeFromMigrations());
         }
 
         public DbSet<Afiliado>? Afiliados { get; set; }
@@ -48,8 +48,12 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public DbSet<Puesto>? Puestos { get; set; }
         public DbSet<Seccional>? Seccionales { get; set; }
         public DbSet<Sexo>? Sexos { get; set; }
-        public DbSet<EstadoSolicitud>? EstadosSolicitud { get; set; }
+        public DbSet<EstadoSolicitud>? EstadosSolicitudes { get; set; }
         public DbSet<Nacionalidad>? Nacionalidades { get; set; }
         public DbSet<SeccionalLocalidad>? SeccionalesLocalidades { get; set; }
+        public DbSet<DDJJUatre>? DDJJUatre { get; set; }
+        public DbSet<EstadoCivil>? EstadosCiviles { get; set; }
+        public DbSet<Empresas>? Empresas { get; set; }
+        public DbSet<TipoDocumento>? TiposDocumentos { get; set; }
     }
 }

@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Constants\" />
     <Folder Include="Features\Actividad\Commands\" />
+    <Folder Include="Features\EstadoSolicitud\" />
     <Folder Include="Features\Sexo\Commands\" />
   </ItemGroup>
 

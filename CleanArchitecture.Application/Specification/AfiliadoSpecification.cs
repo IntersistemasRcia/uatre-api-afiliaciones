@@ -16,6 +16,8 @@ namespace CleanArchitecture.Application.Specification
             AgregarIncludes(a => a.Sexo);
             AgregarIncludes(a => a.Actividad);
             AgregarIncludes(a => a.Puesto);
+            AgregarIncludes(a => a.Provincia);
+            AgregarIncludes(a => a.Empresa);
 
             //Paginacion
             ApplyPaging(pParams.PageSize * (pParams.PageIndex-1), pParams.PageSize );
@@ -24,11 +26,7 @@ namespace CleanArchitecture.Application.Specification
             if (!string.IsNullOrEmpty(pParams.Sort))
             {
                 switch (pParams.Sort)
-                {
-                    case "cuit":
-                        AddOrderBy(a => a.CUIT);
-                        break;
-
+                {                    
                     case "cuil":
                         AddOrderByDescending(a => a.CUIL);
                         break;

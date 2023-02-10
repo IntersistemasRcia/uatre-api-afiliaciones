@@ -4,7 +4,7 @@ using CleanArchitecture.Domain;
 
 namespace CleanArchitecture.Infrastructure.Configurations
 {
-    public class PadronCfg : IEntityTypeConfiguration<Afiliado>
+    public class AfiliadoCfg : IEntityTypeConfiguration<Afiliado>
     {
         public void Configure(EntityTypeBuilder<Afiliado> builder)
         {
@@ -17,6 +17,9 @@ namespace CleanArchitecture.Infrastructure.Configurations
             builder.HasOne(a => a.Seccional).WithMany().HasForeignKey(a => a.SeccionalId);
             builder.HasOne(a => a.Sexo).WithMany().HasForeignKey(a => a.SexoId);
             builder.HasOne(a => a.Actividad).WithMany().HasForeignKey(x => x.ActividadId);
+
+            //Constraints
+            builder.HasIndex(u => u.CUIL).IsUnique();
         }
     }
 }

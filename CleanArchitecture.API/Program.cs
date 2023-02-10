@@ -2,8 +2,10 @@ using CleanArchitecture.API.Middleware;
 using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,5 +45,17 @@ app.UseAuthorization();
 app.UseCors("CorsPolicy");
 
 app.MapControllers();
+
+//Seed
+var contextOptions = new DbContextOptionsBuilder<AfiliacionesDbContext>()
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    .Options;
+
+using var context = new AfiliacionesDbContext(contextOptions);
+{
+    context.Database.EnsureCreated();
+
+    AfiliacionesDbContextSeed.SeedAsync(context).Wait();
+}
 
 app.Run();
