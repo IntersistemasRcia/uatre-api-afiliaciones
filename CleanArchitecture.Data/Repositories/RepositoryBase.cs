@@ -4,9 +4,6 @@ using CleanArchitecture.Domain.Commom;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Specification;
 using Microsoft.EntityFrameworkCore;
-using SendGrid.Helpers.Mail;
-using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CleanArchitecture.Infrastructure.Repositories
 {
@@ -84,6 +81,11 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(context.Set<T>().AsQueryable(), spec);
+        }
+
+        public async Task<T> GetOneWithSpecsAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
     }
 }

@@ -39,6 +39,7 @@ namespace CleanArchitecture.Domain
         public string? DireccionReal { get; set; }
         public string? Telefono { get; set; }
         public string? Correo { get; set; }
+        //public DateTime? FechaNacimiento { get; set; }
         public Int64? AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         [StringLength(50)]

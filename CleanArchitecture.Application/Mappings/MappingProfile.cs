@@ -30,6 +30,9 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.Nacionalidad, x => x.MapFrom(b => b.Nacionalidad!.Descripcion))
                 .ForMember(a => a.CUIT, x => x.MapFrom(b => b.Empresa!.CUIT))
                 .ForMember(a => a.Empresa, x => x.MapFrom(b => b.Empresa!.RazonSocial))
+                .ForMember(a => a.Nacionalidad, x => x.MapFrom(b => b.Nacionalidad!.Descripcion))
+                .ForMember(a => a.EstadoCivil, x => x.MapFrom(b => b.EstadoCivil!.Descripcion))
+                .ForMember(a => a.TipoDocumento, x => x.MapFrom(b => b.EstadoCivil!.Descripcion))
                 ;
             CreateMap<Puesto, PuestoVm>();
             CreateMap<Seccional, SeccionalVm>();

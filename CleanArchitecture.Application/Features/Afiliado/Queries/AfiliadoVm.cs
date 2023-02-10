@@ -13,6 +13,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? Puesto { get; set; }
         public DateTime? FechaIngreso { get; set; }
         public DateTime? FechaEgreso { get; set; }
+        public int NacionalidadId { get; set; }
         public string? Nacionalidad { get; set; }
         public double CUIT { get; set; }
         public string? Empresa { get; set; }
@@ -26,7 +27,15 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public int ActividadId { get; set; }
         public string? Actividad { get; set; }
         public int EstadoSolicitudId { get; set; }
-        public string? EstadoSolicitud { get; set; }
+        public string? EstadoSolicitud { get; set; }        
+        public int TipoDocumentoId { get; set; }
+        public string? TipoDocumento { get; set; }
+        public int EstadoCivilId { get; set; }
+        public string? EstadoCivil { get; set; }
+        public string? DireccionReal { get; set; }
+        public string? Telefono { get; set; }
+        public string? Correo { get; set; }
+        //public DateTime? FechaNacimiento { get; set; }
         public long? AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         public string? AFIPNombre { get; set; }

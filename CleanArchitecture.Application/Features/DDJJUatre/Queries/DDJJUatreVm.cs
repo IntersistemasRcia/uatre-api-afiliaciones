@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Application.Features.DDJJUatre.Queries
+﻿namespace CleanArchitecture.Application.Features.DDJJUatre.Queries
 {
     public class DDJJUatreVm
     {
@@ -17,5 +11,6 @@ namespace CleanArchitecture.Application.Features.DDJJUatre.Queries
         public int Rectificativa { get; set; }
         public DateTime PresentacionFecha { get; set; }
         public DateTime ProcesoFecha { get; set; }
+        public double RemuneracionImponible { get; set; }        
     }
 }

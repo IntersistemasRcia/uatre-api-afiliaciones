@@ -4,9 +4,8 @@ using System.Net;
 using CleanArchitecture.Application.Models;
 using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
 using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
+using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByCUIL;
 
 namespace CleanArchitecture.API.Controllers
 {
@@ -23,6 +22,18 @@ namespace CleanArchitecture.API.Controllers
         //[Authorize]
         [ProducesResponseType(typeof(Pagination<AfiliadoVm>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Pagination<AfiliadoVm>>> GetAfiliadosAll([FromQuery] GetAfiliadoListQuery query)
+        {
+            //var query = new GetPadronListQuery(parameters);
+            var padrones = await _mediator.Send(query);
+
+            return Ok(padrones);
+        }
+
+        [HttpGet("GetAfiliado", Name = "GetAfiliado")]
+        //[Authorize]
+        [ProducesResponseType(typeof(AfiliadoVm), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(AfiliadoVm), (int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<AfiliadoVm>> GetAfiliado([FromQuery] GetAfiliadoByCUILQuery query)
         {
             //var query = new GetPadronListQuery(parameters);
             var padrones = await _mediator.Send(query);
