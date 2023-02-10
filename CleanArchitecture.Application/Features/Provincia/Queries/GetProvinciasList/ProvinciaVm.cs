@@ -3,6 +3,7 @@
     public class ProvinciaVm
     {
         public int Id { get; set; }
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
+        public int IdProvinciaAFIP { get; set; }
     }
 }
