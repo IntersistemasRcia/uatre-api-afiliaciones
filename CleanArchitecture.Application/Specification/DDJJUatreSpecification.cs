@@ -14,11 +14,12 @@ namespace CleanArchitecture.Application.Specification
         public DDJJUatreSpecification(GetDDJJUatreByCUILListQuery pParams)
             : base(x => x.CUIL == pParams.CUIL)
         {
-
+            AgregarIncludes(r => r.Empresa);
         }
 
         public DDJJUatreSpecification(int pId) : base(x => x.Id == pId)
         {
+            AgregarIncludes(r => r.Empresa);
         }
     }
 }

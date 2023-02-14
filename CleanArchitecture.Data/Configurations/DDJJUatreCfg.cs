@@ -14,6 +14,10 @@ namespace CleanArchitecture.Infrastructure.Configurations
             builder.Ignore(x => x.CreatedDate);
             builder.Ignore(x => x.LastModifiedBy);
             builder.Ignore(x => x.LastModifiedDate);
+
+            builder.HasOne(a => a.Empresa).WithMany().HasForeignKey(a => a.CUIT).HasPrincipalKey(a => a.CUIT); ;
+
+           // builder.HasOne(sl => sl.Empresa).WithOne(s => s.DDJJUatre).HasForeignKey(sl => sl.CUIT);
         }
     }
 }

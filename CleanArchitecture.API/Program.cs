@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Configuration;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,13 @@ builder.Services.AddApplicationServices();
 
 builder.Services.AddCors(opt =>
 {
-    opt.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+    opt.AddPolicy("CorsPolicy", builder =>
+    {
+        //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    });
+    
+
 });
 
 //Serilog
@@ -42,6 +49,7 @@ app.UseMiddleware<ExcepcionMiddleware>();
 //app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseRouting();
 app.UseCors("CorsPolicy");
 
 app.MapControllers();

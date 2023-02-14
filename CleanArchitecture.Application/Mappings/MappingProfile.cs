@@ -39,7 +39,9 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<Provincia, ProvinciaVm>();
             CreateMap<Nacionalidad, NacionalidadVm>();
             CreateMap<EstadoCivil, EstadoCivilVm>();
-            CreateMap<DDJJUatre, DDJJUatreVm>();
+            CreateMap<DDJJUatre, DDJJUatreVm>()
+                .ForMember(a => a.Empresa, x => x.MapFrom(b => b.Empresa!.RazonSocial))
+                ;
             CreateMap<TipoDocumento, TipoDocumentoVm>();
 
             CreateMap<CreateAfiliadoCommand, Afiliado>();
