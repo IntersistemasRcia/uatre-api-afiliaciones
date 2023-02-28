@@ -19,7 +19,7 @@ namespace CleanArchitecture.API.Controllers
         [HttpGet("GetDDJJUatreByCUIL", Name = "GetDDJJUatreByCUIL")]
         //[Authorize]
         [ProducesResponseType(typeof(IReadOnlyList<DDJJUatreVm>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(IReadOnlyList<DDJJUatreVm>), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(DDJJUatreVm), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<IReadOnlyCollection<DDJJUatreVm>>> GetDDJJUatreByCUIL([FromQuery] GetDDJJUatreByCUILListQuery query)
         {
             var list = await _mediator.Send(query);

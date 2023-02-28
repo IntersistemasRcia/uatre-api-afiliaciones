@@ -149,6 +149,23 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TiposDocumentos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TiposDocumentos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Localidades",
                 columns: table => new
                 {
@@ -180,56 +197,60 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CUIL = table.Column<long>(type: "bigint", nullable: false),
-                    Secuencia = table.Column<int>(type: "int", nullable: false),
                     NroAfiliado = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     PuestoId = table.Column<int>(type: "int", nullable: false),
                     FechaIngreso = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaEgreso = table.Column<DateTime>(type: "datetime2", nullable: true),
                     NacionalidadId = table.Column<int>(type: "int", nullable: false),
-                    EmpresaId = table.Column<int>(type: "int", maxLength: 100, nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", maxLength: 255, nullable: false),
                     SeccionalId = table.Column<int>(type: "int", nullable: false),
                     SexoId = table.Column<int>(type: "int", nullable: false),
-                    DNI = table.Column<long>(type: "bigint", nullable: false),
+                    TipoDocumentoId = table.Column<int>(type: "int", nullable: false),
+                    Documento = table.Column<long>(type: "bigint", nullable: false),
                     ActividadId = table.Column<int>(type: "int", nullable: false),
                     EstadoSolicitudId = table.Column<int>(type: "int", nullable: false),
                     EstadoCivilId = table.Column<int>(type: "int", nullable: false),
                     ProvinciaId = table.Column<int>(type: "int", nullable: false),
-                    DireccionReal = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Domicilio = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Celular = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Correo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AFIPCUIL = table.Column<long>(type: "bigint", nullable: true),
                     AFIPFechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AFIPNombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPApellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPRazonSocial = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    AFIPTipoDocumento = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AFIPNombre = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPApellido = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPRazonSocial = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPTipoDocumento = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPNumeroDocumento = table.Column<int>(type: "int", nullable: true),
-                    AFIPTipoPersona = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPTipoClave = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPEstadoClave = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AFIPTipoPersona = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPTipoClave = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPEstadoClave = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPClaveInactivaAsociada = table.Column<long>(type: "bigint", nullable: true),
                     AFIPFechaFallecimiento = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AFIPFormaJuridica = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPActividadPrincipal = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    AFIPFormaJuridica = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPActividadPrincipal = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPIdActividadPrincipal = table.Column<int>(type: "int", nullable: true),
                     AFIPPeriodoActividadPrincipal = table.Column<int>(type: "int", nullable: true),
                     AFIPFechaContratoSocial = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AFIPMesCierre = table.Column<int>(type: "int", nullable: true),
-                    AFIPDomicilioDireccion = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    AFIPDomicilioCalle = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AFIPDomicilioDireccion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPDomicilioCalle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPDomicilioNumero = table.Column<int>(type: "int", nullable: true),
-                    AFIPDomicilioPiso = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPDomicilioDepto = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPDomicilioSector = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPDomicilioTorre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AFIPDomicilioPiso = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPDomicilioDepto = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPDomicilioSector = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPDomicilioTorre = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPDomicilioManzana = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPDomicilioLocalidad = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPDomicilioProvincia = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AFIPDomicilioLocalidad = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPDomicilioProvincia = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPDomicilioIdProvincia = table.Column<int>(type: "int", nullable: true),
                     AFIPDomicilioCodigoPostal = table.Column<int>(type: "int", nullable: true),
-                    AFIPDomicilioTipo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPDomicilioEstado = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPDomicilioDatoAdicional = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    AFIPDomicilioTipoDatoAdicional = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AFIPDomicilioTipo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPDomicilioEstado = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPDomicilioDatoAdicional = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    AFIPDomicilioTipoDatoAdicional = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -242,6 +263,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         name: "FK_Afiliados_Actividades_ActividadId",
                         column: x => x.ActividadId,
                         principalTable: "Actividades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Afiliados_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -284,6 +311,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         name: "FK_Afiliados_Sexos_SexoId",
                         column: x => x.SexoId,
                         principalTable: "Sexos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Afiliados_TiposDocumentos_TipoDocumentoId",
+                        column: x => x.TipoDocumentoId,
+                        principalTable: "TiposDocumentos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -330,6 +363,11 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Afiliados_EmpresaId",
+                table: "Afiliados",
+                column: "EmpresaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Afiliados_EstadoCivilId",
                 table: "Afiliados",
                 column: "EstadoCivilId");
@@ -363,6 +401,11 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 name: "IX_Afiliados_SexoId",
                 table: "Afiliados",
                 column: "SexoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Afiliados_TipoDocumentoId",
+                table: "Afiliados",
+                column: "TipoDocumentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Localidades_ProvinciaId",
@@ -405,6 +448,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sexos");
+
+            migrationBuilder.DropTable(
+                name: "TiposDocumentos");
 
             migrationBuilder.DropTable(
                 name: "Localidades");

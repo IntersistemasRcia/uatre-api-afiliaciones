@@ -61,12 +61,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AFIPActividadPrincipal")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPApellido")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<long?>("AFIPCUIL")
                         .HasColumnType("bigint");
@@ -75,34 +75,34 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("AFIPDomicilioCalle")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int?>("AFIPDomicilioCodigoPostal")
                         .HasColumnType("int");
 
                     b.Property<string>("AFIPDomicilioDatoAdicional")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioDepto")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioDireccion")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioEstado")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int?>("AFIPDomicilioIdProvincia")
                         .HasColumnType("int");
 
                     b.Property<string>("AFIPDomicilioLocalidad")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioManzana")
                         .HasMaxLength(50)
@@ -112,32 +112,32 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AFIPDomicilioPiso")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioProvincia")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioSector")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioTipo")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioTipoDatoAdicional")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPDomicilioTorre")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPEstadoClave")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<DateTime?>("AFIPFechaContratoSocial")
                         .HasColumnType("datetime2");
@@ -149,8 +149,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AFIPFormaJuridica")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int?>("AFIPIdActividadPrincipal")
                         .HasColumnType("int");
@@ -159,8 +159,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AFIPNombre")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int?>("AFIPNumeroDocumento")
                         .HasColumnType("int");
@@ -169,20 +169,20 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AFIPRazonSocial")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPTipoClave")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPTipoDocumento")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("AFIPTipoPersona")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("ActividadId")
                         .HasColumnType("int");
@@ -190,8 +190,13 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<long>("CUIL")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Celular")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("Correo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -199,14 +204,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DireccionReal")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("Documento")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Domicilio")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<int>("EmpresaId")
-                        .HasMaxLength(100)
+                        .HasMaxLength(255)
                         .HasColumnType("int");
 
                     b.Property<int>("EstadoCivilId")
@@ -221,6 +227,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("FechaIngreso")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("FechaNacimiento")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -231,8 +240,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("NroAfiliado")
                         .HasColumnType("int");
@@ -246,14 +255,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int>("SeccionalId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Secuencia")
-                        .HasColumnType("int");
-
                     b.Property<int>("SexoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("TipoDocumentoId")
                         .HasColumnType("int");
@@ -264,6 +271,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("CUIL")
                         .IsUnique();
+
+                    b.HasIndex("EmpresaId");
 
                     b.HasIndex("EstadoCivilId");
 
@@ -384,10 +393,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CUIT");
+
                     b.ToTable("DDJJUatre", null, t => t.ExcludeFromMigrations());
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.Empresa", b =>
+            modelBuilder.Entity("CleanArchitecture.Domain.Empresas", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -467,7 +478,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LocalidadId")
+                    b.Property<int?>("LocalidadId")
                         .HasColumnType("int")
                         .HasColumnName("DomicilioLocalidadesId");
 
@@ -481,7 +492,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("LocalidadId");
 
-                    b.ToTable("Empresa", null, t => t.ExcludeFromMigrations());
+                    b.ToTable("Empresas", null, t => t.ExcludeFromMigrations());
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.EstadoCivil", b =>
@@ -813,6 +824,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CleanArchitecture.Domain.Empresas", "Empresa")
+                        .WithMany()
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CleanArchitecture.Domain.EstadoCivil", "EstadoCivil")
                         .WithMany()
                         .HasForeignKey("EstadoCivilId")
@@ -863,6 +880,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Navigation("Actividad");
 
+                    b.Navigation("Empresa");
+
                     b.Navigation("EstadoCivil");
 
                     b.Navigation("EstadoSolicitud");
@@ -880,13 +899,23 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("TipoDocumento");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.Empresa", b =>
+            modelBuilder.Entity("CleanArchitecture.Domain.DDJJUatre", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Empresas", "Empresa")
+                        .WithMany()
+                        .HasForeignKey("CUIT")
+                        .HasPrincipalKey("CUIT")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Empresas", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Localidad", "Localidad")
                         .WithMany()
-                        .HasForeignKey("LocalidadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocalidadId");
 
                     b.Navigation("Localidad");
                 });

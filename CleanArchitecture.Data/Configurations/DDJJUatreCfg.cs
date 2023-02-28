@@ -9,7 +9,7 @@ namespace CleanArchitecture.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<DDJJUatre> builder)
         {
             //Particulares
-            builder.ToTable(nameof(Empresas), t => t.ExcludeFromMigrations());
+            builder.ToTable(nameof(DDJJUatre), t => t.ExcludeFromMigrations());
             builder.Ignore(x => x.CreatedBy);
             builder.Ignore(x => x.CreatedDate);
             builder.Ignore(x => x.LastModifiedBy);

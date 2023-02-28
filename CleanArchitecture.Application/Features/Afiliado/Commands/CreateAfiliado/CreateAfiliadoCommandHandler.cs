@@ -27,8 +27,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
 
             if (result <= 0)
             {
-                logger.LogError("No se insertó el registro de director");
-                throw new Exception("No se pudo insertar Director");
+                logger.LogError("No se insertó el registro de Afiliado");
+                throw new Exception("No se pudo insertar Afiliado");
             }
 
             return entidad.Id;

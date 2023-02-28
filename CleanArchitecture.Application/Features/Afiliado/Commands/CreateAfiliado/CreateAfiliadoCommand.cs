@@ -5,7 +5,6 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
     public class CreateAfiliadoCommand : IRequest<int>
     {
         public Int64 CUIL { get; set; }
-        public int Secuencia { get; set; }
         public int NroAfiliado { get; set; }
         public string? Nombre { get; set; }
         public int PuestoId { get; set; }
@@ -21,10 +20,11 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         public int EstadoSolicitudId { get; set; }
         public int EstadoCivilId { get; set; }
         public int ProvinciaId { get; set; }
-        public string? DireccionReal { get; set; }
+        public string? Domicilio { get; set; }
         public string? Telefono { get; set; }
         public string? Correo { get; set; }
-        //ublic DateTime? FechaNacimiento { get; set; }
+        public string? Celular { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
         public Int64 AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         public string? AFIPNombre { get; set; }
