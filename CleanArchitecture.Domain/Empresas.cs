@@ -32,5 +32,6 @@ namespace CleanArchitecture.Domain
         public string? DomicilioEstado { get; set; }
         public string? DomicilioDatoAdicional { get; set; }
         public string? DomicilioDatoAdicionalTipo { get; set; }
+
     }
 }
