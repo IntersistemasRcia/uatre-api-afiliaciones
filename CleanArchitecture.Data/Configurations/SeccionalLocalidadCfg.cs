@@ -15,7 +15,7 @@ namespace CleanArchitecture.Infrastructure.Configurations
 
             //Relaciones
             builder.HasOne(sl => sl.Seccional).WithMany(s => s.SeccionalLocalidad).HasForeignKey(sl => sl.SeccionalId);
-            builder.HasOne(sl => sl.Localidad).WithMany(l => l.SeccionalLocalidad).HasForeignKey(sl => sl.LocalidadId);
+            builder.HasOne(sl => sl.RefLocalidad).WithMany(l => l.SeccionalLocalidad).HasForeignKey(sl => sl.RefLocalidadId);
         }
     }
 }

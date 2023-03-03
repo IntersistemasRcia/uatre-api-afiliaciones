@@ -32,8 +32,8 @@ namespace CleanArchitecture.Domain
         public EstadoSolicitud? EstadoSolicitud { get; set; }
         public int EstadoCivilId { get; set; }
         public EstadoCivil? EstadoCivil { get; set; }
-        public int ProvinciaId { get; set; }
-        public Provincia? Provincia { get; set; }
+        public int RefLocalidadId { get; set; }
+        public RefLocalidad? RefLocalidad { get; set; }
         [StringLength(255)]
         public string? Domicilio { get; set; }
         [StringLength(255)]

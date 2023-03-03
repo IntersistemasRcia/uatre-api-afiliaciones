@@ -246,10 +246,10 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int>("NroAfiliado")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProvinciaId")
+                    b.Property<int>("PuestoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PuestoId")
+                    b.Property<int>("RefLocalidadId")
                         .HasColumnType("int");
 
                     b.Property<int>("SeccionalId")
@@ -280,9 +280,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("NacionalidadId");
 
-                    b.HasIndex("ProvinciaId");
-
                     b.HasIndex("PuestoId");
+
+                    b.HasIndex("RefLocalidadId");
 
                     b.HasIndex("SeccionalId");
 
@@ -478,19 +478,19 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LocalidadId")
-                        .HasColumnType("int")
-                        .HasColumnName("DomicilioLocalidadesId");
-
                     b.Property<string>("RazonSocial")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RefLocalidadId")
+                        .HasColumnType("int")
+                        .HasColumnName("DomicilioLocalidadesId");
 
                     b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LocalidadId");
+                    b.HasIndex("RefLocalidadId");
 
                     b.ToTable("Empresas", null, t => t.ExcludeFromMigrations());
                 });
@@ -551,44 +551,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EstadosSolicitudes");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.Localidad", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CP")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("ProvinciaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProvinciaId");
-
-                    b.ToTable("Localidades");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Nacionalidad", b =>
@@ -683,6 +645,54 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.ToTable("Puestos");
                 });
 
+            modelBuilder.Entity("CleanArchitecture.Domain.RefLocalidad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CodPostal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Codigo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LitProvincia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreCompleto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProvinciaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProvinciaId");
+
+                    b.ToTable("RefLocalidades");
+                });
+
             modelBuilder.Entity("CleanArchitecture.Domain.Seccional", b =>
                 {
                     b.Property<int>("Id")
@@ -738,7 +748,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LocalidadId")
+                    b.Property<int>("RefLocalidadId")
                         .HasColumnType("int");
 
                     b.Property<int>("SeccionalId")
@@ -746,7 +756,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LocalidadId");
+                    b.HasIndex("RefLocalidadId");
 
                     b.HasIndex("SeccionalId");
 
@@ -848,15 +858,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CleanArchitecture.Domain.Provincia", "Provincia")
-                        .WithMany()
-                        .HasForeignKey("ProvinciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CleanArchitecture.Domain.Puesto", "Puesto")
                         .WithMany()
                         .HasForeignKey("PuestoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitecture.Domain.RefLocalidad", "RefLocalidad")
+                        .WithMany()
+                        .HasForeignKey("RefLocalidadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -888,9 +898,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Navigation("Nacionalidad");
 
-                    b.Navigation("Provincia");
-
                     b.Navigation("Puesto");
+
+                    b.Navigation("RefLocalidad");
 
                     b.Navigation("Seccional");
 
@@ -913,14 +923,14 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitecture.Domain.Empresas", b =>
                 {
-                    b.HasOne("CleanArchitecture.Domain.Localidad", "Localidad")
+                    b.HasOne("CleanArchitecture.Domain.RefLocalidad", "RefLocalidad")
                         .WithMany()
-                        .HasForeignKey("LocalidadId");
+                        .HasForeignKey("RefLocalidadId");
 
-                    b.Navigation("Localidad");
+                    b.Navigation("RefLocalidad");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.Localidad", b =>
+            modelBuilder.Entity("CleanArchitecture.Domain.RefLocalidad", b =>
                 {
                     b.HasOne("CleanArchitecture.Domain.Provincia", "Provincia")
                         .WithMany()
@@ -933,9 +943,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitecture.Domain.SeccionalLocalidad", b =>
                 {
-                    b.HasOne("CleanArchitecture.Domain.Localidad", "Localidad")
+                    b.HasOne("CleanArchitecture.Domain.RefLocalidad", "RefLocalidad")
                         .WithMany("SeccionalLocalidad")
-                        .HasForeignKey("LocalidadId")
+                        .HasForeignKey("RefLocalidadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -945,12 +955,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Localidad");
+                    b.Navigation("RefLocalidad");
 
                     b.Navigation("Seccional");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.Localidad", b =>
+            modelBuilder.Entity("CleanArchitecture.Domain.RefLocalidad", b =>
                 {
                     b.Navigation("SeccionalLocalidad");
                 });

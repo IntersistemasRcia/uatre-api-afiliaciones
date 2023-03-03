@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.Specification
+namespace CleanArchitecture.Application.Specification.Implements
 {
     public class DDJJUatreSpecification : BaseSpecification<DDJJUatre>
     {

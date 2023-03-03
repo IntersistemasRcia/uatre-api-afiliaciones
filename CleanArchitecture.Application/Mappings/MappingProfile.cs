@@ -25,7 +25,7 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.Sexo, x => x.MapFrom(b => b.Sexo!.Descripcion))
                 .ForMember(a => a.Actividad, x => x.MapFrom(b => b.Actividad!.Descripcion))
                 .ForMember(a => a.Seccional, x => x.MapFrom(b => b.Seccional!.Descripcion))
-                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Provincia!.Nombre))
+                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.RefLocalidad!.Provincia!.Nombre))
                 .ForMember(a => a.Puesto, x => x.MapFrom(b => b.Puesto!.Descripcion))
                 .ForMember(a => a.Nacionalidad, x => x.MapFrom(b => b.Nacionalidad!.Descripcion))
                 .ForMember(a => a.CUIT, x => x.MapFrom(b => b.Empresa!.CUIT))

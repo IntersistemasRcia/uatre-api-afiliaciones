@@ -24,8 +24,8 @@ namespace CleanArchitecture.Domain
         public string? DomicilioTorre { get; set; }
         public string? DomicilioManzana { get; set; }
         public int? DomicilioProvinciasId { get; set; }
-        public int? LocalidadId { get; set; }
-        public Localidad? Localidad { get; set; }
+        public int? RefLocalidadId { get; set; }
+        public RefLocalidad? RefLocalidad { get; set; }
         public int? DomicilioCodigoPostal { get; set; }
         public string? DomicilioCPA { get; set; }
         public string? DomicilioTipo { get; set; }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesByProvinciaList;
-using CleanArchitecture.Application.Specification;
+using CleanArchitecture.Application.Specification.Implements;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesByCPList

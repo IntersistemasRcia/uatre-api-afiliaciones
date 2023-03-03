@@ -43,7 +43,6 @@ namespace CleanArchitecture.Infrastructure.Persistence
 
         public DbSet<Afiliado>? Afiliados { get; set; }
         public DbSet<Actividad>? Actividades { get; set; }
-        public DbSet<Localidad>? Localidades { get; set; }
         public DbSet<Provincia>? Provincias { get; set; }
         public DbSet<Puesto>? Puestos { get; set; }
         public DbSet<Seccional>? Seccionales { get; set; }
@@ -55,5 +54,6 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public DbSet<EstadoCivil>? EstadosCiviles { get; set; }
         public DbSet<Empresas>? Empresas { get; set; }
         public DbSet<TipoDocumento>? TiposDocumentos { get; set; }
+        public DbSet<RefLocalidad>? RefLocalidades { get; set; }
     }
 }

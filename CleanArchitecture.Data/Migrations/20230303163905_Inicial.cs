@@ -166,13 +166,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Localidades",
+                name: "RefLocalidades",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CP = table.Column<int>(type: "int", nullable: false),
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodPostal = table.Column<int>(type: "int", nullable: false),
+                    LitProvincia = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProvinciaId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -181,9 +185,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Localidades", x => x.Id);
+                    table.PrimaryKey("PK_RefLocalidades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Localidades_Provincias_ProvinciaId",
+                        name: "FK_RefLocalidades_Provincias_ProvinciaId",
                         column: x => x.ProvinciaId,
                         principalTable: "Provincias",
                         principalColumn: "Id",
@@ -211,7 +215,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     ActividadId = table.Column<int>(type: "int", nullable: false),
                     EstadoSolicitudId = table.Column<int>(type: "int", nullable: false),
                     EstadoCivilId = table.Column<int>(type: "int", nullable: false),
-                    ProvinciaId = table.Column<int>(type: "int", nullable: false),
+                    RefLocalidadId = table.Column<int>(type: "int", nullable: false),
                     Domicilio = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Celular = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
@@ -290,15 +294,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Afiliados_Provincias_ProvinciaId",
-                        column: x => x.ProvinciaId,
-                        principalTable: "Provincias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Afiliados_Puestos_PuestoId",
                         column: x => x.PuestoId,
                         principalTable: "Puestos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Afiliados_RefLocalidades_RefLocalidadId",
+                        column: x => x.RefLocalidadId,
+                        principalTable: "RefLocalidades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -327,7 +331,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LocalidadId = table.Column<int>(type: "int", nullable: false),
+                    RefLocalidadId = table.Column<int>(type: "int", nullable: false),
                     SeccionalId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -338,9 +342,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_SeccionalesLocalidades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SeccionalesLocalidades_Localidades_LocalidadId",
-                        column: x => x.LocalidadId,
-                        principalTable: "Localidades",
+                        name: "FK_SeccionalesLocalidades_RefLocalidades_RefLocalidadId",
+                        column: x => x.RefLocalidadId,
+                        principalTable: "RefLocalidades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -383,14 +387,14 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 column: "NacionalidadId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Afiliados_ProvinciaId",
-                table: "Afiliados",
-                column: "ProvinciaId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Afiliados_PuestoId",
                 table: "Afiliados",
                 column: "PuestoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Afiliados_RefLocalidadId",
+                table: "Afiliados",
+                column: "RefLocalidadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Afiliados_SeccionalId",
@@ -408,14 +412,14 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 column: "TipoDocumentoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Localidades_ProvinciaId",
-                table: "Localidades",
+                name: "IX_RefLocalidades_ProvinciaId",
+                table: "RefLocalidades",
                 column: "ProvinciaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SeccionalesLocalidades_LocalidadId",
+                name: "IX_SeccionalesLocalidades_RefLocalidadId",
                 table: "SeccionalesLocalidades",
-                column: "LocalidadId");
+                column: "RefLocalidadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SeccionalesLocalidades_SeccionalId",
@@ -453,7 +457,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 name: "TiposDocumentos");
 
             migrationBuilder.DropTable(
-                name: "Localidades");
+                name: "RefLocalidades");
 
             migrationBuilder.DropTable(
                 name: "Seccionales");
