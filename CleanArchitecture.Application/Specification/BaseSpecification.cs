@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application.Specification
         /// <summary>
         /// Implementación de la interfaz ISpecification
         /// </summary>
-        public BaseSpecification() { }
+        //public BaseSpecification() { }
 
         public BaseSpecification(Expression<Func<T, bool>> criteria)
         {

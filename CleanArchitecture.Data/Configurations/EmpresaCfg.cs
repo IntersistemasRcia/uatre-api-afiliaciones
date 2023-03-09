@@ -13,7 +13,7 @@ namespace CleanArchitecture.Infrastructure.Configurations
                 .UseIdentityColumn();
 
             builder.ToTable("Empresas");
-            builder.Property(e => e.LocalidadId).HasColumnName("DomicilioLocalidadesId");
+            builder.Property(e => e.RefLocalidadId).HasColumnName("DomicilioLocalidadesId");
 
             //Particulares
             builder.ToTable(nameof(Empresas), t => t.ExcludeFromMigrations());

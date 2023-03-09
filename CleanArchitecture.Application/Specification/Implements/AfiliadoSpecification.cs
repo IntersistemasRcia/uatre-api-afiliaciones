@@ -1,13 +1,13 @@
 ﻿using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
 
-namespace CleanArchitecture.Application.Specification
+namespace CleanArchitecture.Application.Specification.Implements
 {
     public class AfiliadoSpecification : BaseSpecification<Afiliado>
     {
         public AfiliadoSpecification(GetAfiliadoListQuery pParams)
             : base(x =>
-                (!pParams.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == pParams.EstadoSolicitudId)
+                !pParams.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == pParams.EstadoSolicitudId
             )
         {
             //Agrego tablas relacionadas
@@ -16,20 +16,21 @@ namespace CleanArchitecture.Application.Specification
             AgregarIncludes(a => a.Sexo);
             AgregarIncludes(a => a.Actividad);
             AgregarIncludes(a => a.Puesto);
-            AgregarIncludes(a => a.Provincia);
+            AgregarIncludes(a => a.RefLocalidad);
+            AgregarIncludes(a => a.RefLocalidad.Provincia);
             AgregarIncludes(a => a.Empresa);
             AgregarIncludes(a => a.Nacionalidad);
             AgregarIncludes(a => a.EstadoCivil);
             AgregarIncludes(a => a.TipoDocumento);
 
             //Paginacion
-            ApplyPaging(pParams.PageSize * (pParams.PageIndex-1), pParams.PageSize );
+            ApplyPaging(pParams.PageSize * (pParams.PageIndex - 1), pParams.PageSize);
 
             //Ordenamiento
             if (!string.IsNullOrEmpty(pParams.Sort))
             {
                 switch (pParams.Sort)
-                {                    
+                {
                     case "cuil":
                         AddOrderByDescending(a => a.CUIL);
                         break;
@@ -53,7 +54,8 @@ namespace CleanArchitecture.Application.Specification
             AgregarIncludes(a => a.Sexo);
             AgregarIncludes(a => a.Actividad);
             AgregarIncludes(a => a.Puesto);
-            AgregarIncludes(a => a.Provincia);
+            AgregarIncludes(a => a.RefLocalidad);
+            AgregarIncludes(a => a.RefLocalidad.Provincia);
             AgregarIncludes(a => a.Empresa);
             AgregarIncludes(a => a.Nacionalidad);
             AgregarIncludes(a => a.EstadoCivil);
