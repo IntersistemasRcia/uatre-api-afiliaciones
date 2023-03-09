@@ -19,6 +19,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? Empresa { get; set; }
         public int ProvinciaId { get; set; }
         public string? Provincia { get; set; }
+        public int RefLocalidadId { get; set; }
+        public string? Localidad { get; set; }
         public int SeccionalId { get; set; }
         public string? Seccional { get; set; }
         public int SexoId { get; set; }

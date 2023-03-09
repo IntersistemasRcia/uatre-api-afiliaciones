@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    [Migration("20230303163905_Inicial")]
+    [Migration("20230306135538_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -480,15 +480,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LocalidadId")
-                        .HasColumnType("int")
-                        .HasColumnName("DomicilioLocalidadesId");
-
                     b.Property<string>("RazonSocial")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("RefLocalidadId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("DomicilioLocalidadesId");
 
                     b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
