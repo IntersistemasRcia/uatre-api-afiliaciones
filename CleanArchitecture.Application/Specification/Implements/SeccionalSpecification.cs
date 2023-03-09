@@ -12,11 +12,6 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (!query.LocalidadId.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Id == query.LocalidadId).Any()) &&
                 (!query.CodigoPostal.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.CodPostal == query.CodigoPostal).Any())
             )
-        //: base(x => 
-        //(!query.ProvinciaId.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.ProvinciaId == query.ProvinciaId).Any()) &&
-        //(!query.LocalidadId.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Id == query.LocalidadId).Any()) &&
-        //(!query.CodigoPostal.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.CodPostal == query.CodigoPostal).Any())
-        //)
         {
 
         }
