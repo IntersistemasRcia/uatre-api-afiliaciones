@@ -16,9 +16,9 @@ namespace CleanArchitecture.Application.Features.EstadoCivil.Queries.GetEstadoCi
         }
         public async Task<List<EstadoCivilVm>> Handle(GetEstadoCivilListQuery request, CancellationToken cancellationToken)
         {
-            var actividadList = await _unitOfWork.Repository<Domain.EstadoCivil>().GetAllAsync();
+            var list = await _unitOfWork.Repository<Domain.EstadoCivil>().GetAllAsync();
 
-            return _mapper.Map<List<EstadoCivilVm>>(actividadList);
+            return _mapper.Map<List<EstadoCivilVm>>(list);
         }
     }
 }

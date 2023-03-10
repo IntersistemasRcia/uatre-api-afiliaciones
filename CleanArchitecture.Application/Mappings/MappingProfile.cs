@@ -4,6 +4,7 @@ using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.DDJJUatre.Queries;
 using CleanArchitecture.Application.Features.EstadoCivil.Queries;
+using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidadesList;
 using CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList;
 using CleanArchitecture.Application.Features.Puesto.Queries;
@@ -46,7 +47,8 @@ namespace CleanArchitecture.Application.Mappings
                 ;
             CreateMap<TipoDocumento, TipoDocumentoVm>();
             CreateMap<RefLocalidad, RefLocalidadVm>()
-                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Provincia.Nombre));
+                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Provincia!.Nombre));
+            CreateMap<EstadoSolicitud, EstadoSolicitudVm>();
 
             CreateMap<CreateAfiliadoCommand, Afiliado>();
         }

@@ -8,5 +8,8 @@ namespace CleanArchitecture.Domain.Commom
         public string? CreatedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public string? LastModifiedBy { get; set; }
+        //public DateTime? DeletedDate { get; set; }
+        //public string? DeletedBy { get; set; }
+        //public string? DeletedObs { get; set; }
     }
 }
