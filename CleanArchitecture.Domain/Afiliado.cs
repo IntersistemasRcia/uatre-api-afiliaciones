@@ -34,6 +34,8 @@ namespace CleanArchitecture.Domain
         public EstadoCivil? EstadoCivil { get; set; }
         public int RefLocalidadId { get; set; }
         public RefLocalidad? RefLocalidad { get; set; }
+        //[StringLength(1000)]
+        //public string? ResolucionSolicitudObservaciones { get; set; }
         [StringLength(255)]
         public string? Domicilio { get; set; }
         [StringLength(255)]

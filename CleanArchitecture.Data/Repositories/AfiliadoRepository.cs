@@ -1,8 +1,8 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Infrastructure.Repositories
 {
@@ -14,6 +14,10 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         public async Task<int> PatchEntityAsync(int id, JsonPatchDocument model)
         {
+            var nroAfiliado = await context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefaultAsync();
+            model.Operations[1].value = DateTime.Now.Date;
+            model.Operations[2].value = nroAfiliado + 1;
+
             var afiliado = await context.Set<Afiliado>().FindAsync(id);
             model.ApplyTo(afiliado);
             return await context.SaveChangesAsync();
