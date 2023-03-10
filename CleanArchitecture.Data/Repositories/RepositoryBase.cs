@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Contracts.Specification;
 using CleanArchitecture.Domain.Commom;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Specification;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Infrastructure.Repositories
@@ -71,7 +72,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public void UpdateEntity(T Entity)
         {
             context.Set<T>().Remove(Entity);
-        }
+        }        
 
         public async Task<int> CountAsync(ISpecification<T> spec)
         {

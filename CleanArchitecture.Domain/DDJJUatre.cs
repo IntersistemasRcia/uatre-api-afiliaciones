@@ -34,7 +34,7 @@ namespace CleanArchitecture.Domain
         public int Version { get; set; }
         public int VersionRelease { get; set; }
         public double Renatea { get; set; }
-        public int MyProperty { get; set; }
+        //public int LiquidacionId { get; set; }
         public Empresas? Empresa { get; set; }
     }
 }

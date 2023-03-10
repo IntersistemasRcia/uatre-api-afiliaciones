@@ -1,6 +1,9 @@
 ﻿using CleanArchitecture.Application.Contracts.Specification;
+using CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado;
 using CleanArchitecture.Domain.Commom;
+using Microsoft.AspNetCore.JsonPatch;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
 
 namespace CleanArchitecture.Application.Contracts.Persistence
 {
@@ -23,7 +26,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         Task<T> UpdateAsync(T Entity);
         Task DeleteAsync(T Entity);
         void AddEntity(T Entity);
-        void UpdateEntity(T Entity);
+        void UpdateEntity(T Entity);        
         void DeleteEntity(T Entity);
         Task<int> CountAsync(ISpecification<T> spec);
     }

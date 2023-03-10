@@ -4,7 +4,7 @@ namespace CleanArchitecture.Domain
 {
     public class Empresas : BaseDomainModel
     {
-        public double CUIT { get; set; }
+        public double? CUIT { get; set; }
         public string? RazonSocial { get; set; }
         public string? ClaveTipo { get; set; }
         public string? ClaveEstado { get; set; }
