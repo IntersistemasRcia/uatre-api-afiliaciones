@@ -11,17 +11,17 @@ namespace CleanArchitecture.Application.Specification.Implements
             )
         {
             //Agrego tablas relacionadas
-            AgregarIncludes(a => a.EstadoSolicitud);
-            AgregarIncludes(a => a.Seccional);
-            AgregarIncludes(a => a.Sexo);
-            AgregarIncludes(a => a.Actividad);
-            AgregarIncludes(a => a.Puesto);
-            AgregarIncludes(a => a.RefLocalidad);
-            AgregarIncludes(a => a.RefLocalidad.Provincia);
-            AgregarIncludes(a => a.Empresa);
-            AgregarIncludes(a => a.Nacionalidad);
-            AgregarIncludes(a => a.EstadoCivil);
-            AgregarIncludes(a => a.TipoDocumento);
+            AgregarIncludes(a => a.EstadoSolicitud!);
+            AgregarIncludes(a => a.Seccional!);
+            AgregarIncludes(a => a.Sexo!);
+            AgregarIncludes(a => a.Actividad!);
+            AgregarIncludes(a => a.Puesto!);
+            AgregarIncludes(a => a.RefLocalidad!);
+            AgregarIncludes(a => a.RefLocalidad!.Provincia!);
+            AgregarIncludes(a => a.Empresa!);
+            AgregarIncludes(a => a.Nacionalidad!);
+            AgregarIncludes(a => a.EstadoCivil!);
+            AgregarIncludes(a => a.TipoDocumento!);
 
             //Paginacion
             ApplyPaging(pParams.PageSize * (pParams.PageIndex - 1), pParams.PageSize);
@@ -49,17 +49,17 @@ namespace CleanArchitecture.Application.Specification.Implements
         public AfiliadoSpecification(int pId) : base(x => x.Id == pId)
         {
             //Agrego tablas relacionadas
-            AgregarIncludes(a => a.EstadoSolicitud);
-            AgregarIncludes(a => a.Seccional);
-            AgregarIncludes(a => a.Sexo);
-            AgregarIncludes(a => a.Actividad);
-            AgregarIncludes(a => a.Puesto);
-            AgregarIncludes(a => a.RefLocalidad);
-            AgregarIncludes(a => a.RefLocalidad.Provincia);
-            AgregarIncludes(a => a.Empresa);
-            AgregarIncludes(a => a.Nacionalidad);
-            AgregarIncludes(a => a.EstadoCivil);
-            AgregarIncludes(a => a.TipoDocumento);
+            AgregarIncludes(a => a.EstadoSolicitud!);
+            AgregarIncludes(a => a.Seccional!);
+            AgregarIncludes(a => a.Sexo!);
+            AgregarIncludes(a => a.Actividad!);
+            AgregarIncludes(a => a.Puesto!);
+            AgregarIncludes(a => a.RefLocalidad!);
+            AgregarIncludes(a => a.RefLocalidad!.Provincia!);
+            AgregarIncludes(a => a.Empresa!);
+            AgregarIncludes(a => a.Nacionalidad!);
+            AgregarIncludes(a => a.EstadoCivil!);
+            AgregarIncludes(a => a.TipoDocumento!);
         }
     }
 }

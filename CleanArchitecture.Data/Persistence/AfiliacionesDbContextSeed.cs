@@ -39,8 +39,8 @@ namespace CleanArchitecture.Infrastructure.Persistence
             {
                 new EstadoSolicitud { Descripcion = "Pendiente" },
                 new EstadoSolicitud { Descripcion = "Activo" },
-                new EstadoSolicitud { Descripcion = "Baja" },
-                new EstadoSolicitud { Descripcion = "Rechazado" },                
+                new EstadoSolicitud { Descripcion = "No Activo" },
+                new EstadoSolicitud { Descripcion = "Observado" },                
             };
         }
 

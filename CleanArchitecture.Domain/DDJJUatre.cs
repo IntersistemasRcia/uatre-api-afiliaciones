@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Domain.Commom;
+using System.ComponentModel.DataAnnotations;
 
 namespace CleanArchitecture.Domain
 {
@@ -34,7 +35,10 @@ namespace CleanArchitecture.Domain
         public int Version { get; set; }
         public int VersionRelease { get; set; }
         public double Renatea { get; set; }
-        //public int LiquidacionId { get; set; }
-        public Empresas? Empresa { get; set; }
+        [StringLength(2)]
+        public string? CondicionRural { get; set; }
+        [StringLength(100)]
+        public string? Archivo { get; set; }
+        public int LiquidacionId { get; set; }
     }
 }

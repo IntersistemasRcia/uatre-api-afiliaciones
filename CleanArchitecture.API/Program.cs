@@ -5,8 +5,6 @@ using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using System.Configuration;
-using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +36,12 @@ builder.Services.AddCors(opt =>
 Log.Logger = new LoggerConfiguration().CreateBootstrapLogger();
 builder.Host.UseSerilog(((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)));
 
+// HttpClient Factory
+builder.Services.AddHttpClient("APIComunes", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["APIComunes"] ?? "");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -59,11 +63,14 @@ var contextOptions = new DbContextOptionsBuilder<AfiliacionesDbContext>()
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     .Options;
 
-using var context = new AfiliacionesDbContext(contextOptions);
+if (app.Environment.IsDevelopment()) 
 {
-    context.Database.EnsureCreated();
+    using var context = new AfiliacionesDbContext(contextOptions);
+    {
+        context.Database.EnsureCreated();
 
-    AfiliacionesDbContextSeed.SeedAsync(context).Wait();
+        AfiliacionesDbContextSeed.SeedAsync(context).Wait();
+    }
 }
 
 app.Run();

@@ -17,10 +17,10 @@ namespace CleanArchitecture.Infrastructure.Configurations
 
             //Particulares
             builder.ToTable(nameof(Empresas), t => t.ExcludeFromMigrations());
-            builder.Ignore(x => x.CreatedBy);
-            builder.Ignore(x => x.CreatedDate);
-            builder.Ignore(x => x.LastModifiedBy);
-            builder.Ignore(x => x.LastModifiedDate);
+            //builder.Ignore(x => x.CreatedBy);
+            //builder.Ignore(x => x.CreatedDate);
+            //builder.Ignore(x => x.LastModifiedBy);
+            //builder.Ignore(x => x.LastModifiedDate);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             //excluidas de migrations
-            modelBuilder.Entity<DDJJUatre>().ToTable(nameof(DDJJUatre), t => t.ExcludeFromMigrations());
+            //modelBuilder.Entity<DDJJUatre>().ToTable(nameof(DDJJUatre), t => t.ExcludeFromMigrations());
         }
 
         public DbSet<Afiliado>? Afiliados { get; set; }

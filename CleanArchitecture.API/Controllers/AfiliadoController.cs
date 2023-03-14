@@ -21,10 +21,10 @@ namespace CleanArchitecture.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = "GetAfiliadosAll")]
+        [HttpGet("GetAfiliadosWithSpec", Name = "GetAfiliadosAll")]
         //[Authorize]
         [ProducesResponseType(typeof(Pagination<AfiliadoVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Pagination<AfiliadoVm>>> GetAfiliadosAll([FromQuery] GetAfiliadoListQuery query)
+        public async Task<ActionResult<Pagination<AfiliadoVm>>> GetAfiliadosWithSpec([FromQuery] GetAfiliadoListQuery query)
         {
             //var query = new GetPadronListQuery(parameters);
             var padrones = await _mediator.Send(query);
@@ -32,7 +32,7 @@ namespace CleanArchitecture.API.Controllers
             return Ok(padrones);
         }
 
-        [HttpGet("GetAfiliado", Name = "GetAfiliado")]
+        [HttpGet("GetAfiliadoByCUIL", Name = "GetAfiliado")]
         //[Authorize]
         [ProducesResponseType(typeof(AfiliadoVm), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(AfiliadoVm), (int)HttpStatusCode.NotFound)]

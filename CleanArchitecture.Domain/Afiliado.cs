@@ -30,6 +30,8 @@ namespace CleanArchitecture.Domain
         public Actividad? Actividad { get; set; }
         public int EstadoSolicitudId { get; set; }
         public EstadoSolicitud? EstadoSolicitud { get; set; }
+        [StringLength(1000)]
+        public string? EstadoSolicitudObservaciones { get; set; }
         public int EstadoCivilId { get; set; }
         public EstadoCivil? EstadoCivil { get; set; }
         public int RefLocalidadId { get; set; }

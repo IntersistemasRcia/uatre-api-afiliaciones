@@ -1,10 +1,5 @@
 ﻿using CleanArchitecture.Application.Features.DDJJUatre.Queries.GetDDJJUatreByCUIL;
 using CleanArchitecture.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Specification.Implements
 {
@@ -13,12 +8,10 @@ namespace CleanArchitecture.Application.Specification.Implements
         public DDJJUatreSpecification(GetDDJJUatreByCUILListQuery pParams)
             : base(x => x.CUIL == pParams.CUIL)
         {
-            AgregarIncludes(r => r.Empresa!);
         }
 
         public DDJJUatreSpecification(int pId) : base(x => x.Id == pId)
         {
-            AgregarIncludes(r => r.Empresa!);
         }
     }
 }

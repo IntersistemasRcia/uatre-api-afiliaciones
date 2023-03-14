@@ -9,7 +9,11 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         private const int maxPageSize = 50;
         private int _pageSize = 50;
 
+
+        //public double? CUIT { get; set; }
+        //public string? Nombre { get; set; }
         public int? EstadoSolicitudId { get; set; }
+
         public string? Sort { get; set; }
         public int PageIndex
         {
