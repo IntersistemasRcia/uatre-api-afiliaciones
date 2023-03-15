@@ -25,9 +25,7 @@ namespace CleanArchitecture.Application.Specification
 
 
         public Expression<Func<T, object>> OrderBy { get; private set; }
-
-        public Expression<Func<T, object>> OrderByDesc { get; private set; }
-
+        public Expression<Func<T, object>> OrderByDesc { get; private set; }        
 
         protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
@@ -38,7 +36,6 @@ namespace CleanArchitecture.Application.Specification
         {
             OrderBy = orderByDescExpression;
         }
-
 
         //Implementación de paginación
         public int Take { get; private set; }
@@ -52,6 +49,13 @@ namespace CleanArchitecture.Application.Specification
             Take = pTake;
             Skip = pSkip;
             IsPagingEnabled = true;
+        }
+
+        //Implementacion Takerecords
+        public int? TakeRecords { get; private set; }
+        protected void ApplyTakeRecords(int takeRecords)
+        {
+            TakeRecords = takeRecords;
         }
     }
 }

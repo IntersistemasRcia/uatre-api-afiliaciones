@@ -10,18 +10,21 @@ namespace CleanArchitecture.Application.Specification.Implements
                 x.CUIL == pParams.CUIL
             )
         {
-            //Agrego tablas relacionadas
-            AgregarIncludes(a => a.EstadoSolicitud);
-            AgregarIncludes(a => a.Seccional);
-            AgregarIncludes(a => a.Sexo);
-            AgregarIncludes(a => a.Actividad);
-            AgregarIncludes(a => a.Puesto);
-            AgregarIncludes(a => a.RefLocalidad);
-            AgregarIncludes(a => a.RefLocalidad!.Provincia!);
-            AgregarIncludes(a => a.Empresa);
-            AgregarIncludes(a => a.Nacionalidad);
-            AgregarIncludes(a => a.EstadoCivil);
-            AgregarIncludes(a => a.TipoDocumento);
+            if (pParams.IncludeRelatedTables)
+            {
+                //Agrego tablas relacionadas
+                AgregarIncludes(a => a.EstadoSolicitud);
+                AgregarIncludes(a => a.Seccional);
+                AgregarIncludes(a => a.Sexo);
+                AgregarIncludes(a => a.Actividad);
+                AgregarIncludes(a => a.Puesto);
+                AgregarIncludes(a => a.RefLocalidad);
+                AgregarIncludes(a => a.RefLocalidad!.Provincia!);
+                AgregarIncludes(a => a.Empresa);
+                AgregarIncludes(a => a.Nacionalidad);
+                AgregarIncludes(a => a.EstadoCivil);
+                AgregarIncludes(a => a.TipoDocumento);
+            }            
         }
 
         public AfiliadoByCUILSpecification(int pId) : base(x => x.Id == pId)

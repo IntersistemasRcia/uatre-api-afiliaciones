@@ -20,7 +20,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
             this.context = context;
         }
 
-        public AfiliacionesDbContext StreamerDbContext => context;
+        public AfiliacionesDbContext AfiliacionesDbContext => context;
 
         public async Task<int> CommitAsync()
         {

@@ -31,8 +31,15 @@ namespace CleanArchitecture.Infrastructure.Specification
                 inputQuery = inputQuery.Skip(spec.Skip).Take(spec.Take);
             }
 
+            //Includes
             inputQuery = spec.Includes.Aggregate(inputQuery, (current, include) => current.Include(include));
 
+            //TakeRecords
+            if (spec.TakeRecords.HasValue)
+            {
+                inputQuery = inputQuery.Take(spec.TakeRecords ?? default(int));
+            }
+            
             return inputQuery;
         }
     }

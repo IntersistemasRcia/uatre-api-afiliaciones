@@ -5,6 +5,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByC
     public class GetAfiliadoByCUILQuery : IRequest<AfiliadoVm>
     {
         public Int64 CUIL { get; set; }
+        public bool IncludeRelatedTables { get; set; } = true;
         public GetAfiliadoByCUILQuery()
         {
 

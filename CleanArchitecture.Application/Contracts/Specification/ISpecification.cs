@@ -14,6 +14,9 @@ namespace CleanArchitecture.Application.Contracts.Specification
         Expression<Func<T, object>> OrderBy { get; }
         Expression<Func<T, object>> OrderByDesc { get; }
 
+        //Take
+        int? TakeRecords { get; }
+
         //Paginacion
         int Take { get; }
         int Skip { get; }

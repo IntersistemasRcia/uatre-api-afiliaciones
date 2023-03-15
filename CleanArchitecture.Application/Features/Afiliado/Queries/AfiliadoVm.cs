@@ -16,7 +16,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public int NacionalidadId { get; set; }
         public string? Nacionalidad { get; set; }
         public int EmpresaId { get; set; }
-        public double EmpresaCUIT { get; set; }
+        public double? EmpresaCUIT { get; set; }
         public string? Empresa { get; set; }
         public int ProvinciaId { get; set; }
         public string? Provincia { get; set; }

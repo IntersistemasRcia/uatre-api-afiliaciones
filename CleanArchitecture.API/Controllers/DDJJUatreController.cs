@@ -16,11 +16,11 @@ namespace CleanArchitecture.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetDDJJUatreByCUIL", Name = "GetDDJJUatreByCUIL")]
+        [HttpGet("GetDDJJUatreListBySpecs", Name = "GetDDJJUatreListBySpecs")]
         //[Authorize]
         [ProducesResponseType(typeof(IReadOnlyList<DDJJUatreVm>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(DDJJUatreVm), (int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<IReadOnlyCollection<DDJJUatreVm>>> GetDDJJUatreByCUIL([FromQuery] GetDDJJUatreByCUILListQuery query)
+        public async Task<ActionResult<IReadOnlyCollection<DDJJUatreVm>>> GetDDJJUatreListBySpecs([FromQuery] GetDDJJUatreListBySpecsQuery query)
         {
             var list = await _mediator.Send(query);
 

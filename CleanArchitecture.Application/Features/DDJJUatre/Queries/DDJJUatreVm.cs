@@ -39,5 +39,6 @@ namespace CleanArchitecture.Application.Features.DDJJUatre.Queries
         public string? Archivo { get; set; }
         public int LiquidacionId { get; set; }
         public string? Empresa { get; set; }
+        public string? AfiliadoNombre { get; set; }
     }
 }
