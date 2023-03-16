@@ -33,6 +33,8 @@ namespace CleanArchitecture.Application.Specification.Implements
             {
                 ApplyTakeRecords(query.TakeRecords ?? default(int));
             }            
+
+            ApplyPaging(query.PageSize * (query.PageIndex - 1), query.PageSize);
         }
 
         public DDJJUatreSpecification(int pId) : base(x => x.Id == pId)

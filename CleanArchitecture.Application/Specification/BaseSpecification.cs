@@ -34,7 +34,7 @@ namespace CleanArchitecture.Application.Specification
 
         protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression)
         {
-            OrderBy = orderByDescExpression;
+            OrderByDesc = orderByDescExpression;
         }
 
         //Implementación de paginación

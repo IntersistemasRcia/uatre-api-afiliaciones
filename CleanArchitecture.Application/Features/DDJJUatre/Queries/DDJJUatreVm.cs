@@ -4,8 +4,8 @@ namespace CleanArchitecture.Application.Features.DDJJUatre.Queries
 {
     public class DDJJUatreVm
     {
+        public int Id { get; set; }
         public double CUIT { get; set; }
-
         public double CUIL { get; set; }
         public int Periodo { get; set; }
         public double ObligacionNro { get; set; }
