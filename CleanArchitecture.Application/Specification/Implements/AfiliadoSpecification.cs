@@ -50,7 +50,7 @@ namespace CleanArchitecture.Application.Specification.Implements
                         break;
 
                     case "System.String":
-                        MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                        MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) })!;
                         var rightString = Expression.Constant(pParams.FilterValue, typeof(string));
                         //var bodyString = Expression.Equal(left, rightString);
                         var bodyString = Expression.Call(left, method!, rightString);
@@ -63,11 +63,7 @@ namespace CleanArchitecture.Application.Specification.Implements
                         if (!DateTime.TryParse(pParams.FilterValue, out date))
                         {
                             throw new BadRequestException($"El valor para el campo {propertyName} no es de tipo DateTime.");
-                        }
-                        if (int.TryParse(pParams.FilterValue, out value) == false)
-                        {
-                            throw new BadRequestException($"El tipo de dato para el campo {propertyName} no coincide.");
-                        }
+                        }                        
                         var rightDate = Expression.Constant(date, typeof(DateTime));
                         var bodyDate = Expression.Equal(left, rightDate);
 
@@ -75,7 +71,7 @@ namespace CleanArchitecture.Application.Specification.Implements
                         break;
 
                     default:
-                        break;
+                        throw new BadRequestException($"El tipo de dato para el campo {propertyName} no está mapeado.");
                 }                
             }
 

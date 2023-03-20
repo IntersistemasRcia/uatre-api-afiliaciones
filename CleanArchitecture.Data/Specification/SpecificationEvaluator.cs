@@ -14,12 +14,6 @@ namespace CleanArchitecture.Infrastructure.Specification
                 inputQuery = inputQuery.Where(spec.Criteria);
             }
 
-            ////Filtro generico
-            //if (spec.CriteriaGeneric != null)
-            //{
-            //    inputQuery = inputQuery.Where(spec.CriteriaGeneric);
-            //}
-
             //Ordenamiento
             if (spec.OrderBy != null)
             {
