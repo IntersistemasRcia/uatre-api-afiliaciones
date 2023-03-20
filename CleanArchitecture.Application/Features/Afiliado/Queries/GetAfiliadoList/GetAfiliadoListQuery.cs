@@ -12,7 +12,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
 
         //public double? CUIT { get; set; }
         //public string? Nombre { get; set; }
-        public int? EstadoSolicitudId { get; set; }
+        public string? FilterBy { get; set; }
+        public string? FilterValue { get; set; }
 
         public string? Sort { get; set; }
         public int PageIndex

@@ -1,20 +1,23 @@
 ﻿using CleanArchitecture.Application.Contracts.Specification;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace CleanArchitecture.Application.Specification
 {
     public class BaseSpecification<T> : ISpecification<T>
     {
-        /// <summary>
-        /// Implementación de la interfaz ISpecification
-        /// </summary>
-        //public BaseSpecification() { }
+        public BaseSpecification() { }
 
         public BaseSpecification(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
         }
-        public Expression<Func<T, bool>> Criteria { get; }
+
+        public Expression<Func<T, bool>> Criteria { get; private set; }
+        protected void SetCriteria(Expression<Func<T, bool>> criteria)
+        { 
+            Criteria = criteria; 
+        }
 
         public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
 
@@ -23,9 +26,9 @@ namespace CleanArchitecture.Application.Specification
             Includes.Add(includeExpression);
         }
 
-
         public Expression<Func<T, object>> OrderBy { get; private set; }
-        public Expression<Func<T, object>> OrderByDesc { get; private set; }        
+        public Expression<Func<T, object>> OrderByDesc { get; private set; }
+        public Expression<Func<T, object>> GroupBy { get; private set; }
 
         protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
@@ -35,6 +38,11 @@ namespace CleanArchitecture.Application.Specification
         protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression)
         {
             OrderByDesc = orderByDescExpression;
+        }
+
+        protected void ApplyGroupBy(Expression<Func<T, object>> groupByExpression)
+        {
+            GroupBy = groupByExpression;
         }
 
         //Implementación de paginación

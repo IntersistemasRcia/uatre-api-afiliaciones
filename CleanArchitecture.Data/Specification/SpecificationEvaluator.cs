@@ -14,6 +14,12 @@ namespace CleanArchitecture.Infrastructure.Specification
                 inputQuery = inputQuery.Where(spec.Criteria);
             }
 
+            ////Filtro generico
+            //if (spec.CriteriaGeneric != null)
+            //{
+            //    inputQuery = inputQuery.Where(spec.CriteriaGeneric);
+            //}
+
             //Ordenamiento
             if (spec.OrderBy != null)
             {
@@ -33,6 +39,12 @@ namespace CleanArchitecture.Infrastructure.Specification
 
             //Includes
             inputQuery = spec.Includes.Aggregate(inputQuery, (current, include) => current.Include(include));
+
+            //Group by
+            if (spec.GroupBy != null)
+            {
+                inputQuery = inputQuery.GroupBy(spec.GroupBy).SelectMany(x => x);
+            }
 
             //TakeRecords
             if (spec.TakeRecords.HasValue)

@@ -50,6 +50,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
             {
                 new Sexo { Codigo = "MAS", Descripcion = "Masculino" },
                 new Sexo { Codigo = "FEM", Descripcion = "Femenino" },
+                new Sexo { Codigo = "NB", Descripcion = "No Binario" },
             };
         }
 

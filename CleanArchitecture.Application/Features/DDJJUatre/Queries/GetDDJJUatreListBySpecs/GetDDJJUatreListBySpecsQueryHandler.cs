@@ -41,18 +41,19 @@ namespace CleanArchitecture.Application.Features.DDJJUatre.Queries.GetDDJJUatreB
                 //    .Select(x => x);
                 var totalRecords = await _unitOfWork.Repository<Domain.DDJJUatre>().CountAsync(new BaseSpecification<Domain.DDJJUatre>(spec.Criteria));
                 var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
-
+                
                 var data = _mapper.Map<List<DDJJUatreVm>>(list);
+
+                var client = _httpClientFactory.CreateClient("APIComunes");
                 foreach (var item in data)
                 {
-                    //Busco la empresa
-                    var client = _httpClientFactory.CreateClient("APIComunes");
+                    //Busco la empresa                    
                     var response = await client.GetAsync($"/api/Empresas/GetEmpresaSpecs?CUIT={item.CUIT}");
                     if (response.IsSuccessStatusCode)
                     {
                         string? jsonString = await response.Content.ReadAsStringAsync();
-                        var empresa = JsonSerializer.Deserialize<Empresas>(jsonString);
-                        item.Empresa = empresa?.RazonSocial ?? default(string);
+                        var empresa = JsonSerializer.Deserialize<EmpresaDTO>(jsonString);
+                        item.Empresa = empresa?.razonSocial ?? default(string);
                     }
                     else
                     {

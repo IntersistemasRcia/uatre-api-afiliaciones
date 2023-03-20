@@ -45,7 +45,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? AFIPApellido { get; set; }
         public string? AFIPRazonSocial { get; set; }
         public string? AFIPTipoDocumento { get; set; }
-        public int? AFIPNumeroDocumento { get; set; }
+        public Int64? AFIPNumeroDocumento { get; set; }
         public string? AFIPTipoPersona { get; set; }
         public string? AFIPTipoClave { get; set; }
         public string? AFIPEstadoClave { get; set; }

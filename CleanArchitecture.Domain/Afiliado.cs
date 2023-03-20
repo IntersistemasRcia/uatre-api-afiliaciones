@@ -57,7 +57,7 @@ namespace CleanArchitecture.Domain
         public string? AFIPRazonSocial { get; set; }
         [StringLength(255)]
         public string? AFIPTipoDocumento { get; set; }
-        public int? AFIPNumeroDocumento { get; set; }
+        public Int64? AFIPNumeroDocumento { get; set; }
         [StringLength(255)]
         public string? AFIPTipoPersona { get; set; }
         [StringLength(255)]
