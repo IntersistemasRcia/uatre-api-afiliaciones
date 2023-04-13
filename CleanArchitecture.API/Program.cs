@@ -50,7 +50,8 @@ app.UseAuthorization();
 app.UseRouting();
 app.UseCors("CorsPolicy");
 app.UseMiniProfiler();
-app.MapHealthChecks("/healthcheck");
+app.MapHealthChecks("/hc");
+app.UseSerilogRequestLogging();
 
 app.MapControllers();
 

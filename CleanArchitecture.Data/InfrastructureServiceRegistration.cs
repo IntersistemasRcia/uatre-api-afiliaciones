@@ -36,7 +36,7 @@ namespace CleanArchitecture.Infrastructure
             //Mini profiler
             services.AddMiniProfiler(options =>
             {
-                options.RouteBasePath = "/profiler";
+                options.RouteBasePath = "/apiafiliacionesprofiler";
                 options.ColorScheme = StackExchange.Profiling.ColorScheme.Dark;
                 options.Storage = new SqlServerStorage(configuration.GetConnectionString("MiniProfilerConnection"));
             }).AddEntityFramework();
