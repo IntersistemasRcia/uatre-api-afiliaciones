@@ -18,8 +18,8 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Afiliaciones", Version = "v1" });
 });
 
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddApplicationServices();
 
 builder.Services.AddCors(opt =>
 {
@@ -36,12 +36,6 @@ builder.Services.AddCors(opt =>
 Log.Logger = new LoggerConfiguration().CreateBootstrapLogger();
 builder.Host.UseSerilog(((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)));
 
-// HttpClient Factory
-builder.Services.AddHttpClient("APIComunes", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["APIComunes"] ?? "");
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,6 +49,8 @@ app.UseAuthorization();
 
 app.UseRouting();
 app.UseCors("CorsPolicy");
+app.UseMiniProfiler();
+app.MapHealthChecks("/healthcheck");
 
 app.MapControllers();
 

@@ -13,11 +13,14 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (!query.CodigoPostal.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.CodPostal == query.CodigoPostal).Any())
             )
         {
-
+            AgregarIncludes(x => x.SeccionalContacto);
+            AgregarIncludes(x => x.SeccionalAutoridad);
         }
 
         public SeccionalSpecification(int pId) : base(x => x.Id == pId)
         {
+            AgregarIncludes(x => x.SeccionalContacto);
+            AgregarIncludes(x => x.SeccionalAutoridad);
         }
     }
 }

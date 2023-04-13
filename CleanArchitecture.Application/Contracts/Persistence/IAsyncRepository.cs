@@ -1,9 +1,5 @@
 ﻿using CleanArchitecture.Application.Contracts.Specification;
-using CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado;
 using CleanArchitecture.Domain.Commom;
-using Microsoft.AspNetCore.JsonPatch;
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
 
 namespace CleanArchitecture.Application.Contracts.Persistence
 {

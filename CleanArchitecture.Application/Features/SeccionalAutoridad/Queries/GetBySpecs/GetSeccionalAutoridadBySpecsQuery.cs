@@ -1,0 +1,12 @@
+﻿using MediatR;
+
+namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Queries.GetBySpecs
+{
+    public class GetSeccionalAutoridadBySpecsQuery : IRequest<List<SeccionalAutoridadResponse>>
+    {
+        public int? SeccionalId { get; set; }
+        public GetSeccionalAutoridadBySpecsQuery()
+        {
+        }
+    }
+}

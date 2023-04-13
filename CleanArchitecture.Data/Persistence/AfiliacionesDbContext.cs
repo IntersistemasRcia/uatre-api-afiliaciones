@@ -39,6 +39,13 @@ namespace CleanArchitecture.Infrastructure.Persistence
 
             //excluidas de migrations
             //modelBuilder.Entity<DDJJUatre>().ToTable(nameof(DDJJUatre), t => t.ExcludeFromMigrations());
+
+
+            //No dejar borrar registros padres con hijos
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
 
         public DbSet<Afiliado>? Afiliados { get; set; }
@@ -55,5 +62,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public DbSet<Empresas>? Empresas { get; set; }
         public DbSet<TipoDocumento>? TiposDocumentos { get; set; }
         public DbSet<RefLocalidad>? RefLocalidades { get; set; }
+        public DbSet<SeccionalContacto>? SeccionalContactos { get; set; }
+        public DbSet<SeccionalAutoridad>? SeccionalAutoridades { get; set; }
     }
 }

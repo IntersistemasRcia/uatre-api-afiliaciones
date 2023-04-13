@@ -273,7 +273,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         column: x => x.ProvinciaId,
                         principalTable: "Provincias",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

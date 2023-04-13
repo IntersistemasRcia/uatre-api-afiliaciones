@@ -27,7 +27,6 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
             set => _pageSize = value >= maxPageSize ? maxPageSize : value;
         }
 
-        public string? Search { get; set; }
         public GetAfiliadoListQuery()
         {
             //Id = pId ?? throw new ArgumentNullException(nameof(pId));

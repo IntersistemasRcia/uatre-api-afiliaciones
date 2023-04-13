@@ -10,6 +10,8 @@ using CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList
 using CleanArchitecture.Application.Features.Puesto.Queries;
 using CleanArchitecture.Application.Features.RefLocalidad.Queries;
 using CleanArchitecture.Application.Features.Seccional.Queries;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
+using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
 using CleanArchitecture.Application.Features.TipoDocumento.Queries;
 using CleanArchitecture.Domain;
@@ -48,6 +50,10 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<RefLocalidad, RefLocalidadVm>()
                 .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Provincia!.Nombre));
             CreateMap<EstadoSolicitud, EstadoSolicitudVm>();
+            CreateMap<SeccionalAutoridad, SeccionalAutoridadResponse>()
+                .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
+            CreateMap<SeccionalContacto, SeccionalContactoResponse>()
+                .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
 
             CreateMap<CreateAfiliadoCommand, Afiliado>();
         }

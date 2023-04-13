@@ -15,10 +15,9 @@ namespace CleanArchitecture.Application.Specification.Implements
             if (!string.IsNullOrEmpty(pParams.FilterValue) && !string.IsNullOrEmpty(pParams.FilterBy))
             {
                 var specificationType = GetType().BaseType;
-                var targetType = specificationType.GenericTypeArguments[0];
+                var targetType = specificationType!.GenericTypeArguments[0];
                 var propertyName = pParams.FilterBy;
-                var property = targetType.GetRuntimeProperty(propertyName) ??
-                               throw new BadRequestException($"El campo {propertyName} no existe.");
+                var property = targetType.GetRuntimeProperty(propertyName) ?? throw new BadRequestException($"El campo {propertyName} no existe.");
 
                 var lambdaParamX = Expression.Parameter(targetType, "x");
                 var left = Expression.Property(lambdaParamX, pParams.FilterBy);

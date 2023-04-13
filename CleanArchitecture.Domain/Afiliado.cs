@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Domain.Commom;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CleanArchitecture.Domain
 {
@@ -103,5 +104,7 @@ namespace CleanArchitecture.Domain
         public string? AFIPDomicilioDatoAdicional { get; set; }
         [StringLength(255)]
         public string? AFIPDomicilioTipoDatoAdicional { get; set; }
+        [NotMapped]
+        public int SeccionalAutoridadId { get; set; }
     }
 }

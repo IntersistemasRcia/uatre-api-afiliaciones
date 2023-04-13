@@ -17,7 +17,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -873,7 +873,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Codigo")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -896,9 +895,16 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Descripcion")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Domicilio")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Estado")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("LastModifiedBy")
                         .HasMaxLength(50)
@@ -907,9 +913,128 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("RefDelegacionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RefLocalidadesId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Seccionales");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.SeccionalAutoridad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AfiliadoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedObs")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime?>("FechaVigenciaDesde")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaVigenciaHasta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Observaciones")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RefCargosId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeccionalId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeccionalId");
+
+                    b.ToTable("SeccionalAutoridades");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.SeccionalContacto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedObs")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Detalle")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SeccionalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Tipo")
+                        .HasMaxLength(1)
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeccionalId");
+
+                    b.ToTable("SeccionalContactos");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SeccionalLocalidad", b =>
@@ -1054,61 +1179,61 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasOne("CleanArchitecture.Domain.Actividad", "Actividad")
                         .WithMany()
                         .HasForeignKey("ActividadId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.Empresas", "Empresa")
                         .WithMany()
                         .HasForeignKey("EmpresaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.EstadoCivil", "EstadoCivil")
                         .WithMany()
                         .HasForeignKey("EstadoCivilId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.EstadoSolicitud", "EstadoSolicitud")
                         .WithMany()
                         .HasForeignKey("EstadoSolicitudId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.Nacionalidad", "Nacionalidad")
                         .WithMany()
                         .HasForeignKey("NacionalidadId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.Puesto", "Puesto")
                         .WithMany()
                         .HasForeignKey("PuestoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.RefLocalidad", "RefLocalidad")
                         .WithMany()
                         .HasForeignKey("RefLocalidadId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.Seccional", "Seccional")
                         .WithMany()
                         .HasForeignKey("SeccionalId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.Sexo", "Sexo")
                         .WithMany()
                         .HasForeignKey("SexoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.TipoDocumento", "TipoDocumento")
                         .WithMany()
                         .HasForeignKey("TipoDocumentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Actividad");
@@ -1136,7 +1261,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     b.HasOne("CleanArchitecture.Domain.RefLocalidad", "RefLocalidad")
                         .WithMany()
-                        .HasForeignKey("RefLocalidadId");
+                        .HasForeignKey("RefLocalidadId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("RefLocalidad");
                 });
@@ -1146,10 +1272,32 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasOne("CleanArchitecture.Domain.Provincia", "Provincia")
                         .WithMany()
                         .HasForeignKey("ProvinciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Provincia");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.SeccionalAutoridad", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Seccional", "Seccional")
+                        .WithMany("SeccionalAutoridad")
+                        .HasForeignKey("SeccionalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Seccional");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.SeccionalContacto", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Seccional", "Seccional")
+                        .WithMany("SeccionalContacto")
+                        .HasForeignKey("SeccionalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Seccional");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SeccionalLocalidad", b =>
@@ -1157,13 +1305,13 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasOne("CleanArchitecture.Domain.RefLocalidad", "RefLocalidad")
                         .WithMany("SeccionalLocalidad")
                         .HasForeignKey("RefLocalidadId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CleanArchitecture.Domain.Seccional", "Seccional")
                         .WithMany("SeccionalLocalidad")
                         .HasForeignKey("SeccionalId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("RefLocalidad");
@@ -1178,6 +1326,10 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitecture.Domain.Seccional", b =>
                 {
+                    b.Navigation("SeccionalAutoridad");
+
+                    b.Navigation("SeccionalContacto");
+
                     b.Navigation("SeccionalLocalidad");
                 });
 #pragma warning restore 612, 618

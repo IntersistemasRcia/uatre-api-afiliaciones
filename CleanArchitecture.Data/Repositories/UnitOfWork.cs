@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Domain.Commom;
 using CleanArchitecture.Infrastructure.Persistence;
+using Microsoft.Extensions.Configuration;
 using System.Collections;
 
 namespace CleanArchitecture.Infrastructure.Repositories
@@ -9,15 +10,21 @@ namespace CleanArchitecture.Infrastructure.Repositories
     {
         private readonly AfiliacionesDbContext context;
         private Hashtable repositories;
+        private IConfiguration configuration;
+        private IHttpClientFactory httpClientFactory;
 
         private IAfiliadoRepository afiliadoRepository;
+        private ISeccionalAutoridadRepository seccionalAutoridadRepository;
 
         //Repositorios especiales no se inyectan, de definen x propiedades
-        public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context);
+        public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context, httpClientFactory, configuration);
+        public ISeccionalAutoridadRepository SeccionalAutoridadRepository => seccionalAutoridadRepository ??= new SeccionalAutoridadRepository(configuration, httpClientFactory);
 
-        public UnitOfWork(AfiliacionesDbContext context)
+        public UnitOfWork(AfiliacionesDbContext context, IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
             this.context = context;
+            this.configuration = configuration;
+            this.httpClientFactory = httpClientFactory;
         }
 
         public AfiliacionesDbContext AfiliacionesDbContext => context;

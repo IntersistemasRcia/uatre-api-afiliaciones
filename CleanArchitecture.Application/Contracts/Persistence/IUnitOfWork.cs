@@ -6,6 +6,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
     {
         //Repositorios especiales no se inyectan, de definen x propiedades
         IAfiliadoRepository AfiliadoRepository { get; }
+        ISeccionalAutoridadRepository SeccionalAutoridadRepository { get; }
 
         IAsyncRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel;
         Task<int> CommitAsync();
