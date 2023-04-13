@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Application.Behaviours;
+﻿//using CleanArchitecture.Application.Behaviours;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -16,9 +16,9 @@ namespace CleanArchitecture.Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            //Behaviours
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            ////Behaviours
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             // HttpClient Factory
             services.AddHttpClient("APIComunes", client =>
