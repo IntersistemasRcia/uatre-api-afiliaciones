@@ -34,7 +34,7 @@ namespace CleanArchitecture.API.Middleware
 
                 switch (ex)
                 {
-                    case NotFoundException notFountException:
+                    case NotFoundException notFoundException:
                         statusCode = (int)HttpStatusCode.NotFound;
 
                         break;

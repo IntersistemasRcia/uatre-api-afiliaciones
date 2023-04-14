@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Application.Specification.Implements;
 using MediatR;
 
@@ -19,6 +20,11 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByC
         {
             var spec = new AfiliadoByCUILSpecification(request);
             var afiliado = await _unitOfWork.Repository<Domain.Afiliado>().GetOneWithSpecsAsync(spec);
+            
+            if (afiliado == null) 
+            {
+                throw new NotFoundException(typeof(Domain.Afiliado).Name, request.CUIL);
+            }
 
             return _mapper.Map<Domain.Afiliado, AfiliadoVm>(afiliado);
         }
