@@ -2,7 +2,6 @@
 using CleanArchitecture.Application.Models;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Domain;
-using CleanArchitecture.Infrastructure.Migrations;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -56,7 +55,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
                 if (response.IsSuccessStatusCode)
                 {
                     string? jsonString = await response.Content.ReadAsStringAsync();
-                    var refCargos = JsonSerializer.Deserialize<IReadOnlyCollection<RefCargo>>(jsonString);
+                    var refCargos = JsonSerializer.Deserialize<IReadOnlyCollection<APIRefCargoResponse>>(jsonString);
                     foreach (var item in seccionalAutoridades)
                     {
                         item.RefCargosDescripcion = refCargos!.FirstOrDefault(x => x.id == item.RefCargosId)!.cargo;
@@ -88,7 +87,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
             if (response.IsSuccessStatusCode)
             {
                 string? jsonString = await response.Content.ReadAsStringAsync();
-                var refCargo = JsonSerializer.Deserialize<RefCargo>(jsonString);
+                var refCargo = JsonSerializer.Deserialize<APIRefCargoResponse>(jsonString);
                 seccionalAutoridad.RefCargosDescripcion = refCargo!.cargo;
             }
 

@@ -18,8 +18,7 @@ namespace CleanArchitecture.Domain
         public int NacionalidadId { get; set; }
         public Nacionalidad? Nacionalidad { get; set; }
         [StringLength(255)]
-        public int EmpresaId { get; set; }
-        public Empresas? Empresa { get; set; }
+        public int EmpresaId { get; set; }        
         public int SeccionalId { get; set; }
         public Seccional? Seccional { get; set; }
         public int SexoId { get; set; }
@@ -106,5 +105,9 @@ namespace CleanArchitecture.Domain
         public string? AFIPDomicilioTipoDatoAdicional { get; set; }
         [NotMapped]
         public int SeccionalAutoridadId { get; set; }
+        [NotMapped]
+        public string? EmpresaDescripcion { get; set; }
+        [NotMapped]
+        public double? EmpresaCUIT { get; set; }
     }
 }

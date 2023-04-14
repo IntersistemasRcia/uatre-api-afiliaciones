@@ -188,8 +188,13 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Codigo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Codigo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Domicilio = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Observaciones = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    Estado = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    RefDelegacionId = table.Column<int>(type: "int", nullable: false),
+                    RefLocalidadesId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -277,6 +282,65 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SeccionalAutoridades",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SeccionalId = table.Column<int>(type: "int", nullable: false),
+                    AfiliadoId = table.Column<int>(type: "int", nullable: false),
+                    RefCargosId = table.Column<int>(type: "int", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaVigenciaDesde = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FechaVigenciaHasta = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    DeletedObs = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SeccionalAutoridades", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SeccionalAutoridades_Seccionales_SeccionalId",
+                        column: x => x.SeccionalId,
+                        principalTable: "Seccionales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SeccionalContactos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SeccionalId = table.Column<int>(type: "int", nullable: false),
+                    Tipo = table.Column<int>(type: "int", maxLength: 1, nullable: false),
+                    Detalle = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    DeletedObs = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SeccionalContactos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SeccionalContactos_Seccionales_SeccionalId",
+                        column: x => x.SeccionalId,
+                        principalTable: "Seccionales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Afiliados",
                 columns: table => new
                 {
@@ -310,7 +374,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     AFIPApellido = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPRazonSocial = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPTipoDocumento = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    AFIPNumeroDocumento = table.Column<int>(type: "int", nullable: true),
+                    AFIPNumeroDocumento = table.Column<long>(type: "bigint", nullable: true),
                     AFIPTipoPersona = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPTipoClave = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     AFIPEstadoClave = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
@@ -354,61 +418,55 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         column: x => x.ActividadId,
                         principalTable: "Actividades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Afiliados_Empresas_EmpresaId",
-                        column: x => x.EmpresaId,
-                        principalTable: "Empresas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Afiliados_EstadosCiviles_EstadoCivilId",
                         column: x => x.EstadoCivilId,
                         principalTable: "EstadosCiviles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Afiliados_EstadosSolicitudes_EstadoSolicitudId",
                         column: x => x.EstadoSolicitudId,
                         principalTable: "EstadosSolicitudes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Afiliados_Nacionalidades_NacionalidadId",
                         column: x => x.NacionalidadId,
                         principalTable: "Nacionalidades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Afiliados_Puestos_PuestoId",
                         column: x => x.PuestoId,
                         principalTable: "Puestos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Afiliados_RefLocalidades_RefLocalidadId",
                         column: x => x.RefLocalidadId,
                         principalTable: "RefLocalidades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Afiliados_Seccionales_SeccionalId",
                         column: x => x.SeccionalId,
                         principalTable: "Seccionales",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Afiliados_Sexos_SexoId",
                         column: x => x.SexoId,
                         principalTable: "Sexos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Afiliados_TiposDocumentos_TipoDocumentoId",
                         column: x => x.TipoDocumentoId,
                         principalTable: "TiposDocumentos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -435,13 +493,13 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         column: x => x.RefLocalidadId,
                         principalTable: "RefLocalidades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SeccionalesLocalidades_Seccionales_SeccionalId",
                         column: x => x.SeccionalId,
                         principalTable: "Seccionales",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -454,11 +512,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 table: "Afiliados",
                 column: "CUIL",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Afiliados_EmpresaId",
-                table: "Afiliados",
-                column: "EmpresaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Afiliados_EstadoCivilId",
@@ -516,6 +569,16 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 column: "ProvinciaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SeccionalAutoridades_SeccionalId",
+                table: "SeccionalAutoridades",
+                column: "SeccionalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SeccionalContactos_SeccionalId",
+                table: "SeccionalContactos",
+                column: "SeccionalId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SeccionalesLocalidades_RefLocalidadId",
                 table: "SeccionalesLocalidades",
                 column: "RefLocalidadId");
@@ -533,6 +596,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "DDJJUatre");
+
+            migrationBuilder.DropTable(
+                name: "SeccionalAutoridades");
+
+            migrationBuilder.DropTable(
+                name: "SeccionalContactos");
 
             migrationBuilder.DropTable(
                 name: "SeccionalesLocalidades");

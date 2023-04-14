@@ -20,7 +20,7 @@ namespace CleanArchitecture.Application.Specification.Implements
                 AgregarIncludes(a => a.Puesto);
                 AgregarIncludes(a => a.RefLocalidad);
                 AgregarIncludes(a => a.RefLocalidad!.Provincia!);
-                AgregarIncludes(a => a.Empresa);
+                //AgregarIncludes(a => a.Empresa);
                 AgregarIncludes(a => a.Nacionalidad);
                 AgregarIncludes(a => a.EstadoCivil);
                 AgregarIncludes(a => a.TipoDocumento);
@@ -37,7 +37,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             AgregarIncludes(a => a.Puesto);
             AgregarIncludes(a => a.RefLocalidad);
             AgregarIncludes(a => a.RefLocalidad.Provincia);
-            AgregarIncludes(a => a.Empresa);
+            //AgregarIncludes(a => a.Empresa);
             AgregarIncludes(a => a.Nacionalidad);
             AgregarIncludes(a => a.EstadoCivil);
             AgregarIncludes(a => a.TipoDocumento);

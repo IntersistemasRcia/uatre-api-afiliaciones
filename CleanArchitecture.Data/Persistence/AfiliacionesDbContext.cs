@@ -58,8 +58,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public DbSet<Nacionalidad>? Nacionalidades { get; set; }
         public DbSet<SeccionalLocalidad>? SeccionalesLocalidades { get; set; }
         public DbSet<DDJJUatre>? DDJJUatre { get; set; }
-        public DbSet<EstadoCivil>? EstadosCiviles { get; set; }
-        public DbSet<Empresas>? Empresas { get; set; }
+        public DbSet<EstadoCivil>? EstadosCiviles { get; set; }        
         public DbSet<TipoDocumento>? TiposDocumentos { get; set; }
         public DbSet<RefLocalidad>? RefLocalidades { get; set; }
         public DbSet<SeccionalContacto>? SeccionalContactos { get; set; }

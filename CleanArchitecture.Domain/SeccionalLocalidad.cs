@@ -6,7 +6,7 @@ namespace CleanArchitecture.Domain
     {
         public SeccionalLocalidad()
         {
-            RefLocalidad = new RefLocalidad();
+            //RefLocalidad = new RefLocalidad();
             Seccional = new Seccional();
         }
         public int RefLocalidadId { get; set; }

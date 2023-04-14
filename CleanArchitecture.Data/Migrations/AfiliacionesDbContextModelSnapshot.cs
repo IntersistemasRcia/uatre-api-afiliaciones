@@ -17,7 +17,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -302,8 +302,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("CUIL")
                         .IsUnique();
 
-                    b.HasIndex("EmpresaId");
-
                     b.HasIndex("EstadoCivilId");
 
                     b.HasIndex("EstadoSolicitudId");
@@ -464,128 +462,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("CUIT", "Periodo");
 
                     b.ToTable("DDJJUatre");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.Empresas", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ActividadPrincipalDescripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ActividadPrincipalId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ActividadPrincipalPeriodo")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("CUIT")
-                        .HasColumnType("float");
-
-                    b.Property<byte?>("CierreMes")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("ClaveEstado")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("ClaveInactivaAsociada")
-                        .HasColumnType("float");
-
-                    b.Property<string>("ClaveTipo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ContratoSocialFecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("DomicilioCPA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DomicilioCalle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DomicilioCodigoPostal")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DomicilioDatoAdicional")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DomicilioDatoAdicionalTipo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DomicilioDpto")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DomicilioEstado")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DomicilioManzana")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DomicilioNumero")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DomicilioPiso")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DomicilioProvinciasId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DomicilioSector")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DomicilioTipo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DomicilioTorre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RazonSocial")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RefLocalidadId")
-                        .HasColumnType("int")
-                        .HasColumnName("DomicilioLocalidadesId");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RefLocalidadId");
-
-                    b.ToTable("Empresas", null, t => t.ExcludeFromMigrations());
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.EstadoCivil", b =>
@@ -1182,12 +1058,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CleanArchitecture.Domain.Empresas", "Empresa")
-                        .WithMany()
-                        .HasForeignKey("EmpresaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CleanArchitecture.Domain.EstadoCivil", "EstadoCivil")
                         .WithMany()
                         .HasForeignKey("EstadoCivilId")
@@ -1238,8 +1108,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Navigation("Actividad");
 
-                    b.Navigation("Empresa");
-
                     b.Navigation("EstadoCivil");
 
                     b.Navigation("EstadoSolicitud");
@@ -1255,16 +1123,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("Sexo");
 
                     b.Navigation("TipoDocumento");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.Empresas", b =>
-                {
-                    b.HasOne("CleanArchitecture.Domain.RefLocalidad", "RefLocalidad")
-                        .WithMany()
-                        .HasForeignKey("RefLocalidadId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("RefLocalidad");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.RefLocalidad", b =>

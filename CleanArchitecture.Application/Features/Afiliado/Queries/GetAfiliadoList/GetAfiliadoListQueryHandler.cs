@@ -23,10 +23,10 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         public async Task<Pagination<AfiliadoVm>> Handle(GetAfiliadoListQuery request, CancellationToken cancellationToken)
         {            
             var spec = new AfiliadoSpecification(request);
-            var padronList = await _unitOfWork.AfiliadoRepository.GetAllWithSpecsAsync(spec);
+            var padronList = await _unitOfWork.Repository<Domain.Afiliado>().GetAllWithSpecsAsync(spec);
             var padronListConMarcaAutoridad = await _unitOfWork.AfiliadoRepository.VerificarAutoridadSeccional(padronList);
 
-            var totalRecords = await _unitOfWork.AfiliadoRepository.CountAsync(new BaseSpecification<Domain.Afiliado>(spec.Criteria));
+            var totalRecords = await _unitOfWork.Repository<Domain.Afiliado>().CountAsync(new BaseSpecification<Domain.Afiliado>(spec.Criteria));
             var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
 
             var data = _mapper.Map<List<AfiliadoVm>>(padronListConMarcaAutoridad);
