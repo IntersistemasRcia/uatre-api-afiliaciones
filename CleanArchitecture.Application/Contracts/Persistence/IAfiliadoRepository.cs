@@ -9,7 +9,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
     {
         Task<int> PatchEntityAsync(int id, JsonPatchDocument model);
         Task<IReadOnlyCollection<Afiliado>> VerificarAutoridadSeccional(IReadOnlyCollection<Afiliado> afiliados);
-        Task<Afiliado> BuscarAfiliadoPorCUIL(double cuil);
+        Task<Afiliado> BuscarAfiliadoPorSpecs(ISpecification<Afiliado> spec);
         Task<IReadOnlyCollection<Afiliado>> ListarAfiliados(ISpecification<Afiliado> spec, bool disableTracking = true);
     }
 }

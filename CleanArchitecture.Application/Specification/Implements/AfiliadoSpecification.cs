@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Application.Exceptions;
+﻿using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
 using Newtonsoft.Json.Linq;

@@ -1,5 +1,7 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Contracts.Specification;
+using CleanArchitecture.Common.Exceptions;
+using CleanArchitecture.Domain;
 using CleanArchitecture.Domain.Commom;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Specification;
@@ -46,7 +48,13 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         public virtual async Task<T> GetByIdAsync(int id)
         {
-            return await context.Set<T>().FindAsync(id);
+            var entity = await context.Set<T>().FindAsync(id);
+            if (entity == null)
+            {
+                throw new NotFoundException(typeof(T).Name, id);
+            }
+
+            return entity;
         }
 
         public async Task<T> UpdateAsync(T Entity)
@@ -86,7 +94,14 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         public async Task<T> GetOneWithSpecsAsync(ISpecification<T> spec)
         {
-            return await ApplySpecification(spec).FirstOrDefaultAsync();
+            var entity = await ApplySpecification(spec).FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                throw new NotFoundException(typeof(Afiliado).Name, "No se encontró la Entidad con el Specification indicado");
+            }
+
+            return entity;
         }
     }
 }

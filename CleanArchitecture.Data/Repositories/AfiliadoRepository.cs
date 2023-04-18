@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Contracts.Specification;
 using CleanArchitecture.Application.Models.APIComunes;
+using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Specification;
@@ -65,9 +66,24 @@ namespace CleanArchitecture.Infrastructure.Repositories
             return afiliados;
         }
 
-        public async Task<Afiliado> BuscarAfiliadoPorCUIL(double cuil)
+        public async Task<Afiliado> BuscarAfiliadoPorSpecs(ISpecification<Afiliado> spec)
         {
-            throw new NotImplementedException();
+            Afiliado? afiliado = await ApplySpecification(spec).FirstOrDefaultAsync();
+
+            if (afiliado == null)
+            {
+                throw new NotFoundException(typeof(Afiliado).Name, "No se encontró Afiliado con el Specification indicado");
+            }
+
+            var httpClient = _httpClientFactory.CreateClient("APIComun");
+            var response = await httpClient.GetAsync($"/api/Empresas/GetById?Id={afiliado.EmpresaId}");
+            string? jsonString = await response.Content.ReadAsStringAsync();
+            var empresa = JsonSerializer.Deserialize<APIEmpresaResponse>(jsonString);
+
+            afiliado.EmpresaDescripcion = empresa?.razonSocial ?? "";
+            afiliado.EmpresaCUIT = empresa?.cuit ?? 0;
+
+            return afiliado;
         }
 
         public async Task<IReadOnlyCollection<Afiliado>> ListarAfiliados(ISpecification<Afiliado> spec, bool disableTracking = true)
@@ -80,7 +96,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
             if (list.Any())
             {
-                var httpClient = _httpClientFactory.CreateClient("APIComun");
+                var httpClient = _httpClientFactory.CreateClient("APIComunes");
                 //httpClient.DefaultRequestHeaders.Add("ApiKey", "dad03323-09ae-41f2-8d2f-15f4ddfcecb7");
 
                 foreach (var afiliado in list)

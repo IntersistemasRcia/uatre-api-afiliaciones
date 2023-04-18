@@ -1,5 +1,5 @@
 ﻿using CleanArchitecture.API.Errors;
-using CleanArchitecture.Application.Exceptions;
+using CleanArchitecture.Common.Exceptions;
 using Newtonsoft.Json;
 using System.Net;
 
