@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Contracts.Specification;
+using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 
 namespace CleanArchitecture.Infrastructure.Repositories
@@ -96,20 +98,29 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
             if (list.Any())
             {
+                var idsEmpresa = list.GroupBy(x => x.EmpresaId).Select(x => x.Key).ToList();
                 var httpClient = _httpClientFactory.CreateClient("APIComunes");
+                var empresas = new List<APIEmpresaResponse>();
                 //httpClient.DefaultRequestHeaders.Add("ApiKey", "dad03323-09ae-41f2-8d2f-15f4ddfcecb7");
 
-                foreach (var afiliado in list)
+                StringBuilder builder = new StringBuilder();
+                foreach (var id in idsEmpresa)
                 {
-                    var response = await httpClient.GetAsync($"/api/Empresas/GetById?Id={afiliado.EmpresaId}");
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string? jsonString = await response.Content.ReadAsStringAsync();
-                        var empresa = JsonSerializer.Deserialize<APIEmpresaResponse>(jsonString);
+                    builder.Append(builder.Length == 0 ? $"Id={id}" : $"&Id={id}");
+                }
 
-                        afiliado.EmpresaDescripcion = empresa?.razonSocial ?? "";
-                        afiliado.EmpresaCUIT = empresa?.cuit ?? 0;
-                    }
+                var response = await httpClient.GetAsync($"/api/Empresas/GetByIds?{builder}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string? jsonString = await response.Content.ReadAsStringAsync();
+                    var apiEmpresas = JsonSerializer.Deserialize<IEnumerable<APIEmpresaResponse>>(jsonString);
+                    empresas.AddRange(apiEmpresas);
+                }
+                    
+                foreach (var afiliado in list)
+                {                    
+                    afiliado.EmpresaDescripcion = empresas?.Where(x => x.id == afiliado.EmpresaId).Select(x => x.razonSocial).FirstOrDefault() ?? "";
+                    afiliado.EmpresaCUIT = empresas?.Where(x => x.id == afiliado.EmpresaId).Select(x => x.cuit).FirstOrDefault() ?? 0;
                 }
             }            
 
