@@ -55,19 +55,4 @@ app.UseSerilogRequestLogging();
 
 app.MapControllers();
 
-//Seed
-var contextOptions = new DbContextOptionsBuilder<AfiliacionesDbContext>()
-    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-    .Options;
-
-if (app.Environment.IsDevelopment()) 
-{
-    using var context = new AfiliacionesDbContext(contextOptions);
-    {
-        context.Database.EnsureCreated();
-
-        AfiliacionesDbContextSeed.SeedAsync(context).Wait();
-    }
-}
-
 app.Run();
