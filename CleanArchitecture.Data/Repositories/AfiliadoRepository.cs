@@ -1,6 +1,5 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Contracts.Specification;
-using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
@@ -10,11 +9,13 @@ using Dapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Polly;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using static Dapper.SqlMapper;
 
 namespace CleanArchitecture.Infrastructure.Repositories
 {
@@ -31,22 +32,23 @@ namespace CleanArchitecture.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<int> PatchEntityAsync(int id, JsonPatchDocument model)
+        public async Task<int> ResolverSolicitudAsync(int id, JsonPatchDocument model)
         {            
             var afiliado = await _context.Set<Afiliado>().FindAsync(id);
 
-            switch (afiliado!.EstadoSolicitudId)
+            //switch (afiliado!.EstadoSolicitudId)
+            switch (model.Operations[0].value) //Estado enviado
             {
-                case 1:
+                case 2: //Activo
                     var nroAfiliado = await _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefaultAsync();
                     model.Operations[1].value = DateTime.Now.Date;
                     model.Operations[2].value = nroAfiliado + 1;
                     break;
 
-                case 2:
-                    model.Operations[1].value = DateTime.Now.Date;
-                    model.Operations[2].value = afiliado.NroAfiliado;
-                    break;
+                case 3: //No activo
+                    model.Operations[1].value = null;
+                    model.Operations[2].value = 0;
+                    break;                
 
                 default:
                     break;
@@ -77,7 +79,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
                 throw new NotFoundException(typeof(Afiliado).Name, "No se encontró Afiliado con el Specification indicado");
             }
 
-            var httpClient = _httpClientFactory.CreateClient("APIComun");
+            var httpClient = _httpClientFactory.CreateClient("APIComunes");
             var response = await httpClient.GetAsync($"/api/Empresas/GetById?Id={afiliado.EmpresaId}");
             string? jsonString = await response.Content.ReadAsStringAsync();
             var empresa = JsonSerializer.Deserialize<APIEmpresaResponse>(jsonString);
@@ -130,6 +132,26 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private IQueryable<Afiliado> ApplySpecification(ISpecification<Afiliado> spec)
         {
             return SpecificationEvaluator<Afiliado>.GetQuery(_context.Set<Afiliado>().AsQueryable(), spec);
+        }
+
+        public async Task CrearAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)
+        {
+            //Creo la empresa primero
+            var httpClient = _httpClientFactory.CreateClient("APIComunes");
+
+            var json = JsonSerializer.Serialize(empresa);
+            var content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync("/api/Empresas", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new BadRequestException("Error creando Empresa");
+            }
+
+            string? jsonString = await response.Content.ReadAsStringAsync();
+            int empresaId = JsonSerializer.Deserialize<int>(jsonString);
+
+            afiliado.EmpresaId = empresaId;
+            _context.Set<Afiliado>().Add(afiliado);
         }
     }
 }

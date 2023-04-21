@@ -22,7 +22,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado
         }
         public async Task<int> Handle(PatchAfiliadoCommand request, CancellationToken cancellationToken)
         {
-            var result = await unitOfWork.AfiliadoRepository.PatchEntityAsync(request.Id, request.model!);
+            var result = await unitOfWork.AfiliadoRepository.ResolverSolicitudAsync(request.Id, request.model!);
 
             await unitOfWork.CommitAsync();
 

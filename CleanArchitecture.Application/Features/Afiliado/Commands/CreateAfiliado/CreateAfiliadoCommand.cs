@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using CleanArchitecture.Application.Models;
+using CleanArchitecture.Application.Models.APIComunes;
+using MediatR;
 
 namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado
 {
@@ -11,7 +13,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         public DateTime? FechaIngreso { get; set; }
         public DateTime? FechaEgreso { get; set; }
         public int NacionalidadId { get; set; }
-        public int EmpresaId { get; set; }
+        public double EmpresaCuit { get; set; }
         public int SeccionalId { get; set; }
         public int SexoId { get; set; }
         public int TipoDocumentoId { get; set; }
@@ -59,5 +61,6 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         public string? AFIPDomicilioEstado { get; set; }
         public string? AFIPDomicilioDatoAdicional { get; set; }
         public string? AFIPDomicilioTipoDatoAdicional { get; set; }
+        public APIEmpresaCreate? Empresa { get; set; }
     }
 }

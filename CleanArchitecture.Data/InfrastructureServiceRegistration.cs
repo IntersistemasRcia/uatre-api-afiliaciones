@@ -48,7 +48,7 @@ namespace CleanArchitecture.Infrastructure
             
                 using var context = new AfiliacionesDbContext(contextOptions);
                 {
-                    context.Database.EnsureCreated();
+                    //context.Database.EnsureCreated();
 
                     AfiliacionesDbContextSeed.SeedAsync(context).Wait();
                 }

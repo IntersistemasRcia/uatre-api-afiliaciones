@@ -21,7 +21,7 @@ namespace CleanArchitecture.Application.Features.SeccionalContacto.Command.Creat
         {
             var entidad = mapper.Map<Domain.SeccionalContacto>(request);
 
-            unitOfWork.Repository<Domain.SeccionalContacto>().AddEntity(entidad);
+            await unitOfWork.Repository<Domain.SeccionalContacto>().AddAsync(entidad);
             var result = await unitOfWork.CommitAsync();
 
             if (result <= 0)

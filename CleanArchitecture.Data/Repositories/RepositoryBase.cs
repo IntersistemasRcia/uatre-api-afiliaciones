@@ -22,7 +22,16 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public async Task<T> AddAsync(T Entity)
         {
             context.Set<T>().Add(Entity);
-            await context.SaveChangesAsync();
+            //await context.SaveChangesAsync();
+
+            return Entity;
+        }
+
+        public async Task<T> UpdateAsync(T Entity)
+        {
+            context.Set<T>().Attach(Entity);
+            context.Entry(Entity).State = EntityState.Modified;
+            //await context.SaveChangesAsync();
 
             return Entity;
         }
@@ -30,7 +39,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public async Task DeleteAsync(T Entity)
         {
             context.Set<T>().Remove(Entity);
-            await context.SaveChangesAsync();
+            //await context.SaveChangesAsync();
         }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
@@ -55,32 +64,23 @@ namespace CleanArchitecture.Infrastructure.Repositories
             }
 
             return entity;
-        }
-
-        public async Task<T> UpdateAsync(T Entity)
-        {
-            context.Set<T>().Attach(Entity);
-            context.Entry(Entity).State = EntityState.Modified;
-            await context.SaveChangesAsync();
-
-            return Entity;
-        }
-
-        public void AddEntity(T Entity)
-        {
-            context.Set<T>().Add(Entity);
-        }
-
-        public void DeleteEntity(T Entity)
-        {
-            context.Set<T>().Attach(Entity);
-            context.Entry(Entity).State = EntityState.Modified;
-        }
-
-        public void UpdateEntity(T Entity)
-        {
-            context.Set<T>().Remove(Entity);
         }        
+
+        //public void AddEntity(T Entity)
+        //{
+        //    context.Set<T>().Add(Entity);
+        //}
+
+        //public void DeleteEntity(T Entity)
+        //{
+        //    context.Set<T>().Attach(Entity);
+        //    context.Entry(Entity).State = EntityState.Modified;
+        //}
+
+        //public void UpdateEntity(T Entity)
+        //{
+        //    context.Set<T>().Remove(Entity);
+        //}        
 
         public async Task<int> CountAsync(ISpecification<T> spec)
         {

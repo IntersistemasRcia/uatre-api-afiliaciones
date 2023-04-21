@@ -22,7 +22,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         {
             var entidad = mapper.Map<Domain.Afiliado>(request);
 
-            unitOfWork.Repository<Domain.Afiliado>().AddEntity(entidad);
+            await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);
             var result = await unitOfWork.CommitAsync();
 
             if (result <= 0)

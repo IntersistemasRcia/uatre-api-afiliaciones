@@ -21,7 +21,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Command.Crea
         {
             var entidad = mapper.Map<Domain.SeccionalAutoridad>(request);
 
-            unitOfWork.Repository<Domain.SeccionalAutoridad>().AddEntity(entidad);
+            await unitOfWork.Repository<Domain.SeccionalAutoridad>().AddAsync(entidad);
             var result = await unitOfWork.CommitAsync();
 
             if (result <= 0)
