@@ -31,6 +31,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? Actividad { get; set; }
         public int EstadoSolicitudId { get; set; }
         public string? EstadoSolicitud { get; set; }        
+        public string? EstadoSolicitudObservaciones { get; set; }
         public int TipoDocumentoId { get; set; }
         public string? TipoDocumento { get; set; }
         public int EstadoCivilId { get; set; }

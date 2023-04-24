@@ -53,11 +53,11 @@ namespace CleanArchitecture.Application.Features.DDJJUatre.Queries.GetDDJJUatreB
                     {
                         string? jsonString = await response.Content.ReadAsStringAsync();
                         var empresa = JsonSerializer.Deserialize<EmpresaDTO>(jsonString);
-                        item.Empresa = empresa?.razonSocial ?? default(string);
+                        item.Empresa = empresa?.razonSocial ?? "Empresa no existente";
                     }
                     else
                     {
-                        item.Empresa = "";
+                        item.Empresa = "Empresa ";
                     }
                 }
 
@@ -88,7 +88,7 @@ namespace CleanArchitecture.Application.Features.DDJJUatre.Queries.GetDDJJUatreB
                 {
                     var specAfiliado = new AfiliadoByCUILSpecification(new GetAfiliadoByCUILQuery() { CUIL = Convert.ToInt64(item.CUIL), IncludeRelatedTables = false });
                     var afiliado = await _unitOfWork.Repository<Domain.Afiliado>().GetAllWithSpecsAsync(specAfiliado);
-                    item.AfiliadoNombre = afiliado.Count > 0 ? afiliado[0].Nombre : "";
+                    item.AfiliadoNombre = afiliado.Count > 0 ? afiliado[0].Nombre : "Afiliado no existente";
                 }
 
                 return new Pagination<DDJJUatreVm>()
