@@ -2,7 +2,6 @@
 using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
 using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
-using CleanArchitecture.Application.Features.DDJJUatre.Queries;
 using CleanArchitecture.Application.Features.EstadoCivil.Queries;
 using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidadesList;
@@ -45,7 +44,6 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<Provincia, ProvinciaVm>();
             CreateMap<Nacionalidad, NacionalidadVm>();
             CreateMap<EstadoCivil, EstadoCivilVm>();
-            CreateMap<DDJJUatre, DDJJUatreVm>();
             CreateMap<TipoDocumento, TipoDocumentoVm>();
             CreateMap<RefLocalidad, RefLocalidadVm>()
                 .ForMember(a => a.Provincia, x => x.MapFrom(b => b.Provincia!.Nombre));
