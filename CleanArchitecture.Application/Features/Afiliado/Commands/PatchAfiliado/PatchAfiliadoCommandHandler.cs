@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using MediatR;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
 namespace CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado
 {
@@ -22,17 +19,17 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado
         }
         public async Task<int> Handle(PatchAfiliadoCommand request, CancellationToken cancellationToken)
         {
-            var result = await unitOfWork.AfiliadoRepository.ResolverSolicitudAsync(request.Id, request.model!);
+            await unitOfWork.AfiliadoRepository.ResolverSolicitudAsync(request.Id, request.model!);
 
-            await unitOfWork.CommitAsync();
-
-            if (result <= 0)
+            try
+            {
+                return await unitOfWork.CommitAsync();
+            }
+            catch (Exception)
             {
                 logger.LogError("No se actualizó el registro de Afiliado");
-                throw new Exception("No se pudo actualizar Afiliado");
-            }
-
-            return result;
+                throw new Exception("No se pudo resolver solicitud Afiliado");
+            }              
         }
     }
 }

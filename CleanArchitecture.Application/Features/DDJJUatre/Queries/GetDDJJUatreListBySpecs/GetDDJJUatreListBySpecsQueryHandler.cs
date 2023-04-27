@@ -29,16 +29,7 @@ namespace CleanArchitecture.Application.Features.DDJJUatre.Queries.GetDDJJUatreB
             {
                 var spec = new DDJJUatreSpecification(request);
                 var list = await _unitOfWork.Repository<Domain.DDJJUatre>().GetAllWithSpecsAsync(spec);
-                //var finalList = list.OrderByDescending(x => x.Periodo).Take(12).ToList();
-                //var cuites = (
-                //    from c in finalList
-                //    select new
-                //    {
-                //        CUIT = c.CUIT
-                //    })
-                //    .AsEnumerable()
-                //    .GroupBy(x => x.CUIT)
-                //    .Select(x => x);
+                
                 var totalRecords = await _unitOfWork.Repository<Domain.DDJJUatre>().CountAsync(new BaseSpecification<Domain.DDJJUatre>(spec.Criteria));
                 var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
                 
@@ -92,7 +83,7 @@ namespace CleanArchitecture.Application.Features.DDJJUatre.Queries.GetDDJJUatreB
                 }
 
                 return new Pagination<DDJJUatreVm>()
-                {
+                {   
                     Index = request.GetPageIndex(),
                     Size = request.GetPageSize(),
                     Pages = totalPages,

@@ -23,15 +23,17 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
             var entidad = mapper.Map<Domain.Afiliado>(request);
 
             await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);
-            var result = await unitOfWork.CommitAsync();
 
-            if (result <= 0)
+            try
+            {
+                var result = await unitOfWork.CommitAsync();
+                return entidad.Id;
+            }
+            catch (Exception ex)
             {
                 logger.LogError("No se insertó el registro de Afiliado");
-                throw new Exception("No se pudo insertar Afiliado");
-            }
-
-            return entidad.Id;
+                throw new Exception("No se pudo insertar Afiliado. " + ex.InnerException);
+            }            
         }
     }
 }

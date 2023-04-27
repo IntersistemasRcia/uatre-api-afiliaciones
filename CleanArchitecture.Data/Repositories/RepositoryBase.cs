@@ -98,7 +98,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
             if (entity == null)
             {
-                throw new NotFoundException(typeof(Afiliado).Name, "No se encontró la Entidad con el Specification indicado");
+                throw new NotFoundException(typeof(T).Name, "No se encontró la Entidad con el Specification indicado");
             }
 
             return entity;

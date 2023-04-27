@@ -32,19 +32,27 @@ namespace CleanArchitecture.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<int> ResolverSolicitudAsync(int id, JsonPatchDocument model)
+        public async Task ResolverSolicitudAsync(int id, JsonPatchDocument model)
         {            
             var afiliado = await _context.Set<Afiliado>().FindAsync(id);
 
+            if (afiliado == null)
+            {
+                throw new Exception($"No existe el Afiliado {id}");
+            }
+
             //switch (afiliado!.EstadoSolicitudId)
-            switch (model.Operations[0].value) //Estado enviado
+            switch ((Int64)model.Operations[0].value) //Estado enviado
             {
                 case 2: //Activo
-                    var nroAfiliado = await _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefaultAsync();
-                    model.Operations[1].value = DateTime.Now.Date;
-                    model.Operations[2].value = nroAfiliado + 1;
-                    break;
-
+                    lock (_context.Afiliados!)
+                    {
+                        var nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault();
+                        model.Operations[1].value = DateTime.Now.Date;
+                        model.Operations[2].value = nroAfiliado + 1;
+                        break;
+                    }
+                    
                 case 3: //No activo
                     model.Operations[1].value = null;
                     model.Operations[2].value = 0;
@@ -55,7 +63,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
             }
 
             model.ApplyTo(afiliado);
-            return await _context.SaveChangesAsync();
+            //return await _context.SaveChangesAsync();
         }
 
         public async Task<IReadOnlyCollection<Afiliado>> VerificarAutoridadSeccional(IReadOnlyCollection<Afiliado> afiliados)
