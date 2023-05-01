@@ -28,8 +28,8 @@ namespace CleanArchitecture.Application
                 client.BaseAddress = new Uri(configuration["APIComunes"] ?? throw new ArgumentNullException(nameof(client)));
             })
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-                .AddPolicyHandler(GetRetryPolicy())
-                .AddPolicyHandler(GetCircuitBreakerPolicy());
+                .AddPolicyHandler(GetRetryPolicy());
+                //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
             //Cors
 
@@ -41,14 +41,19 @@ namespace CleanArchitecture.Application
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-                .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                (exception, timeSpan, context) =>
+                {
+                    Console.WriteLine("retry" + exception);
+                }
+                );
         }
 
         static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
         {
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
-                .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
+                .CircuitBreakerAsync(2, TimeSpan.FromSeconds(10));
         }
     }
 }
