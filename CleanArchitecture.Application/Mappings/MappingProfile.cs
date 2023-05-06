@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
 using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
+using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.EstadoCivil.Queries;
 using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
@@ -54,6 +55,7 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
 
             CreateMap<CreateAfiliadoCommand, Afiliado>();
+            CreateMap<UpdateAfiliadoCommand, Afiliado>();
         }
     }
 }

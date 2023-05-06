@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado
+namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolicitudAfiliado
 {
     public class PatchAfiliadoCommand : IRequest<int>
     {

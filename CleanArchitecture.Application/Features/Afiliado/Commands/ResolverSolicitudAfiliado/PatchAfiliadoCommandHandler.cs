@@ -3,7 +3,7 @@ using CleanArchitecture.Application.Contracts.Persistence;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado
+namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolicitudAfiliado
 {
     public class PatchAfiliadoCommandHandler : IRequestHandler<PatchAfiliadoCommand, int>
     {

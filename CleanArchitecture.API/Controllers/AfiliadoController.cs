@@ -6,11 +6,9 @@ using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByCUIL;
-using CleanArchitecture.Application.Features.Afiliado.Commands.PatchAfiliado;
-using CleanArchitecture.Domain;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolicitudAfiliado;
 using CleanArchitecture.Common.Exceptions;
+using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliado;
 
 namespace CleanArchitecture.API.Controllers
 {
@@ -67,6 +65,16 @@ namespace CleanArchitecture.API.Controllers
                 throw new BadRequestException("Error");
             }
 
+            return await _mediator.Send(command);
+        }
+
+        [HttpPut(Name = "UpdateAfiliado")]
+        //[Authorize(Roles = "Administrator")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<ActionResult<int>> UpdateAfiliado([FromBody] UpdateAfiliadoCommand command)
+        {
             return await _mediator.Send(command);
         }
     }
