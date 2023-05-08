@@ -14,64 +14,87 @@ namespace CleanArchitecture.Application.Specification.Implements
         {
             if (!string.IsNullOrEmpty(pParams.FilterValue) && !string.IsNullOrEmpty(pParams.FilterBy))
             {
-                var specificationType = GetType().BaseType;
-                var targetType = specificationType!.GenericTypeArguments[0];
-                var propertyName = pParams.FilterBy;
-                var property = targetType.GetRuntimeProperty(propertyName) ?? throw new BadRequestException($"El campo {propertyName} no existe.");
-
-                var lambdaParamX = Expression.Parameter(targetType, "x");
-                var left = Expression.Property(lambdaParamX, pParams.FilterBy);
-
-                switch (property.PropertyType.ToString())
+                if (pParams.FilterBy == "FechaIngreso")
                 {
-                    case "System.Int32":
-                        int value = 0;
-                        if (int.TryParse(pParams.FilterValue, out value) == false)
-                        {
-                            throw new BadRequestException($"El tipo de dato para el campo {propertyName} no coincide.");
-                        }
-                        var rightInt32 = Expression.Constant(value, typeof(int));
-                        var bodyInt32 = Expression.Equal(left, rightInt32);
+                    DateTime date = new DateTime();
+                    if (!DateTime.TryParse(pParams.FilterValue, out date))
+                    {
+                        throw new BadRequestException($"El valor para el campo {pParams.FilterBy} no es de tipo DateTime.");
+                    }
+                    SetCriteria(x => x.FechaIngreso == date);
+                }
+                else if (pParams.FilterBy == "Seccional.Descripcion")
+                {
+                    SetCriteria(x => x.Seccional!.Descripcion!.Contains(pParams.FilterValue));
+                }
+                //else if (pParams.FilterBy == "Empresa.Descripcion")
+                //{
+                //    SetCriteria(x => x.EmpresaDescripcion!.Contains(pParams.FilterValue));
+                //}
+                else
+                {
+                    var specificationType = GetType().BaseType;
+                    var targetType = specificationType!.GenericTypeArguments[0];
+                    var propertyName = pParams.FilterBy;
+                    var property = targetType.GetRuntimeProperty(propertyName) ?? throw new BadRequestException($"El campo {propertyName} no existe.");
 
-                        SetCriteria(Expression.Lambda<Func<Afiliado, bool>>(bodyInt32, lambdaParamX));
-                        break;
+                    var lambdaParamX = Expression.Parameter(targetType, "x");
+                    var left = Expression.Property(lambdaParamX, pParams.FilterBy);
 
-                    case "System.Int64":
-                        Int64 valueInt64 = 0;
-                        if (!Int64.TryParse(pParams.FilterValue, out valueInt64))
-                        {
-                            throw new BadRequestException($"El tipo de dato para el campo {propertyName} no coincide.");
-                        }
-                        var rightInt64 = Expression.Constant(valueInt64, typeof(Int64));
-                        var bodyInt64 = Expression.Equal(left, rightInt64);
+                    switch (property.PropertyType.ToString())
+                    {
+                        case "System.Int32":
+                            int value = 0;
+                            if (int.TryParse(pParams.FilterValue, out value) == false)
+                            {
+                                throw new BadRequestException($"El tipo de dato para el campo {propertyName} no coincide.");
+                            }
+                            var rightInt32 = Expression.Constant(value, typeof(int));
+                            var bodyInt32 = Expression.Equal(left, rightInt32);
 
-                        SetCriteria(Expression.Lambda<Func<Afiliado, bool>>(bodyInt64, lambdaParamX));
-                        break;
+                            SetCriteria(Expression.Lambda<Func<Afiliado, bool>>(bodyInt32, lambdaParamX));
+                            break;
 
-                    case "System.String":
-                        MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) })!;
-                        var rightString = Expression.Constant(pParams.FilterValue, typeof(string));
-                        //var bodyString = Expression.Equal(left, rightString);
-                        var bodyString = Expression.Call(left, method!, rightString);
+                        case "System.Int64":
+                            Int64 valueInt64 = 0;
+                            if (!Int64.TryParse(pParams.FilterValue, out valueInt64))
+                            {
+                                throw new BadRequestException($"El tipo de dato para el campo {propertyName} no coincide.");
+                            }
+                            var rightInt64 = Expression.Constant(valueInt64, typeof(Int64));
+                            var bodyInt64 = Expression.Equal(left, rightInt64);
 
-                        SetCriteria(Expression.Lambda<Func<Afiliado, bool>>(bodyString, lambdaParamX));
-                        break;
+                            SetCriteria(Expression.Lambda<Func<Afiliado, bool>>(bodyInt64, lambdaParamX));
+                            break;
 
-                    case "System.DateTime":
-                        DateTime date = new DateTime();
-                        if (!DateTime.TryParse(pParams.FilterValue, out date))
-                        {
-                            throw new BadRequestException($"El valor para el campo {propertyName} no es de tipo DateTime.");
-                        }                        
-                        var rightDate = Expression.Constant(date, typeof(DateTime));
-                        var bodyDate = Expression.Equal(left, rightDate);
+                        case "System.String":
+                            MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) })!;
+                            var rightString = Expression.Constant(pParams.FilterValue, typeof(string));
+                            //var bodyString = Expression.Equal(left, rightString);
+                            var bodyString = Expression.Call(left, method!, rightString);
 
-                        SetCriteria(Expression.Lambda<Func<Afiliado, bool>>(bodyDate, lambdaParamX));
-                        break;
+                            SetCriteria(Expression.Lambda<Func<Afiliado, bool>>(bodyString, lambdaParamX));
+                            break;
 
-                    default:
-                        throw new BadRequestException($"El tipo de dato para el campo {propertyName} no está mapeado.");
-                }                
+                        case "System.Nullable`1[System.DateTime]":
+                            DateTime date = new DateTime();
+                            if (!DateTime.TryParse(pParams.FilterValue, out date))
+                            {
+                                throw new BadRequestException($"El valor para el campo {propertyName} no es de tipo DateTime.");
+                            }
+
+                            DateTime? dateParsed = date;
+                            var rightDate = Expression.Constant(dateParsed, typeof(DateTime));
+                            var bodyDate = Expression.Equal(left, rightDate);
+
+                            SetCriteria(Expression.Lambda<Func<Afiliado, bool>>(bodyDate, lambdaParamX));
+                            break;
+
+                        default:
+                            throw new BadRequestException($"El tipo de dato para el campo {propertyName} no está mapeado.");
+                    }
+                }
+                             
             }
 
             //Agrego tablas relacionadas
