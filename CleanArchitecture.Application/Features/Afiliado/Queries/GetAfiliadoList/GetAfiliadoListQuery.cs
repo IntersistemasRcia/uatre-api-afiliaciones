@@ -10,10 +10,18 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         private int _pageSize = 50;
 
 
-        //public double? CUIT { get; set; }
-        //public string? Nombre { get; set; }
-        public string? FilterBy { get; set; }
-        public string? FilterValue { get; set; }
+        public long? CUIL { get; set; }
+        public Int64? Documento { get; set; }
+        public string? Nombre { get; set; }
+        //public double? CUITEmpresa { get; set; }
+        public string? Seccional { get; set; }
+        public DateTime? FechaIngreso { get; set; }
+        public DateTime? FechaEgreso { get; set; }
+        public int? EstadoSolicitudId { get; set; }
+        public int? EmpresaId { get; set; }
+
+        //public string? FilterBy { get; set; }
+        //public string? FilterValue { get; set; }
 
         public string? Sort { get; set; }
         public int PageIndex

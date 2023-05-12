@@ -29,8 +29,23 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
             var totalRecords = await _unitOfWork.Repository<Domain.Afiliado>().CountAsync(new BaseSpecification<Domain.Afiliado>(spec.Criteria));
             var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
 
-            var data = _mapper.Map<List<AfiliadoVm>>(padronListConMarcaAutoridad);
+            //Ordenamiento
+            //const string descendingSuffix = "Desc";
+            //var fields = request?.Sort?.Split(",");
+            //if (fields != null)
+            //{
+            //    foreach (var field in fields)
+            //    {
+            //        if (field[0] != null)
+            //        {
+            //            padronListConMarcaAutoridad.OrderBy(x => field);
+            //        }
+                    
 
+            //    }
+            //}
+    
+            var data = _mapper.Map<List<AfiliadoVm>>(padronListConMarcaAutoridad);
 
             return new Pagination<AfiliadoVm>()
             {
