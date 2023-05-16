@@ -12,6 +12,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
 
         public long? CUIL { get; set; }
         public Int64? Documento { get; set; }
+        public int? NroAfiliado { get; set; }
         public string? Nombre { get; set; }
         //public double? CUITEmpresa { get; set; }
         public string? Seccional { get; set; }

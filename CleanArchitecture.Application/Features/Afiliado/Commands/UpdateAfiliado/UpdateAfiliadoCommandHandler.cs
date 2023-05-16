@@ -23,9 +23,9 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliad
         {
             var entityToUpdate = await unitOfWork.Repository<Domain.Afiliado>().GetByIdAsync(request.Id);            
 
-            entityToUpdate =  (Domain.Afiliado)mapper.Map(request, entityToUpdate, typeof(UpdateAfiliadoCommand), typeof(Domain.Afiliado));
+            entityToUpdate = (Domain.Afiliado)mapper.Map(request, entityToUpdate, typeof(UpdateAfiliadoCommand), typeof(Domain.Afiliado));
 
-            await unitOfWork.Repository<Domain.Afiliado>().UpdateAsync(entityToUpdate);
+            await unitOfWork.AfiliadoRepository.ModificarAfiliado(entityToUpdate, request.Empresa!);
 
             try
             {

@@ -144,6 +144,18 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         public async Task CrearAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)
         {
+            afiliado.EmpresaId = await BuscarEmpresa(empresa);
+            _context.Set<Afiliado>().Add(afiliado);
+        }
+
+        public async Task ModificarAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)
+        {
+            afiliado.EmpresaId = await BuscarEmpresa(empresa);
+            _context.Set<Afiliado>().Update(afiliado);
+        }
+
+        private async Task<int> BuscarEmpresa(APIEmpresaCreate empresa)
+        {
             //Creo la empresa primero
             var httpClient = _httpClientFactory.CreateClient("APIComunes");
 
@@ -156,10 +168,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
             }
 
             string? jsonString = await response.Content.ReadAsStringAsync();
-            int empresaId = JsonSerializer.Deserialize<int>(jsonString);
-
-            afiliado.EmpresaId = empresaId;
-            _context.Set<Afiliado>().Add(afiliado);
+            return JsonSerializer.Deserialize<int>(jsonString);
         }
     }
 }
