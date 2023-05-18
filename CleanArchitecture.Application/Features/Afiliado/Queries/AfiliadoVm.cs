@@ -24,6 +24,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? Localidad { get; set; }
         public int SeccionalId { get; set; }
         public string? Seccional { get; set; }
+        public int RefDelegacionId { get; set; }
+        public string? RefDelegacionDescripcion { get; set; }
         public int SexoId { get; set; }
         public string? Sexo { get; set; }
         public long Documento { get; set; }

@@ -108,6 +108,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
             if (list.Any())
             {
+                //Empresa
                 var idsEmpresa = list.GroupBy(x => x.EmpresaId).Select(x => x.Key).ToList();
                 var httpClient = _httpClientFactory.CreateClient("APIComunes");
                 var empresas = new List<APIEmpresaResponse>();
@@ -126,11 +127,25 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     var apiEmpresas = JsonSerializer.Deserialize<IEnumerable<APIEmpresaResponse>>(jsonString);
                     empresas.AddRange(apiEmpresas);
                 }
-                    
+
+                //RefDelegacion
+                var httpClientRefDelegacion = _httpClientFactory.CreateClient("APIComunes");
+                var refDelegaciones = new List<APIRefDelegacionResponse>();
+                //httpClient.DefaultRequestHeaders.Add("ApiKey", "dad03323-09ae-41f2-8d2f-15f4ddfcecb7");                
+
+                IReadOnlyCollection<APIRefDelegacionResponse>? apiRefDelegaciones = null;
+                var refDelegacionesResponse = await httpClientRefDelegacion.GetAsync($"/api/RefDelegacion/GetAll");
+                if (refDelegacionesResponse.IsSuccessStatusCode)
+                {
+                    string? jsonString = await refDelegacionesResponse.Content.ReadAsStringAsync();
+                    apiRefDelegaciones = JsonSerializer.Deserialize<IReadOnlyCollection<APIRefDelegacionResponse>>(jsonString);
+                }
+
                 foreach (var afiliado in list)
                 {                    
                     afiliado.EmpresaDescripcion = empresas?.Where(x => x.id == afiliado.EmpresaId).Select(x => x.razonSocial).FirstOrDefault() ?? "";
                     afiliado.EmpresaCUIT = empresas?.Where(x => x.id == afiliado.EmpresaId).Select(x => x.cuit).FirstOrDefault() ?? 0;
+                    afiliado.Seccional!.RefDelegacionDescripcion = apiRefDelegaciones?.Where(x => x.id == afiliado.Seccional.RefDelegacionId).Select(x => x.nombre).FirstOrDefault() ?? "";
                 }
             }            
 
