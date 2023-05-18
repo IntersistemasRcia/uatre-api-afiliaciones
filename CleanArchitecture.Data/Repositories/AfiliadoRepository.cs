@@ -24,12 +24,14 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private IDbConnection _db;
         private IHttpClientFactory _httpClientFactory;
         private AfiliacionesDbContext _context;
+        private readonly IRefRepository _refRepository;
 
-        public AfiliadoRepository(AfiliacionesDbContext context, IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public AfiliadoRepository(AfiliacionesDbContext context, IHttpClientFactory httpClientFactory, IConfiguration configuration, IRefRepository refRepository)
         {
             _httpClientFactory = httpClientFactory;
             _db = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
             _context = context;
+            _refRepository = refRepository;
         }
 
         public async Task ResolverSolicitudAsync(int id, JsonPatchDocument model)
@@ -87,13 +89,17 @@ namespace CleanArchitecture.Infrastructure.Repositories
                 throw new NotFoundException(typeof(Afiliado).Name, "No se encontró Afiliado con el Specification indicado");
             }
 
-            var httpClient = _httpClientFactory.CreateClient("APIComunes");
-            var response = await httpClient.GetAsync($"/api/Empresas/GetById?Id={afiliado.EmpresaId}");
-            string? jsonString = await response.Content.ReadAsStringAsync();
-            var empresa = JsonSerializer.Deserialize<APIEmpresaResponse>(jsonString);
+            //var httpClient = _httpClientFactory.CreateClient("APIComunes");
+            //var response = await httpClient.GetAsync($"/api/Empresas/GetById?Id={afiliado.EmpresaId}");
+            //string? jsonString = await response.Content.ReadAsStringAsync();
+            //var empresa = JsonSerializer.Deserialize<APIEmpresaResponse>(jsonString);
 
-            afiliado.EmpresaDescripcion = empresa?.razonSocial ?? "";
-            afiliado.EmpresaCUIT = empresa?.cuit ?? 0;
+            var empresa = await _refRepository.GetEmpresaById(afiliado.EmpresaId);
+            var refDelegacion = await _refRepository.GetDelegacionById(afiliado.Seccional!.RefDelegacionId);
+
+            afiliado.EmpresaDescripcion = empresa?.RazonSocial ?? "";
+            afiliado.EmpresaCUIT = empresa?.CUIT ?? 0;
+            afiliado.Seccional!.RefDelegacionDescripcion = refDelegacion?.Nombre ?? "";
 
             return afiliado;
         }
@@ -109,43 +115,46 @@ namespace CleanArchitecture.Infrastructure.Repositories
             if (list.Any())
             {
                 //Empresa
-                var idsEmpresa = list.GroupBy(x => x.EmpresaId).Select(x => x.Key).ToList();
-                var httpClient = _httpClientFactory.CreateClient("APIComunes");
-                var empresas = new List<APIEmpresaResponse>();
-                //httpClient.DefaultRequestHeaders.Add("ApiKey", "dad03323-09ae-41f2-8d2f-15f4ddfcecb7");
+                //var idsEmpresa = list.GroupBy(x => x.EmpresaId).Select(x => x.Key).ToList();
+                //var httpClient = _httpClientFactory.CreateClient("APIComunes");
+                //var empresas = new List<APIEmpresaResponse>();
+                ////httpClient.DefaultRequestHeaders.Add("ApiKey", "dad03323-09ae-41f2-8d2f-15f4ddfcecb7");
 
-                StringBuilder builder = new StringBuilder();
-                foreach (var id in idsEmpresa)
-                {
-                    builder.Append(builder.Length == 0 ? $"Id={id}" : $"&Id={id}");
-                }
+                //StringBuilder builder = new StringBuilder();
+                //foreach (var id in idsEmpresa)
+                //{
+                //    builder.Append(builder.Length == 0 ? $"Id={id}" : $"&Id={id}");
+                //}
 
-                var response = await httpClient.GetAsync($"/api/Empresas/GetByIds?{builder}");
-                if (response.IsSuccessStatusCode)
-                {
-                    string? jsonString = await response.Content.ReadAsStringAsync();
-                    var apiEmpresas = JsonSerializer.Deserialize<IEnumerable<APIEmpresaResponse>>(jsonString);
-                    empresas.AddRange(apiEmpresas);
-                }
+                //var response = await httpClient.GetAsync($"/api/Empresas/GetByIds?{builder}");
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    string? jsonString = await response.Content.ReadAsStringAsync();
+                //    var apiEmpresas = JsonSerializer.Deserialize<IEnumerable<APIEmpresaResponse>>(jsonString);
+                //    empresas.AddRange(apiEmpresas);
+                //}
 
-                //RefDelegacion
-                var httpClientRefDelegacion = _httpClientFactory.CreateClient("APIComunes");
-                var refDelegaciones = new List<APIRefDelegacionResponse>();
-                //httpClient.DefaultRequestHeaders.Add("ApiKey", "dad03323-09ae-41f2-8d2f-15f4ddfcecb7");                
+                ////RefDelegacion
+                //var httpClientRefDelegacion = _httpClientFactory.CreateClient("APIComunes");
+                //var refDelegaciones = new List<APIRefDelegacionResponse>();
+                ////httpClient.DefaultRequestHeaders.Add("ApiKey", "dad03323-09ae-41f2-8d2f-15f4ddfcecb7");                
 
-                IReadOnlyCollection<APIRefDelegacionResponse>? apiRefDelegaciones = null;
-                var refDelegacionesResponse = await httpClientRefDelegacion.GetAsync($"/api/RefDelegacion/GetAll");
-                if (refDelegacionesResponse.IsSuccessStatusCode)
-                {
-                    string? jsonString = await refDelegacionesResponse.Content.ReadAsStringAsync();
-                    apiRefDelegaciones = JsonSerializer.Deserialize<IReadOnlyCollection<APIRefDelegacionResponse>>(jsonString);
-                }
+                //IReadOnlyCollection<APIRefDelegacionResponse>? apiRefDelegaciones = null;
+                //var refDelegacionesResponse = await httpClientRefDelegacion.GetAsync($"/api/RefDelegacion/GetAll");
+                //if (refDelegacionesResponse.IsSuccessStatusCode)
+                //{
+                //    string? jsonString = await refDelegacionesResponse.Content.ReadAsStringAsync();
+                //    apiRefDelegaciones = JsonSerializer.Deserialize<IReadOnlyCollection<APIRefDelegacionResponse>>(jsonString);
+                //}
 
                 foreach (var afiliado in list)
-                {                    
-                    afiliado.EmpresaDescripcion = empresas?.Where(x => x.id == afiliado.EmpresaId).Select(x => x.razonSocial).FirstOrDefault() ?? "";
-                    afiliado.EmpresaCUIT = empresas?.Where(x => x.id == afiliado.EmpresaId).Select(x => x.cuit).FirstOrDefault() ?? 0;
-                    afiliado.Seccional!.RefDelegacionDescripcion = apiRefDelegaciones?.Where(x => x.id == afiliado.Seccional.RefDelegacionId).Select(x => x.nombre).FirstOrDefault() ?? "";
+                {
+                    var empresa = await _refRepository.GetEmpresaById(afiliado.EmpresaId);
+                    var refDelegacion = await _refRepository.GetDelegacionById(afiliado.Seccional!.RefDelegacionId);
+
+                    afiliado.EmpresaDescripcion = empresa?.RazonSocial ?? "";
+                    afiliado.EmpresaCUIT = empresa?.CUIT ?? 0;
+                    afiliado.Seccional!.RefDelegacionDescripcion = refDelegacion?.Nombre ?? "";
                 }
             }            
 

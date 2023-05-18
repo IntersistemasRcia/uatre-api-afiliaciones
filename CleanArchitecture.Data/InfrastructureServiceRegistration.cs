@@ -20,11 +20,15 @@ namespace CleanArchitecture.Infrastructure
             services.AddDbContext<AfiliacionesDbContext>(opt =>
                 opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
             );
+            services.AddDbContext<UATRERefDbContext>(opt => {
+                opt.UseSqlServer(configuration.GetConnectionString("UATRERefConnection") ?? throw new ArgumentNullException("UATRERefConnection no seteado"));
+            });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-            services.AddScoped<ISeccionalAutoridadRepository, SeccionalAutoridadRepository>();
-            services.AddScoped<IAfiliadoRepository, AfiliadoRepository>();
+            //services.AddScoped<IRefRepository, RefRepository>();
+            //services.AddScoped<ISeccionalAutoridadRepository, SeccionalAutoridadRepository>();
+            //services.AddScoped<IAfiliadoRepository, AfiliadoRepository>();            
 
             services.Configure<EmailSettings>(e => configuration.GetSection("EmailSettings"));
             services.AddTransient<IEmailService, EmailService>();
