@@ -62,5 +62,6 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public DbSet<RefLocalidad>? RefLocalidades { get; set; }
         public DbSet<SeccionalContacto>? SeccionalContactos { get; set; }
         public DbSet<SeccionalAutoridad>? SeccionalAutoridades { get; set; }
+        public DbSet<AfiliadoEstadoSolicitud> AfiliadoEstadosSolicitud { get; set; }
     }
 }

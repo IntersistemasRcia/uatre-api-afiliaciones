@@ -34,16 +34,10 @@ namespace CleanArchitecture.Infrastructure.Repositories
             _refRepository = refRepository;
         }
 
-        public async Task ResolverSolicitudAsync(int id, JsonPatchDocument model)
-        {            
-            var afiliado = await _context.Set<Afiliado>().FindAsync(id);
+        public async Task ResolverSolicitudAsync(Afiliado afiliado, JsonPatchDocument model)
+        {
+            int estadoSolicitudAnt = afiliado.EstadoSolicitudId;
 
-            if (afiliado == null)
-            {
-                throw new Exception($"No existe el Afiliado {id}");
-            }
-
-            //switch (afiliado!.EstadoSolicitudId)
             switch ((Int64)model.Operations[0].value) //Estado enviado
             {
                 case 2: //Activo
@@ -65,7 +59,10 @@ namespace CleanArchitecture.Infrastructure.Repositories
             }
 
             model.ApplyTo(afiliado);
-            //return await _context.SaveChangesAsync();
+
+            //Auditoria con estado Anterior
+            AfiliadoEstadoSolicitud afiliadoEstadoSolicitud = new AfiliadoEstadoSolicitud(afiliado.Id, estadoSolicitudAnt);
+            await _context.Set<AfiliadoEstadoSolicitud>().AddAsync(afiliadoEstadoSolicitud);
         }
 
         public async Task<IReadOnlyCollection<Afiliado>> VerificarAutoridadSeccional(IReadOnlyCollection<Afiliado> afiliados)
