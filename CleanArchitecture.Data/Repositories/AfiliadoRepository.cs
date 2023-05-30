@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Contracts.Specification;
+using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
@@ -37,21 +38,23 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public async Task ResolverSolicitudAsync(Afiliado afiliado, JsonPatchDocument model)
         {
             int estadoSolicitudAnt = afiliado.EstadoSolicitudId;
-
-            switch ((Int64)model.Operations[0].value) //Estado enviado
-            {
+            int.TryParse(model.Operations[0].value.ToString(), out int EstadoSolicitud);
+            switch (EstadoSolicitud) //Estado enviado
+            {                
                 case 2: //Activo
                     lock (_context.Afiliados!)
                     {
                         var nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault();
                         model.Operations[1].value = DateTime.Now.Date;
-                        model.Operations[2].value = nroAfiliado + 1;
-                        break;
+                        model.Operations[2].value = nroAfiliado + 1;                        
                     }
                     
+                    break;
+
                 case 3: //No activo
                     model.Operations[1].value = null;
                     model.Operations[2].value = 0;
+                   
                     break;                
 
                 default:
@@ -60,9 +63,12 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
             model.ApplyTo(afiliado);
 
-            //Auditoria con estado Anterior
-            AfiliadoEstadoSolicitud afiliadoEstadoSolicitud = new AfiliadoEstadoSolicitud(afiliado.Id, estadoSolicitudAnt);
-            await _context.Set<AfiliadoEstadoSolicitud>().AddAsync(afiliadoEstadoSolicitud);
+            if (estadoSolicitudAnt != EstadoSolicitud)
+            {
+                //Auditoria con estado Anterior
+                AfiliadoEstadoSolicitud afiliadoEstadoSolicitud = new AfiliadoEstadoSolicitud(afiliado.Id, estadoSolicitudAnt);
+                await _context.Set<AfiliadoEstadoSolicitud>().AddAsync(afiliadoEstadoSolicitud);
+            }            
         }
 
         public async Task<IReadOnlyCollection<Afiliado>> VerificarAutoridadSeccional(IReadOnlyCollection<Afiliado> afiliados)
