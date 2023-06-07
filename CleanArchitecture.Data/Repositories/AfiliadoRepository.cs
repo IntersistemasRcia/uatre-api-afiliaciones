@@ -52,9 +52,11 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     break;
 
                 case 3: //No activo
-                    model.Operations[1].value = null;
+                    model.Operations[1].value = afiliado.FechaIngreso;
                     model.Operations[2].value = 0;
-                   
+                    model.Operations[4].value = Convert.ToDateTime(model.Operations[4].value).Date;
+
+
                     break;                
 
                 default:
@@ -177,7 +179,10 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         public async Task ModificarAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)
         {
-            afiliado.EmpresaId = await BuscarEmpresa(empresa);
+            if (empresa != null)
+            {
+                afiliado.EmpresaId = await BuscarEmpresa(empresa);
+            }            
             _context.Set<Afiliado>().Update(afiliado);
         }
 
