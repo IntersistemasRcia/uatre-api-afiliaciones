@@ -45,7 +45,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     lock (_context.Afiliados!)
                     {
                         var nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault();
-                        //model.Operations[1].value = DateTime.Now.Date;
+                        model.Operations[1].value = Convert.ToDateTime(model.Operations[1].value).Date; ; // DateTime.Now.Date;
                         model.Operations[2].value = nroAfiliado + 1;                        
                     }
                     
