@@ -45,7 +45,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     lock (_context.Afiliados!)
                     {
                         var nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault();
-                        model.Operations[1].value = Convert.ToDateTime(model.Operations[1].value).Date; ; // DateTime.Now.Date;
+                        model.Operations[1].value = DateTime.Now.Date; //Convert.ToDateTime(model.Operations[1].value).Date;
                         model.Operations[2].value = nroAfiliado + 1;                        
                     }
                     
@@ -53,7 +53,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
                 case 3: //No activo
                     model.Operations[1].value = afiliado.FechaIngreso;
-                    model.Operations[2].value = 0;
+                    //model.Operations[2].value = 0;
                     model.Operations[4].value = Convert.ToDateTime(model.Operations[4].value).Date;
 
 

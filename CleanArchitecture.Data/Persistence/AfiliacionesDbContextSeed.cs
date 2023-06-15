@@ -75,6 +75,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
             {
                 new TipoDocumento { Descripcion = "DNI" },
                 new TipoDocumento { Descripcion = "LC" },
+                new TipoDocumento { Descripcion = "LE" },
             };
         }
     }
