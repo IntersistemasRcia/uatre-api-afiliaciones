@@ -14,5 +14,6 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         Task<IReadOnlyCollection<Afiliado>> ListarAfiliados(ISpecification<Afiliado> spec, bool disableTracking = true);
         Task CrearAfiliado(Afiliado afiliado, APIEmpresaCreate empresa);
         Task ModificarAfiliado(Afiliado afiliado, APIEmpresaCreate empresa);
+        void UpdateDatosAfip(Afiliado afiliado, JsonPatchDocument datosAfipModel);
     }
 }

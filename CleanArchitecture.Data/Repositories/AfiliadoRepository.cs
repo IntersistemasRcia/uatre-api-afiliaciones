@@ -46,7 +46,8 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     {
                         var nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault();
                         model.Operations[1].value = DateTime.Now.Date; //Convert.ToDateTime(model.Operations[1].value).Date;
-                        model.Operations[2].value = nroAfiliado + 1;                        
+                        model.Operations[2].value = nroAfiliado + 1;
+                        model.Operations[4].value = 0;
                     }
                     
                     break;
@@ -55,7 +56,6 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     model.Operations[1].value = afiliado.FechaIngreso;
                     //model.Operations[2].value = 0;
                     model.Operations[4].value = Convert.ToDateTime(model.Operations[4].value).Date;
-
 
                     break;                
 
@@ -184,6 +184,11 @@ namespace CleanArchitecture.Infrastructure.Repositories
                 afiliado.EmpresaId = await BuscarEmpresa(empresa);
             }            
             _context.Set<Afiliado>().Update(afiliado);
+        }
+
+        public void UpdateDatosAfip(Afiliado afiliado, JsonPatchDocument datosAfipModel)
+        {
+            datosAfipModel.ApplyTo(afiliado);
         }
 
         private async Task<int> BuscarEmpresa(APIEmpresaCreate empresa)

@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Contracts.Specification;
 using CleanArchitecture.Domain.Commom;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CleanArchitecture.Infrastructure.Specification
 {
@@ -14,16 +15,26 @@ namespace CleanArchitecture.Infrastructure.Specification
                 inputQuery = inputQuery.Where(spec.Criteria);
             }
 
-            //Ordenamiento
-            if (spec.OrderBy != null)
+            //Ordenamiento            
+            IOrderedQueryable<T>? orderedQuery = null;            
+            if (spec.Order != null)
             {
-                inputQuery = inputQuery.OrderBy(spec.OrderBy);
-            }
+                var count = spec.Order.Count;
 
-            if (spec.OrderByDesc != null)
-            {
-                inputQuery = inputQuery.OrderByDescending(spec.OrderByDesc);
-            }
+                for (int i = 0; i < count; ++i)
+                {
+                    if (i == 0)
+                    {
+                        orderedQuery = spec.Order[i].descending ? inputQuery.OrderByDescending(spec.Order[i].Order) : inputQuery.OrderBy(spec.Order[i].Order);
+                    }
+                    else
+                    {
+                        orderedQuery = spec.Order[i].descending ? orderedQuery!.ThenByDescending(spec.Order[i].Order) : orderedQuery!.ThenBy(spec.Order[i].Order);
+                    }
+                    Console.WriteLine(spec.Order[i]);
+                }
+                inputQuery = orderedQuery ?? inputQuery;
+            }            
 
             //Paginacion opcional
             if (spec.IsPagingEnabled)

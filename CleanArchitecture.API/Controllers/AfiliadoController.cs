@@ -9,16 +9,19 @@ using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByCUIL;
 using CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolicitudAfiliado;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliado;
+using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateDatosAfip;
 
 namespace CleanArchitecture.API.Controllers
 {
     public class AfiliadoController : BaseApiController
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<AfiliadoController> _logger;
 
-        public AfiliadoController(IMediator mediator)
+        public AfiliadoController(IMediator mediator, ILogger<AfiliadoController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet("GetAfiliadosWithSpec", Name = "GetAfiliadosAll")]
@@ -26,6 +29,7 @@ namespace CleanArchitecture.API.Controllers
         [ProducesResponseType(typeof(Pagination<AfiliadoVm>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Pagination<AfiliadoVm>>> GetAfiliadosWithSpec([FromQuery] GetAfiliadoListQuery query)
         {
+            _logger.LogInformation("Query", query);
             //var query = new GetPadronListQuery(parameters);
             var padrones = await _mediator.Send(query);
 
@@ -75,6 +79,21 @@ namespace CleanArchitecture.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<int>> UpdateAfiliado([FromBody] UpdateAfiliadoCommand command)
         {
+            return await _mediator.Send(command);
+        }
+
+        [HttpPatch("ActualizarDatosAfip")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<ActionResult<int>> ActualizarDatosAfip([FromRoute] PatchAfiliadoDatosAfipCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("BadRequest");
+                throw new BadRequestException("Error");
+            }
+
             return await _mediator.Send(command);
         }
     }

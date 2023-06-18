@@ -25,10 +25,7 @@ namespace CleanArchitecture.Infrastructure
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-            //services.AddScoped<IRefRepository, RefRepository>();
-            //services.AddScoped<ISeccionalAutoridadRepository, SeccionalAutoridadRepository>();
-            //services.AddScoped<IAfiliadoRepository, AfiliadoRepository>();            
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));               
 
             services.Configure<EmailSettings>(e => configuration.GetSection("EmailSettings"));
             services.AddTransient<IEmailService, EmailService>();

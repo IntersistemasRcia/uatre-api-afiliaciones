@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using CleanArchitecture.Application.Specification;
+using System.Linq.Expressions;
 
 namespace CleanArchitecture.Application.Contracts.Specification
 {
@@ -11,8 +12,9 @@ namespace CleanArchitecture.Application.Contracts.Specification
         List<Expression<Func<T, object>>> Includes { get; }
 
         //Ordenamiento
-        Expression<Func<T, object>> OrderBy { get; }
-        Expression<Func<T, object>> OrderByDesc { get; }
+        List<OrderDetails> Order { get; set; }
+        List<Expression<Func<T, object>>> OrderBy { get; }
+        List<Expression<Func<T, object>>> OrderByDesc { get; }        
 
         //Agrupar
         Expression<Func<T, object>> GroupBy { get; }
@@ -24,5 +26,11 @@ namespace CleanArchitecture.Application.Contracts.Specification
         int Take { get; }
         int Skip { get; }
         bool IsPagingEnabled { get; }
+
+        public class OrderDetails
+        {
+            public Expression<Func<T, object>> Order { get; set; }
+            public bool descending { get; set; }
+        }
     }
 }
