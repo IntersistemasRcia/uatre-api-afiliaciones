@@ -47,14 +47,14 @@ namespace CleanArchitecture.Infrastructure.Repositories
                         var nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault();
                         model.Operations[1].value = DateTime.Now.Date; //Convert.ToDateTime(model.Operations[1].value).Date;
                         model.Operations[2].value = nroAfiliado + 1;
-                        model.Operations[4].value = 0;
+                        model.Operations[4].value = null;
                     }
                     
                     break;
 
                 case 3: //No activo
                     model.Operations[1].value = afiliado.FechaIngreso;
-                    //model.Operations[2].value = 0;
+                    model.Operations[2].value = afiliado.NroAfiliado;
                     model.Operations[4].value = Convert.ToDateTime(model.Operations[4].value).Date;
 
                     break;                
