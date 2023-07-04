@@ -42,13 +42,21 @@ namespace CleanArchitecture.Infrastructure.Repositories
             switch (EstadoSolicitud) //Estado enviado
             {                
                 case 2: //Activo
-                    lock (_context.Afiliados!)
+                    var nroAfiliado = afiliado.NroAfiliado;
+
+                    //Solo busco el siguiente nro afiliado si el afiliado estaba pendiente
+                    if (afiliado.EstadoSolicitudId == 1)
                     {
-                        var nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault();
-                        model.Operations[1].value = DateTime.Now.Date; //Convert.ToDateTime(model.Operations[1].value).Date;
-                        model.Operations[2].value = nroAfiliado + 1;
-                        model.Operations[4].value = null;
+                        lock (_context.Afiliados!)
+                        {
+                            nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault() + 1;
+                        }   
                     }
+                        
+                    model.Operations[1].value = DateTime.Now.Date; //Convert.ToDateTime(model.Operations[1].value).Date;
+                    model.Operations[2].value = nroAfiliado;
+                    model.Operations[4].value = null;
+                    
                     
                     break;
 
