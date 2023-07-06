@@ -26,6 +26,7 @@ namespace CleanArchitecture.Infrastructure.Configurations
 
             //Constraints
             builder.HasIndex(u => u.CUIL).IsUnique();
+            builder.HasIndex(u => u.CUILValidado);
             builder.HasIndex(u => new { u.NroAfiliado, u.Id }).IsDescending(true, false);
         }
     }

@@ -7,7 +7,8 @@ namespace CleanArchitecture.Domain
     public class Afiliado : BaseDomainModel
     {
         [Required]
-        public Int64 CUIL { get; set; }        
+        public Int64 CUIL { get; set; }
+        public Int64 CUILValidado { get; set; }
         public int NroAfiliado { get; set; }
         [StringLength(255)]
         public string? Nombre { get; set; }

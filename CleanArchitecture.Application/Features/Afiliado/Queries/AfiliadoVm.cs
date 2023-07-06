@@ -6,6 +6,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
     {
         public int Id { get; set; }
         public long CUIL { get; set; }
+        public long CUILValidado { get; set; }
         public int Secuencia { get; set; }
         public int NroAfiliado { get; set; }
         public string? Nombre { get; set; }

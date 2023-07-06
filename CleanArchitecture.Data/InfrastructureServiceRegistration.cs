@@ -50,7 +50,7 @@ namespace CleanArchitecture.Infrastructure
                 using var context = new AfiliacionesDbContext(contextOptions);
                 {
                     context.Database.EnsureCreated();
-                    context.Database.Migrate();
+                    //context.Database.Migrate();
 
                     AfiliacionesDbContextSeed.SeedAsync(context).Wait();
                 }
