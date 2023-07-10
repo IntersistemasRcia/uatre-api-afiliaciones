@@ -9,7 +9,9 @@ namespace CleanArchitecture.Application.Specification.Implements
         public SeccionalSpecification(GetSeccionalesListSpecsQuery query)
             : base(x =>
                 (string.IsNullOrEmpty(query.Provincia) || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Provincia.Nombre == query.Provincia).Any()) &&
+                (!query.ProvinciaId.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Provincia.Id == query.ProvinciaId).Any()) &&
                 (string.IsNullOrEmpty(query.Localidad) || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Nombre == query.Localidad).Any()) &&
+                (!query.LocalidadId.HasValue|| x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Id == query.LocalidadId).Any()) &&
                 (!query.CodigoPostal.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.CodPostal == query.CodigoPostal).Any())
             )
         {
