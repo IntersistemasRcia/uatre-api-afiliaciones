@@ -21,7 +21,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         public async Task<T> AddAsync(T Entity)
         {
-            context.Set<T>().Add(Entity);
+            await context.Set<T>().AddAsync(Entity);
             //await context.SaveChangesAsync();
 
             return Entity;

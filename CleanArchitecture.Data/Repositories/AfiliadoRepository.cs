@@ -182,7 +182,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public async Task CrearAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)
         {
             afiliado.EmpresaId = await BuscarEmpresa(empresa);
-            _context.Set<Afiliado>().Add(afiliado);
+            await _context.Set<Afiliado>().AddAsync(afiliado);
         }
 
         public async Task ModificarAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)

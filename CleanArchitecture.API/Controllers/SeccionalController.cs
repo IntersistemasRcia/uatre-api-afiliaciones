@@ -44,8 +44,6 @@ namespace CleanArchitecture.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(SeccionalVm), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(RequestValidationException), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(Exception), (int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<CreateSeccionalVm>> Post([FromBody] CreateSeccionalCommand command)
         {
             return await _mediator.Send(command);
