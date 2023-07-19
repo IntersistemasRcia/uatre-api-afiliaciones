@@ -1,9 +1,12 @@
-﻿using CleanArchitecture.Application.Features.Seccional.Queries;
+﻿using CleanArchitecture.Application.Features.Seccional.Command.Create;
+using CleanArchitecture.Application.Features.Seccional.Queries;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesList;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
+using CleanArchitecture.Common.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,29 +42,13 @@ namespace CleanArchitecture.API.Controllers
             return Ok(list);
         }
 
-        //// GET api/<SeccionalController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/<SeccionalController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT api/<SeccionalController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<SeccionalController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpPost]
+        [ProducesResponseType(typeof(SeccionalVm), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(RequestValidationException), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Exception), (int)HttpStatusCode.InternalServerError)]
+        public async Task<ActionResult<CreateSeccionalVm>> Post([FromBody] CreateSeccionalCommand command)
+        {
+            return await _mediator.Send(command);
+        }
     }
 }

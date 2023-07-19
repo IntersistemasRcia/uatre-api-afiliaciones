@@ -9,6 +9,7 @@ using CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidades
 using CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList;
 using CleanArchitecture.Application.Features.Puesto.Queries;
 using CleanArchitecture.Application.Features.RefLocalidad.Queries;
+using CleanArchitecture.Application.Features.Seccional.Command.Create;
 using CleanArchitecture.Application.Features.Seccional.Queries;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
@@ -44,6 +45,7 @@ namespace CleanArchitecture.Application.Mappings
                 ;
             CreateMap<Puesto, PuestoVm>();
             CreateMap<Seccional, SeccionalVm>();
+            CreateMap<Seccional, CreateSeccionalVm>();
             CreateMap<Provincia, ProvinciaVm>();
             CreateMap<Nacionalidad, NacionalidadVm>();
             CreateMap<EstadoCivil, EstadoCivilVm>();
@@ -58,6 +60,7 @@ namespace CleanArchitecture.Application.Mappings
 
             CreateMap<CreateAfiliadoCommand, Afiliado>();
             CreateMap<UpdateAfiliadoCommand, Afiliado>();
+            CreateMap<CreateSeccionalCommand, Seccional>();
         }
     }
 }
