@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionale
         {
             var list = await _unitOfWork.Repository<Domain.Seccional>().GetAllAsync();
 
-            return _mapper.Map<List<SeccionalVm>>(list);
+            return _mapper.Map<List<SeccionalVm>>(list.OrderBy(x => x.Descripcion));
         }
     }
 }
