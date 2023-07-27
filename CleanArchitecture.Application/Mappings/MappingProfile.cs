@@ -61,6 +61,8 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<CreateAfiliadoCommand, Afiliado>();
             CreateMap<UpdateAfiliadoCommand, Afiliado>();
             CreateMap<CreateSeccionalCommand, Seccional>();
+            CreateMap<CreateSeccionalAutoridad, SeccionalAutoridad>();
+            CreateMap<CreateSeccionalLocalidad, SeccionalLocalidad>();
         }
     }
 }

@@ -22,16 +22,16 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Create
             var entidad = mapper.Map<Domain.Seccional>(request);
 
             await unitOfWork.Repository<Domain.Seccional>().AddAsync(entidad);
-            await unitOfWork.CommitAsync();
+            //await unitOfWork.CommitAsync();
 
-            //Seccional Localidad
-            var seccionalLocalidad = new Domain.SeccionalLocalidad()
-            {
-                RefLocalidadId = request.RefLocalidadesId,
-                SeccionalId = entidad.Id
-            };
+            ////Seccional Localidad
+            //var seccionalLocalidad = new Domain.SeccionalLocalidad()
+            //{
+            //    RefLocalidadId = request.RefLocalidadesId,
+            //    SeccionalId = entidad.Id
+            //};
 
-            await unitOfWork.Repository<Domain.SeccionalLocalidad>().AddAsync(seccionalLocalidad);
+            //await unitOfWork.Repository<Domain.SeccionalLocalidad>().AddAsync(seccionalLocalidad);
             var result = await unitOfWork.CommitAsync();
 
             if (result <= 0)

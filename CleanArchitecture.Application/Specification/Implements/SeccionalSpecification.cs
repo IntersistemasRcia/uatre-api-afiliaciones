@@ -16,13 +16,13 @@ namespace CleanArchitecture.Application.Specification.Implements
             )
         {
             AgregarIncludes(x => x.SeccionalContacto);
-            AgregarIncludes(x => x.SeccionalAutoridad);
+            AgregarIncludes(x => x.SeccionalAutoridades);
         }
 
         public SeccionalSpecification(int pId) : base(x => x.Id == pId)
         {
             AgregarIncludes(x => x.SeccionalContacto);
-            AgregarIncludes(x => x.SeccionalAutoridad);
+            AgregarIncludes(x => x.SeccionalAutoridades);
         }
     }
 }

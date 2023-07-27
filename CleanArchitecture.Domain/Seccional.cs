@@ -23,7 +23,7 @@ namespace CleanArchitecture.Domain
         public string? RefDelegacionDescripcion { get; set; }
         public ICollection<SeccionalLocalidad>? SeccionalLocalidad { get; set; }
         public ICollection<SeccionalContacto>? SeccionalContacto { get; set; }
-        public ICollection<SeccionalAutoridad>? SeccionalAutoridad { get; set; }
+        public ICollection<SeccionalAutoridad>? SeccionalAutoridades { get; set; }
     }
 
     //public enum SeccionalEstado
