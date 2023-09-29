@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Domain;
+﻿using CleanArchitecture.Application.Models.APIComunes;
+using CleanArchitecture.Domain;
 
 namespace CleanArchitecture.Application.Features.Afiliado.Queries
 {
@@ -78,5 +79,6 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? AFIPDomicilioDatoAdicional { get; set; }
         public string? AFIPDomicilioTipoDatoAdicional { get; set; }
         public int SeccionalAutoridadId { get; set; }
+        public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
 }

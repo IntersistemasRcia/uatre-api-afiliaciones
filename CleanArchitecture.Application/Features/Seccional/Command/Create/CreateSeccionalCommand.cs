@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CleanArchitecture.Application.Models.APIComunes;
+using MediatR;
 
 namespace CleanArchitecture.Application.Features.Seccional.Command.Create
 {
@@ -14,6 +15,7 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Create
         //public IReadOnlyCollection<CreateSeccionalContactoCommand>? Contactos { get; set; }
         public ICollection<CreateSeccionalAutoridad>? SeccionalAutoridades { get; set; }
         public ICollection<CreateSeccionalLocalidad>? SeccionalLocalidad { get; set; }
+        public ICollection<DocumentacionEntidad>? Documentacion { get; set; } 
     }
 
     //public class CreateSeccionalContactoCommand

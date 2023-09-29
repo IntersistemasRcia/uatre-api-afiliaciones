@@ -14,14 +14,16 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private IConfiguration configuration;
         private IHttpClientFactory httpClientFactory;
 
-        private IRefRepository refRepository;
+        private IRefRepository _refRepository;
         private IAfiliadoRepository afiliadoRepository;
-        private ISeccionalAutoridadRepository seccionalAutoridadRepository;        
+        private ISeccionalAutoridadRepository seccionalAutoridadRepository;
+        private ISeccionalRepository _seccionalRepository;
 
         //Repositorios especiales no se inyectan, de definen x propiedades
-        //public IRefRepository RefRepository => refRepository ??= new RefRepository(uatreContext);
+        public IRefRepository RefRepository => _refRepository ??= new RefRepository(uatreContext);
         public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context, httpClientFactory, configuration, new RefRepository(uatreContext));
         public ISeccionalAutoridadRepository SeccionalAutoridadRepository => seccionalAutoridadRepository ??= new SeccionalAutoridadRepository(configuration, httpClientFactory);
+        public ISeccionalRepository SeccionalRepository => _seccionalRepository ??= new SeccionalRepository(context);
 
         public UnitOfWork(AfiliacionesDbContext context, IConfiguration configuration, IHttpClientFactory httpClientFactory, UATRERefDbContext uatreContext)
         {
@@ -36,7 +38,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         public async Task<int> CommitAsync()
         {
-            return await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();            
         }
 
         public void Dispose()

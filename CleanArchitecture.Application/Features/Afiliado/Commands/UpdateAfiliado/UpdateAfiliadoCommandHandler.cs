@@ -25,11 +25,17 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliad
 
             entityToUpdate = (Domain.Afiliado)mapper.Map(request, entityToUpdate, typeof(UpdateAfiliadoCommand), typeof(Domain.Afiliado));
 
-            await unitOfWork.AfiliadoRepository.ModificarAfiliado(entityToUpdate, request.Empresa!);
-
             try
             {
+                await unitOfWork.AfiliadoRepository.ModificarAfiliado(entityToUpdate, request.Empresa!);
+
+                if (request.Documentacion?.Count > 0)
+                {
+                    unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entityToUpdate.Id);
+                }
+
                 var result = await unitOfWork.CommitAsync();
+
                 return result;
             }
             catch (Exception ex)

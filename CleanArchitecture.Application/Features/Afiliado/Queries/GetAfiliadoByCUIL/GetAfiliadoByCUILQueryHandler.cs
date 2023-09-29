@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Application.Specification.Implements;
 using MediatR;
 
@@ -19,8 +20,18 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByC
         {
             var spec = new AfiliadoByCUILSpecification(request);
             var afiliado = await _unitOfWork.AfiliadoRepository.BuscarAfiliadoPorSpecs(spec);
-        
-            return _mapper.Map<Domain.Afiliado, AfiliadoVm>(afiliado);
+
+            var documentacion = await _unitOfWork.RefRepository.GetDocumentacionEntidadById("A", afiliado.Id);
+
+            var afiliadoVm = _mapper.Map<Domain.Afiliado, AfiliadoVm>(afiliado);
+            afiliadoVm.Documentacion = new List<DocumentacionEntidad>();
+
+            foreach (var item in documentacion)
+            {
+                afiliadoVm.Documentacion.Add(item);
+            }
+
+            return afiliadoVm;
         }
     }
 }

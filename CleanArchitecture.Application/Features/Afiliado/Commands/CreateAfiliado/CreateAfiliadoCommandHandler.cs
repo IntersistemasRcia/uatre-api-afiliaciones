@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -21,12 +22,18 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         public async Task<int> Handle(CreateAfiliadoCommand request, CancellationToken cancellationToken)
         {
             var entidad = mapper.Map<Domain.Afiliado>(request);
-
-            await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);
-
+            
             try
             {
+                await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);                
+
+                if (request.Documentacion?.Count > 0)
+                {
+                    unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entidad.Id);
+                }
+
                 var result = await unitOfWork.CommitAsync();
+
                 return entidad.Id;
             }
             catch (Exception ex)

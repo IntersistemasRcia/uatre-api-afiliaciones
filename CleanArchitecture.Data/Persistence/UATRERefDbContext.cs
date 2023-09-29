@@ -22,9 +22,11 @@ namespace CleanArchitecture.Infrastructure.Persistence
             //excluidas de migrations
             modelBuilder.Entity<Empresa>().ToTable("Empresas", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<RefDelegacion>().ToTable("RefDelegaciones", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<DocumentacionEntidad>().ToTable("DocumentacionEntidades", t => t.ExcludeFromMigrations());
         }
 
         public DbSet<Empresa>? Empresas { get; set; }
         public DbSet<RefDelegacion>? RefDelegaciones { get; set; }
+        public DbSet<DocumentacionEntidad>? DocumentacionEntidades { get; set; }
     }
 }

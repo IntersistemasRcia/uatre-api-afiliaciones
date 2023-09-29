@@ -62,5 +62,6 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliad
         public string? AFIPDomicilioDatoAdicional { get; set; }
         public string? AFIPDomicilioTipoDatoAdicional { get; set; }
         public APIEmpresaCreate? Empresa { get; set; }
+        public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
 }

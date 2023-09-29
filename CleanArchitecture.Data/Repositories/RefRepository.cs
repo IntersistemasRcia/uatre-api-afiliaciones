@@ -26,5 +26,23 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
             return entity;
         }
+
+        public async void AgregarDocumentacionEntidad(ICollection<DocumentacionEntidad> documentacionEntidad, string entidadTipo, int entidadId)
+        {
+            foreach (var item in documentacionEntidad)
+            {
+                item.EntidadTipo = entidadTipo;
+                item.EntidadId = entidadId;
+            }
+            
+            await _context.Set<DocumentacionEntidad>().AddRangeAsync(documentacionEntidad);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IReadOnlyCollection<DocumentacionEntidad>> GetDocumentacionEntidadById(string tipoEntidad, int entidadId)
+        {
+            return await _context.Set<DocumentacionEntidad>().Where(x => x.EntidadTipo == tipoEntidad && x.EntidadId == entidadId).ToListAsync();
+        }
     }
 }
