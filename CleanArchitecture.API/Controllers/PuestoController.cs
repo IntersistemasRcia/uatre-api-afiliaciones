@@ -18,10 +18,9 @@ namespace CleanArchitecture.API.Controllers
         [HttpGet(Name = "GetPuestosAll")]
         //[Authorize]
         [ProducesResponseType(typeof(IReadOnlyList<PuestoVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IReadOnlyCollection<PuestoVm>>> GetPuestosAll()
+        public async Task<ActionResult<IReadOnlyCollection<PuestoVm>>> GetPuestosAll([FromQuery] GetPuestosListQuery request)
         {
-            var query = new GetPuestosListQuery();
-            var list = await _mediator.Send(query);
+            var list = await _mediator.Send(request);
 
             return Ok(list);
         }

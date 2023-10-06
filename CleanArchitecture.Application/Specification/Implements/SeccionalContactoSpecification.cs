@@ -7,7 +7,8 @@ namespace CleanArchitecture.Application.Specification.Implements
     {
         public SeccionalContactoSpecification(GetSeccionalContactoBySpecsQuery query)
             : base(x =>
-                (x.SeccionalId == query.SeccionalId)
+                (x.SeccionalId == query.SeccionalId) &&
+                (!query.SoloActivos || x.DeletedDate == null)
             )
         {
 

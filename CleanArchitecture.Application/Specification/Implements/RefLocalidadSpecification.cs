@@ -8,7 +8,8 @@ namespace CleanArchitecture.Application.Specification.Implements
         public RefLocalidadSpecification(GetRefLocalidadSpecsQuery query)
             : base(x =>              
                 (!query.CodigoPostal.HasValue || x.CodPostal == query.CodigoPostal) &&
-                (!query.ProvinciaId.HasValue || x.ProvinciaId == query.ProvinciaId)
+                (!query.ProvinciaId.HasValue || x.ProvinciaId == query.ProvinciaId) &&
+                (!query.SoloActivos || x.DeletedDate == null)
             )
         {
             AgregarIncludes(r => r.Provincia!);

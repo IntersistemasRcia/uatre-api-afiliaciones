@@ -6,5 +6,6 @@
         public string? SeccionalDescripcion { get; set; }
         public string? Tipo { get; set; }
         public string? Detalle { get; set; }
+        public DateTime? DeletedDate { get; set; }
     }
 }

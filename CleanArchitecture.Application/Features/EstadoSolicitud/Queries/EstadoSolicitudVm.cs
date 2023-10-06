@@ -5,5 +5,6 @@ namespace CleanArchitecture.Application.Features.EstadoSolicitud.Queries
     {
         public int Id { get; set; }
         public string? Descripcion { get; set; }
+        public DateTime? DeletedDate { get; set; }
     }
 }

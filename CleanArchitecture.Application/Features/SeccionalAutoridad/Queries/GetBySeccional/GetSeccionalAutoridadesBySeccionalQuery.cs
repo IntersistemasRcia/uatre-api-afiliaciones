@@ -4,7 +4,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Queries.GetB
     public class GetSeccionalAutoridadesBySeccionalQuery : IRequest<IReadOnlyCollection<SeccionalAutoridadResponse>>
     {
         public int SeccionalId { get; set; }
-        public bool SoloVigentes { get; set; } = true;
+        public bool SoloActivos { get; set; } = true;
 
         public GetSeccionalAutoridadesBySeccionalQuery()
         {

@@ -24,10 +24,9 @@ namespace CleanArchitecture.API.Controllers
         [HttpGet(Name = "GetSeccionalesAll")]
         //[Authorize]
         [ProducesResponseType(typeof(IReadOnlyList<SeccionalVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IReadOnlyCollection<SeccionalVm>>> GetSeccionalesAll()
+        public async Task<ActionResult<IReadOnlyCollection<SeccionalVm>>> GetSeccionalesAll([FromQuery] GetSeccionalesListQuery request)
         {
-            var query = new GetSeccionalesListQuery();
-            var list = await _mediator.Send(query);
+            var list = await _mediator.Send(request);
 
             return Ok(list);
         }

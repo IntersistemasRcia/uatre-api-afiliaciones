@@ -79,6 +79,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? AFIPDomicilioDatoAdicional { get; set; }
         public string? AFIPDomicilioTipoDatoAdicional { get; set; }
         public int SeccionalAutoridadId { get; set; }
+        public DateTime? DeletedDate { get; set; }
         public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
 }

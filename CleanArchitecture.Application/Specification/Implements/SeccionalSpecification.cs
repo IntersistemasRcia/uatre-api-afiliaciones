@@ -12,7 +12,8 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (!query.ProvinciaId.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Provincia.Id == query.ProvinciaId).Any()) &&
                 (string.IsNullOrEmpty(query.Localidad) || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Nombre == query.Localidad).Any()) &&
                 (!query.LocalidadId.HasValue|| x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Id == query.LocalidadId).Any()) &&
-                (!query.CodigoPostal.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.CodPostal == query.CodigoPostal).Any())
+                (!query.CodigoPostal.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.CodPostal == query.CodigoPostal).Any()) &&
+                (!query.SoloActivos || x.DeletedDate == null)
             )
         {
             AgregarIncludes(x => x.SeccionalContacto);

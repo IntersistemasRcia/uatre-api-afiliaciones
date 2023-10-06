@@ -4,5 +4,6 @@ namespace CleanArchitecture.Application.Features.EstadoSolicitud.Queries.GetEsta
 {
     public class GetEstadosSolicitudesListQuery : IRequest<List<EstadoSolicitudVm>>
     {
+        public bool SoloActivos { get; set; } = true;
     }
 }

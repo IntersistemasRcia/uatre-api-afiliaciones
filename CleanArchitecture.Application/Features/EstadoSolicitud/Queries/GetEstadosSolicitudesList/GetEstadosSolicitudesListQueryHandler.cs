@@ -17,6 +17,11 @@ namespace CleanArchitecture.Application.Features.EstadoSolicitud.Queries.GetEsta
         public async Task<List<EstadoSolicitudVm>> Handle(GetEstadosSolicitudesListQuery request, CancellationToken cancellationToken)
         {
             var list = await _unitOfWork.Repository<Domain.EstadoSolicitud>().GetAllAsync();
+            if (request.SoloActivos)
+            {
+                var listActivos = list.Where(x => x.DeletedDate == null).ToList();
+                return _mapper.Map<List<EstadoSolicitudVm>>(listActivos);
+            }
 
             return _mapper.Map<List<EstadoSolicitudVm>>(list);
         }

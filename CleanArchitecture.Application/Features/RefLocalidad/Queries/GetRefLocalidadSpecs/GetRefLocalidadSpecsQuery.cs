@@ -6,5 +6,6 @@ namespace CleanArchitecture.Application.Features.RefLocalidad.Queries.GetRefLoca
     {
         public int? CodigoPostal { get; set; }
         public int? ProvinciaId { get;set; }
+        public bool SoloActivos { get; set; } = true;
     }
 }

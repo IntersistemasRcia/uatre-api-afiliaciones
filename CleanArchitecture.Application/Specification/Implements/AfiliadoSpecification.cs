@@ -14,7 +14,8 @@ namespace CleanArchitecture.Application.Specification.Implements
             (!query.FechaIngreso.HasValue || x.FechaIngreso == query.FechaIngreso) &&
             (!query.FechaEgreso.HasValue || x.FechaEgreso == query.FechaEgreso) &&
             (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
-            (!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId)
+            (!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId) &&
+            (!query.SoloActivos || x.DeletedDate == null)
         )
         {            
 

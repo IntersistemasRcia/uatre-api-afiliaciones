@@ -19,10 +19,9 @@ namespace CleanArchitecture.API.Controllers
         [HttpGet(Name = "GetEstadosSolicitudesAll")]
         //[Authorize]
         [ProducesResponseType(typeof(IReadOnlyList<EstadoSolicitudVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IReadOnlyCollection<EstadoSolicitudVm>>> GetEstadosSolicitudesAll()
+        public async Task<ActionResult<IReadOnlyCollection<EstadoSolicitudVm>>> GetEstadosSolicitudesAll([FromQuery] GetEstadosSolicitudesListQuery request)
         {
-            var query = new GetEstadosSolicitudesListQuery();
-            var list = await _mediator.Send(query);
+            var list = await _mediator.Send(request);
 
             return Ok(list);
         }

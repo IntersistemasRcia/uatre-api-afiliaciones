@@ -19,10 +19,9 @@ namespace CleanArchitecture.API.Controllers
         [HttpGet(Name = "GetEstadosCivilesAll")]
         //[Authorize]
         [ProducesResponseType(typeof(IReadOnlyList<EstadoCivilVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IReadOnlyCollection<EstadoCivilVm>>> GetEstadosCivilesAll()
+        public async Task<ActionResult<IReadOnlyCollection<EstadoCivilVm>>> GetEstadosCivilesAll([FromQuery] GetEstadoCivilListQuery request)
         {
-            var query = new GetEstadoCivilListQuery();
-            var list = await _mediator.Send(query);
+            var list = await _mediator.Send(request);
 
             return Ok(list);
         }

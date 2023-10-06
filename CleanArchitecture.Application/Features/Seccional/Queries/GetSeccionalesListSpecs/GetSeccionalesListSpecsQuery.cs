@@ -9,6 +9,7 @@ namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionale
         public string? Localidad { get; set; }
         public int? LocalidadId { get; set; }
         public int? CodigoPostal { get; set; }
+        public bool SoloActivos { get; set; } = true;
         public GetSeccionalesListSpecsQuery()
         {
            //CP = pCP ?? throw new ArgumentNullException(nameof(pCP));
