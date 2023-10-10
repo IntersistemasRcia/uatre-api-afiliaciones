@@ -46,7 +46,8 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<Puesto, PuestoVm>();
             CreateMap<Seccional, SeccionalVm>();
             CreateMap<Seccional, CreateSeccionalVm>();
-            CreateMap<Provincia, ProvinciaVm>();
+            CreateMap<Provincia, ProvinciaVm>()
+                .ForMember(a => a.SeccionalDescripcionPorDefecto, x => x.MapFrom(s => s.Seccional.Descripcion));
             CreateMap<Nacionalidad, NacionalidadVm>();
             CreateMap<EstadoCivil, EstadoCivilVm>();
             CreateMap<TipoDocumento, TipoDocumentoVm>();

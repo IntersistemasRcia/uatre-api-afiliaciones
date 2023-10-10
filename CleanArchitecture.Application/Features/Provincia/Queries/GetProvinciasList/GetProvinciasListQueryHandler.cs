@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Specification.Implements;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList
@@ -16,7 +17,8 @@ namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvincias
         }
         public async Task<List<ProvinciaVm>> Handle(GetProvinciasListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitOfWork.Repository<Domain.Provincia>().GetAllAsync();
+            var spec = new ProvinciasGetAllSpec(request);
+            var list = await _unitOfWork.Repository<Domain.Provincia>().GetAllWithSpecsAsync(spec);
 
             return _mapper.Map<List<ProvinciaVm>>(list);
         }

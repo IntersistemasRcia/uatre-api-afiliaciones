@@ -17,7 +17,7 @@ namespace CleanArchitecture.API.Controllers
 
         [HttpGet(Name = "GetProvinciasAll")]
         //[Authorize]
-        [ProducesResponseType(typeof(IReadOnlyList<Provincia>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IReadOnlyList<ProvinciaVm>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IReadOnlyCollection<ProvinciaVm>>> GetProvinciasAll()
         {
             var query = new GetProvinciasListQuery();
