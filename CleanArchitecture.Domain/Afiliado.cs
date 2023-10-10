@@ -110,5 +110,8 @@ namespace CleanArchitecture.Domain
         public string? EmpresaDescripcion { get; set; }
         [NotMapped]
         public double? EmpresaCUIT { get; set; }
+        public int RefMotivoBajaId { get; set; }
+        [NotMapped]
+        public string? RefMotivoBajaDescripcion { get; set; }
     }
 }
