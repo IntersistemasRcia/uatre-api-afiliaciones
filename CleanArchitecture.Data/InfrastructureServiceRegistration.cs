@@ -42,18 +42,18 @@ namespace CleanArchitecture.Infrastructure
                 options.Storage = new SqlServerStorage(configuration.GetConnectionString("MiniProfilerConnection"));
             }).AddEntityFramework();
 
-            //Seed
-            var contextOptions = new DbContextOptionsBuilder<AfiliacionesDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
-                .Options;
+            ////Seed
+            //var contextOptions = new DbContextOptionsBuilder<AfiliacionesDbContext>()
+            //    .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+            //    .Options;
             
-                using var context = new AfiliacionesDbContext(contextOptions);
-                {
-                    context.Database.EnsureCreated();
-                    context.Database.Migrate();
+            //    using var context = new AfiliacionesDbContext(contextOptions);
+            //    {
+            //        context.Database.EnsureCreated();
+            //        context.Database.Migrate();
 
-                    AfiliacionesDbContextSeed.SeedAsync(context).Wait();
-                }
+            //        AfiliacionesDbContextSeed.SeedAsync(context).Wait();
+            //    }
 
             return services;
         }
