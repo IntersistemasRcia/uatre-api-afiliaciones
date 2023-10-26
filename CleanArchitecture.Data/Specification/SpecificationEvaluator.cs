@@ -43,7 +43,12 @@ namespace CleanArchitecture.Infrastructure.Specification
             }
 
             //Includes
-            inputQuery = spec.Includes.Aggregate(inputQuery, (current, include) => current.Include(include));
+            inputQuery = spec.Includes.Aggregate(inputQuery,
+                                    (current, include) => include(current));
+
+            //// Include any string-based include statements
+            //inputQuery = spec.IncludeStrings.Aggregate(inputQuery,
+            //                        (current, include) => current.Include(include));
 
             //Group by
             if (spec.GroupBy != null)

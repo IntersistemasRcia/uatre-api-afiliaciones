@@ -8,8 +8,11 @@ using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidadesList;
 using CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList;
 using CleanArchitecture.Application.Features.Puesto.Queries;
+using CleanArchitecture.Application.Features.RefLocalidad.Command.Create;
+using CleanArchitecture.Application.Features.RefLocalidad.Command.Update;
 using CleanArchitecture.Application.Features.RefLocalidad.Queries;
 using CleanArchitecture.Application.Features.Seccional.Command.Create;
+using CleanArchitecture.Application.Features.Seccional.Command.Update;
 using CleanArchitecture.Application.Features.Seccional.Queries;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
@@ -44,7 +47,9 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.TipoDocumento, x => x.MapFrom(b => b.EstadoCivil!.Descripcion))
                 ;
             CreateMap<Puesto, PuestoVm>();
-            CreateMap<Seccional, SeccionalVm>();
+            CreateMap<RefLocalidad, SeccionalLocalidadVm>();
+            CreateMap<Seccional, SeccionalVm>()
+                .ForMember(a => a.SeccionalLocalidad, x => x.MapFrom(s => s.SeccionalLocalidad.Select(x => x.RefLocalidad)));
             CreateMap<Seccional, CreateSeccionalVm>();
             CreateMap<Provincia, ProvinciaVm>()
                 .ForMember(a => a.SeccionalDescripcionPorDefecto, x => x.MapFrom(s => s.Seccional.Descripcion));
@@ -59,11 +64,15 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<SeccionalContacto, SeccionalContactoResponse>()
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
 
+            // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();
             CreateMap<UpdateAfiliadoCommand, Afiliado>();
             CreateMap<CreateSeccionalCommand, Seccional>();
+            CreateMap<UpdateSeccionalCommand, Seccional>();
             CreateMap<CreateSeccionalAutoridad, SeccionalAutoridad>();
             CreateMap<CreateSeccionalLocalidad, SeccionalLocalidad>();
+            CreateMap<CreateRefLocalidadCommand, RefLocalidad>();
+            CreateMap<UpdateRefLocalidadCommand, RefLocalidad>();
         }
     }
 }

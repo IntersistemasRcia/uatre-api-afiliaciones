@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Specification;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace CleanArchitecture.Application.Contracts.Specification
@@ -9,7 +10,8 @@ namespace CleanArchitecture.Application.Contracts.Specification
         Expression<Func<T, bool>> Criteria { get; }
 
         //Include de tablas relacionadas
-        List<Expression<Func<T, object>>> Includes { get; }
+        List<Func<IQueryable<T>, IIncludableQueryable<T, object>>> Includes { get; }
+        //List<string> IncludeStrings { get; }
 
         //Ordenamiento
         List<OrderDetails> Order { get; set; }

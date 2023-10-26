@@ -1,6 +1,6 @@
-﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs
-    ;
+﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Specification.Implements
 {
@@ -16,14 +16,16 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (!query.SoloActivos || x.DeletedDate == null)
             )
         {
-            AgregarIncludes(x => x.SeccionalContacto);
-            AgregarIncludes(x => x.SeccionalAutoridades);
+            AgregarIncludes(x => x.Include(e => e.SeccionalLocalidad!).ThenInclude(er => er.RefLocalidad));
+            AgregarIncludes(x => x.Include(e => e.SeccionalContacto!));
+            AgregarIncludes(x => x.Include(e => e.SeccionalAutoridades!));
         }
 
         public SeccionalSpecification(int pId) : base(x => x.Id == pId)
         {
-            AgregarIncludes(x => x.SeccionalContacto);
-            AgregarIncludes(x => x.SeccionalAutoridades);
+            AgregarIncludes(x => x.Include(e => e.SeccionalLocalidad!));
+            AgregarIncludes(x => x.Include(e => e.SeccionalContacto!));
+            AgregarIncludes(x => x.Include(e => e.SeccionalAutoridades!));
         }
     }
 }

@@ -35,7 +35,6 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Create
 
     public class CreateSeccionalLocalidad
     {
-        public int RefLocalidadId { get; set; }
-        public int SeccionalId { get; set; }        
+        public int RefLocalidadId { get; set; }      
     }
 }

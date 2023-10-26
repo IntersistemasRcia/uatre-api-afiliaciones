@@ -18,13 +18,7 @@ namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionale
         public async Task<List<SeccionalVm>> Handle(GetSeccionalesListSpecsQuery request, CancellationToken cancellationToken)
         {
             var spec = new SeccionalSpecification(request);
-            var list = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(spec);
-            if (request.SoloActivos)
-            {
-                var listActivos = list.Where(x => x.DeletedDate == null).ToList();
-                return _mapper.Map<List<SeccionalVm>>(listActivos);
-            }
-
+            var list = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(spec);            
             return _mapper.Map<List<SeccionalVm>>(list);
         }
     }

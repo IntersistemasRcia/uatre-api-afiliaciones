@@ -5,9 +5,16 @@
         public int Id { get; set; }
         public string? Codigo { get; set; }
         public string? Descripcion { get; set; }
-        public string? Domicilio { get; set; }
+        public string? Domicilio { get; set; }        
         public string? Estado { get; set; }
         public string? Observaciones { get; set; }
         public DateTime? DeletedDate { get; set; }
+        public ICollection<SeccionalLocalidadVm>? SeccionalLocalidad { get; set; }
+    }
+
+    public class SeccionalLocalidadVm
+    {
+        public int Id { get; set; }
+        public string? Nombre { get; set; }
     }
 }

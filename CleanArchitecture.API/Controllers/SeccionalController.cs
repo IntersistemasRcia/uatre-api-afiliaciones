@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Features.Seccional.Command.Create;
+using CleanArchitecture.Application.Features.Seccional.Command.Update;
 using CleanArchitecture.Application.Features.Seccional.Queries;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesList;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
@@ -45,7 +46,18 @@ namespace CleanArchitecture.API.Controllers
         [ProducesResponseType(typeof(SeccionalVm), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<CreateSeccionalVm>> Post([FromBody] CreateSeccionalCommand command)
         {
-            return await _mediator.Send(command);
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<int>> Update([FromBody] UpdateSeccionalCommand command)
+        {
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

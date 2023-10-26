@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Contracts.Specification;
 using CleanArchitecture.Common.Exceptions;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -21,9 +22,10 @@ namespace CleanArchitecture.Application.Specification
             Criteria = criteria;
         }
 
-        public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
+        //public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
+        public List<Func<IQueryable<T>, IIncludableQueryable<T, object>>> Includes { get; } = new List<Func<IQueryable<T>, IIncludableQueryable<T, object>>>();
 
-        protected void AgregarIncludes(Expression<Func<T, object>> includeExpression)
+        protected void AgregarIncludes(Func<IQueryable<T>, IIncludableQueryable<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
         }

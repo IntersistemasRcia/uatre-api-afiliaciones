@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Features.RefLocalidad.Queries.GetRefLocalidadSpecs;
 using CleanArchitecture.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Specification.Implements
 {
@@ -12,12 +13,12 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (!query.SoloActivos || x.DeletedDate == null)
             )
         {
-            AgregarIncludes(r => r.Provincia!);
+            AgregarIncludes(r => r.Include(e => e.Provincia!));
         }
 
         public RefLocalidadSpecification(int pId) : base(x => x.Id == pId)
         {
-            AgregarIncludes(r => r.Provincia!);
+            AgregarIncludes(r => r.Include(e => e.Provincia!));
         }
     }
 }

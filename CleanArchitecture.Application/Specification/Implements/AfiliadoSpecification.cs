@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Specification.Implements
 {
@@ -20,17 +21,17 @@ namespace CleanArchitecture.Application.Specification.Implements
         {            
 
             //Agrego tablas relacionadas
-            AgregarIncludes(a => a.EstadoSolicitud!);
-            AgregarIncludes(a => a.Seccional!);
-            AgregarIncludes(a => a.Sexo!);
-            AgregarIncludes(a => a.Actividad!);
-            AgregarIncludes(a => a.Puesto!);
-            AgregarIncludes(a => a.RefLocalidad!);
-            AgregarIncludes(a => a.RefLocalidad!.Provincia!);
+            AgregarIncludes(a => a.Include(e => e.EstadoSolicitud!));
+            AgregarIncludes(a => a.Include(e => e.Seccional!));
+            AgregarIncludes(a => a.Include(e => e.Sexo!));
+            AgregarIncludes(a => a.Include(e => e.Actividad!));
+            AgregarIncludes(a => a.Include(e => e.Puesto!));
+            AgregarIncludes(a => a.Include(e => e.RefLocalidad!));
+            AgregarIncludes(a => a.Include(e => e.RefLocalidad!.Provincia!));
             //AgregarIncludes(a => a.Empresa!);
-            AgregarIncludes(a => a.Nacionalidad!);
-            AgregarIncludes(a => a.EstadoCivil!);
-            AgregarIncludes(a => a.TipoDocumento!);
+            AgregarIncludes(a => a.Include(e => e.Nacionalidad!));
+            AgregarIncludes(a => a.Include(e => e.EstadoCivil!));
+            AgregarIncludes(a => a.Include(e => e.TipoDocumento!));
 
             //Paginacion
             ApplyPaging(query.PageSize * (query.PageIndex - 1), query.PageSize);
@@ -45,17 +46,16 @@ namespace CleanArchitecture.Application.Specification.Implements
         public AfiliadoSpecification(int pId) : base(x => x.Id == pId)
         {
             //Agrego tablas relacionadas
-            AgregarIncludes(a => a.EstadoSolicitud!);
-            AgregarIncludes(a => a.Seccional!);
-            AgregarIncludes(a => a.Sexo!);
-            AgregarIncludes(a => a.Actividad!);
-            AgregarIncludes(a => a.Puesto!);
-            AgregarIncludes(a => a.RefLocalidad!);
-            AgregarIncludes(a => a.RefLocalidad!.Provincia!);
-            //AgregarIncludes(a => a.Empresa!);
-            AgregarIncludes(a => a.Nacionalidad!);
-            AgregarIncludes(a => a.EstadoCivil!);
-            AgregarIncludes(a => a.TipoDocumento!);
+            AgregarIncludes(a => a.Include(e => e.EstadoSolicitud!));
+            AgregarIncludes(a => a.Include(e => e.Seccional!));
+            AgregarIncludes(a => a.Include(e => e.Sexo!));
+            AgregarIncludes(a => a.Include(e => e.Actividad!));
+            AgregarIncludes(a => a.Include(e => e.Puesto!));
+            AgregarIncludes(a => a.Include(e => e.RefLocalidad!));
+            AgregarIncludes(a => a.Include(e => e.RefLocalidad!.Provincia!));
+            AgregarIncludes(a => a.Include(e => e.Nacionalidad!));
+            AgregarIncludes(a => a.Include(e => e.EstadoCivil!));
+            AgregarIncludes(a => a.Include(e => e.TipoDocumento!));
         }
 
         
