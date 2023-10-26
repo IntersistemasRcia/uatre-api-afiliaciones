@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Models;
+using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Application.Specification;
 using CleanArchitecture.Application.Specification.Implements;
+using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 
@@ -26,9 +28,22 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
             var padronList = await _unitOfWork.AfiliadoRepository.ListarAfiliados(spec);
             var padronListConMarcaAutoridad = await _unitOfWork.AfiliadoRepository.VerificarAutoridadSeccional(padronList);
 
+            foreach (var afiliado in padronList)
+            {
+                
+            }
+
             var totalRecords = await _unitOfWork.Repository<Domain.Afiliado>().CountAsync(new BaseSpecification<Domain.Afiliado>(spec.Criteria));
             var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));    
             var data = _mapper.Map<List<AfiliadoVm>>(padronListConMarcaAutoridad);
+
+            foreach (var afiliado in data)
+            {
+                var documentacion = await _unitOfWork.RefRepository.GetDocumentacionEntidadById("A", afiliado.Id);
+
+                afiliado.Documentacion = new List<DocumentacionEntidad>();
+                afiliado.Documentacion = (List<DocumentacionEntidad>)documentacion;
+            }
 
             return new Pagination<AfiliadoVm>()
             {

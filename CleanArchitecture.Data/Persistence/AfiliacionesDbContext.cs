@@ -14,7 +14,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (var entry in ChangeTracker.Entries<BaseDomainModel>())
+            foreach (var entry in ChangeTracker.Entries<EntidadAuditable>())
             {
                 switch (entry.State)
                 {

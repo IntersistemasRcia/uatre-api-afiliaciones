@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CleanArchitecture.Domain
 {
-    public class Actividad : BaseDomainModel
+    public class Actividad : EntidadAuditable
     {
         [StringLength(50)]
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
     }
 }

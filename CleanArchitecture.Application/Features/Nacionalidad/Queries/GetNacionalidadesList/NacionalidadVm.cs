@@ -1,8 +1,9 @@
-﻿namespace CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidadesList
+﻿using CleanArchitecture.Domain.Commom;
+
+namespace CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidadesList
 {
-    public class NacionalidadVm
+    public class NacionalidadVm : EntidadAuditable
     {
-        public int Id { get; set; }
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
     }
 }

@@ -13,6 +13,7 @@ public class UpdateSeccionalCommand : IRequest<int>
     public string? Observaciones { get; set; }
     public string? Estado { get; set; }
     public int RefDelegacionId { get; set; }
+    public int RefLocalidadesId { get; set; }
     public ICollection<CreateSeccionalAutoridad>? SeccionalAutoridades { get; set; }
     public ICollection<CreateSeccionalLocalidad>? SeccionalLocalidad { get; set; }
     public ICollection<DocumentacionEntidad>? Documentacion { get; set; }

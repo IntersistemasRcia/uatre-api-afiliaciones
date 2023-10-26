@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CleanArchitecture.Domain
 {
-    public class Afiliado : BaseDomainModel
+    public class Afiliado : EntidadAuditable
     {
         [Required]
         public Int64 CUIL { get; set; }

@@ -1,9 +1,9 @@
-﻿namespace CleanArchitecture.Application.Features.Puesto.Queries
+﻿using CleanArchitecture.Domain.Commom;
+
+namespace CleanArchitecture.Application.Features.Puesto.Queries
 {
-    public class PuestoVm
+    public class PuestoVm : EntidadAuditable
     {
-        public int Id { get; set; }
-        public string Descripcion { get; set; }
-        public DateTime? DeletedDate { get; set; }
+        public string? Descripcion { get; set; }
     }
 }

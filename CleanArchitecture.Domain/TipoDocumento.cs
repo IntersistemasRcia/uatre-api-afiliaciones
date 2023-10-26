@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Domain
 {
-    public class TipoDocumento : BaseDomainModel
+    public class TipoDocumento : EntidadAuditable
     {
         public string? Descripcion { get; set; }
     }

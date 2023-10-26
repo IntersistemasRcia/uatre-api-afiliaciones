@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CleanArchitecture.Domain.Commom;
 
 namespace CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList
 {
-    public class ActividadVm
+    public class ActividadVm : EntidadAuditable
     {
-        public int Id { get; set; }
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
     }
 }

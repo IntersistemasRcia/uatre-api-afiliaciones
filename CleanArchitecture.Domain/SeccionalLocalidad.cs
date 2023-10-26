@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Domain
 {
-    public class SeccionalLocalidad : BaseDomainModel
+    public class SeccionalLocalidad : EntidadAuditable
     {
         public SeccionalLocalidad()
         {

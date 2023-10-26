@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Domain
 {
-    public class Nacionalidad : BaseDomainModel
+    public class Nacionalidad : EntidadAuditable
     {
         public string Descripcion { get; set; }
     }

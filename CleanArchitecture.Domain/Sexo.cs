@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CleanArchitecture.Domain
 {
-    public class Sexo : BaseDomainModel
+    public class Sexo : EntidadAuditable
     {
         [StringLength(3)]
         public string Codigo { get; set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CleanArchitecture.Domain
 {
-    public class Seccional : BaseDomainModel
+    public class Seccional : EntidadAuditable
     {
         [StringLength(30)]
         public string? Codigo { get; set; }
@@ -19,6 +19,7 @@ namespace CleanArchitecture.Domain
         public string? Estado { get; set; }
         public int RefDelegacionId { get; set; }
         public int RefLocalidadesId { get; set; }
+        public RefLocalidad? RefLocalidades { get; set; }
         [NotMapped]
         public string? RefDelegacionDescripcion { get; set; }
         public ICollection<SeccionalLocalidad>? SeccionalLocalidad { get; set; }

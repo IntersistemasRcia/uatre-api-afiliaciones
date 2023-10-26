@@ -1,9 +1,9 @@
-﻿
+﻿using CleanArchitecture.Domain.Commom;
+
 namespace CleanArchitecture.Application.Features.EstadoCivil.Queries
 {
-    public class EstadoCivilVm
+    public class EstadoCivilVm : EntidadAuditable
     {
-        public int Id { get; set; }
         public string? Descripcion { get; set; }
     }
 }

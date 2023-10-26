@@ -1,11 +1,11 @@
 ﻿using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Domain;
+using CleanArchitecture.Domain.Commom;
 
 namespace CleanArchitecture.Application.Features.Afiliado.Queries
 {
-    public class AfiliadoVm
+    public class AfiliadoVm : EntidadAuditable
     {
-        public int Id { get; set; }
         public long CUIL { get; set; }
         public long CUILValidado { get; set; }
         public int Secuencia { get; set; }
@@ -79,7 +79,6 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? AFIPDomicilioDatoAdicional { get; set; }
         public string? AFIPDomicilioTipoDatoAdicional { get; set; }
         public int SeccionalAutoridadId { get; set; }
-        public DateTime? DeletedDate { get; set; }
         public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
 }

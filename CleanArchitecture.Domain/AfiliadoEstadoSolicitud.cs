@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Domain
 {
-    public class AfiliadoEstadoSolicitud : BaseDomainModel
+    public class AfiliadoEstadoSolicitud : EntidadAuditable
     {
         public AfiliadoEstadoSolicitud()
         {

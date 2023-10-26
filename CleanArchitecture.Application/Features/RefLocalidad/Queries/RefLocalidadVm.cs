@@ -1,11 +1,12 @@
-﻿namespace CleanArchitecture.Application.Features.RefLocalidad.Queries
+﻿using CleanArchitecture.Domain.Commom;
+
+namespace CleanArchitecture.Application.Features.RefLocalidad.Queries
 {
-    public class RefLocalidadVm
+    public class RefLocalidadVm : EntidadAuditable
     {
-        public int Id { get; set; }
         public string? Nombre { get; set; }
         public int CodPostal { get; set; }
         public string? Provincia { get; set; }
-        public DateTime? DeletedDate { get; set; }
+       
     }
 }

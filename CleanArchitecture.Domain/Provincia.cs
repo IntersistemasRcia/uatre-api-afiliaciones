@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CleanArchitecture.Domain
 {
-    public class Provincia : BaseDomainModel
+    public class Provincia : EntidadAuditable
     {
         public Provincia()
         {

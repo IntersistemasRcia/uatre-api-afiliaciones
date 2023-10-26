@@ -1,8 +1,9 @@
-﻿namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList
+﻿using CleanArchitecture.Domain.Commom;
+
+namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList
 {
-    public class ProvinciaVm
+    public class ProvinciaVm : EntidadAuditable
     {
-        public int Id { get; set; }
         public string? Nombre { get; set; }
         public int IdProvinciaAFIP { get; set; }
         public int SeccionalIdPorDefecto { get; set; }

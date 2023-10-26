@@ -19,6 +19,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             AgregarIncludes(x => x.Include(e => e.SeccionalLocalidad!).ThenInclude(er => er.RefLocalidad));
             AgregarIncludes(x => x.Include(e => e.SeccionalContacto!));
             AgregarIncludes(x => x.Include(e => e.SeccionalAutoridades!));
+            AgregarIncludes(x => x.Include(e => e.RefLocalidades!));
         }
 
         public SeccionalSpecification(int pId) : base(x => x.Id == pId)
@@ -26,6 +27,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             AgregarIncludes(x => x.Include(e => e.SeccionalLocalidad!));
             AgregarIncludes(x => x.Include(e => e.SeccionalContacto!));
             AgregarIncludes(x => x.Include(e => e.SeccionalAutoridades!));
+            AgregarIncludes(x => x.Include(e => e.RefLocalidades!));
         }
     }
 }

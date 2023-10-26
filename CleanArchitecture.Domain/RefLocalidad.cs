@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Domain
 {
-    public class RefLocalidad : BaseDomainModel
+    public class RefLocalidad : EntidadAuditable
     {
         public int Codigo { get; set; }
         public string? Nombre { get; set; }

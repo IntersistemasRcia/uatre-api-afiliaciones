@@ -1,7 +1,9 @@
 ﻿
+using CleanArchitecture.Domain.Commom;
+
 namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Queries
 {
-    public class SeccionalAutoridadResponse
+    public class SeccionalAutoridadResponse : EntidadAuditable
     {
         public int SeccionalId { get; set; }
         public string? SeccionalDescripcion { get; set; }
@@ -13,6 +15,5 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Queries
         public string? RefCargosDescripcion { get; set; }
         public string? AfiliadoNombre { get; set; }
         public int AfiliadoNumero { get; set; }
-        public DateTime? DeletedDate { get; set; }
     }
 }

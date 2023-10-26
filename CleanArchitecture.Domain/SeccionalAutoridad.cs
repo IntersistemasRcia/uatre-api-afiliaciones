@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CleanArchitecture.Domain
 {
-    public class SeccionalAutoridad : BaseDomainModel
+    public class SeccionalAutoridad : EntidadAuditable
     {
         public int SeccionalId { get; set; }
         public Seccional? Seccional { get; set; }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CleanArchitecture.Domain
 {
-    public class EstadoSolicitud : BaseDomainModel
+    public class EstadoSolicitud : EntidadAuditable
     {
         [StringLength(50)]
         public string Descripcion { get; set; }
