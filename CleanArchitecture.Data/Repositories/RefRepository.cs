@@ -1,16 +1,23 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Infrastructure.Persistence;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Polly;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace CleanArchitecture.Infrastructure.Repositories
 {
     public class RefRepository : IRefRepository
     {
         private readonly UATRERefDbContext _context;
-        public RefRepository(UATRERefDbContext context)
+        private IDbConnection _db;
+
+        public RefRepository(UATRERefDbContext context, IConfiguration configuration)
         {
+            _db = new SqlConnection(configuration.GetConnectionString("UATRERefConnection"));
             _context = context;
         }
 
@@ -68,6 +75,22 @@ namespace CleanArchitecture.Infrastructure.Repositories
             //await context.SaveChangesAsync();
 
             return Entity;
+        }
+
+        public async Task BorrarDocumentacionEntidad(string tipo, int id)
+        {
+            try
+            {
+                string SQL = $"DELETE FROM DocumentacionEntidades WHERE EntidadTipo = '{tipo}' AND EntidadId = {id}";
+                using (var connection = _db)
+                {
+                    var affectedRows = connection.Execute(SQL);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
         }
     }
 }

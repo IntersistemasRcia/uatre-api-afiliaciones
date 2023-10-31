@@ -26,6 +26,11 @@ namespace CleanArchitecture.Infrastructure.Persistence
                         entry.Entity.LastModifiedDate = DateTime.Now;
                         entry.Entity.LastModifiedBy = "change";
                         break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.Entity.DeletedDate = DateTime.Now;
+                        entry.Entity.DeletedBy = "delete";
+                        break;
                 }
             }
 

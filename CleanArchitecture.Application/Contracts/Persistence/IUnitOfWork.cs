@@ -11,5 +11,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         ISeccionalRepository SeccionalRepository { get; }
         IAsyncRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel;
         Task<int> CommitAsync();
+        Task<int> CommitAsyncUatreRefContext();
+        Task<int> CommitAsyncAllContext();
     }
 }

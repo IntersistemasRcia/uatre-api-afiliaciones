@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CleanArchitecture.Domain.Commom;
+using System.ComponentModel.DataAnnotations;
 
 namespace CleanArchitecture.Application.Models.APIComunes
 {
-    public class DocumentacionEntidad
+    public class DocumentacionEntidad : EntidadAuditable
     {        
-        public int Id { get; set; }
         public string? EntidadTipo { get; set; }
         public int EntidadId { get; set; }
         public int RefTipoDocumentacionId { get; set; }

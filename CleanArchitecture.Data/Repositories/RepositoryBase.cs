@@ -66,22 +66,6 @@ namespace CleanArchitecture.Infrastructure.Repositories
             return entity;
         }        
 
-        //public void AddEntity(T Entity)
-        //{
-        //    context.Set<T>().Add(Entity);
-        //}
-
-        //public void DeleteEntity(T Entity)
-        //{
-        //    context.Set<T>().Attach(Entity);
-        //    context.Entry(Entity).State = EntityState.Modified;
-        //}
-
-        //public void UpdateEntity(T Entity)
-        //{
-        //    context.Set<T>().Remove(Entity);
-        //}        
-
         public async Task<int> CountAsync(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).CountAsync();
@@ -102,6 +86,35 @@ namespace CleanArchitecture.Infrastructure.Repositories
             }
 
             return entity;
+        }
+
+        public void DarDeBajaAsync(T Entity, JsonPatchDocument model)
+        {
+            try
+            {
+                context.Set<T>();
+                context.Entry(Entity).State = EntityState.Deleted;
+                model.ApplyTo(Entity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"No se pudo dar de Baja {Entity.GetType()}. Error: {ex.Message}");
+            }
+        }
+
+        public void ReactivarAsync(T Entity, JsonPatchDocument model)
+        {
+            try
+            {
+                context.Set<T>();
+                context.Entry(Entity).State = EntityState.Modified;
+                model.ApplyTo(Entity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"No se pudo Reactivar {Entity.GetType()}. Error: {ex.Message}");
+            }
+
         }
     }
 }

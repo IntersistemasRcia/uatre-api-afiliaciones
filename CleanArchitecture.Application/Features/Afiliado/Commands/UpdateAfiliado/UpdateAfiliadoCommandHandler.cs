@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Models.APIComunes;
+using CleanArchitecture.Application.Specification.Implements;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
 using MediatR;
@@ -21,7 +23,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliad
         }
         public async Task<int> Handle(UpdateAfiliadoCommand request, CancellationToken cancellationToken)
         {
-            var entityToUpdate = await unitOfWork.Repository<Domain.Afiliado>().GetByIdAsync(request.Id);            
+
+            var entityToUpdate = await unitOfWork.Repository<Domain.Afiliado>().GetByIdAsync(request.Id);
 
             entityToUpdate = (Domain.Afiliado)mapper.Map(request, entityToUpdate, typeof(UpdateAfiliadoCommand), typeof(Domain.Afiliado));
 
@@ -31,12 +34,20 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliad
 
                 if (request.Documentacion?.Count > 0)
                 {
-                    unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entityToUpdate.Id);
+                    await unitOfWork.RefRepository.BorrarDocumentacionEntidad("A", request.Id);
+                    foreach (var item in request.Documentacion!)
+                    {
+                        item.Id = 0;
+                        await unitOfWork.RefRepository.AddAsync(item);
+                    }
                 }
 
-                var result = await unitOfWork.CommitAsync();
+                var t1 = unitOfWork.CommitAsync();
+                var t2 = unitOfWork.CommitAsyncUatreRefContext();
 
-                return result;
+                await Task.WhenAll(t1, t2);
+
+                return t1.Result + t2.Result;
             }
             catch (Exception ex)
             {

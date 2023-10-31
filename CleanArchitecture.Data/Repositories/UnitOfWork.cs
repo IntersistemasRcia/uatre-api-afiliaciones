@@ -20,8 +20,8 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private ISeccionalRepository _seccionalRepository;
 
         //Repositorios especiales no se inyectan, de definen x propiedades
-        public IRefRepository RefRepository => _refRepository ??= new RefRepository(uatreContext);
-        public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context, httpClientFactory, configuration, new RefRepository(uatreContext));
+        public IRefRepository RefRepository => _refRepository ??= new RefRepository(uatreContext, configuration);
+        public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context, httpClientFactory, configuration, new RefRepository(uatreContext, configuration));
         public ISeccionalAutoridadRepository SeccionalAutoridadRepository => seccionalAutoridadRepository ??= new SeccionalAutoridadRepository(configuration, httpClientFactory);
         public ISeccionalRepository SeccionalRepository => _seccionalRepository ??= new SeccionalRepository(context);
 
@@ -39,6 +39,21 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public async Task<int> CommitAsync()
         {
             return await context.SaveChangesAsync();            
+        }
+
+        public async Task<int> CommitAsyncUatreRefContext()
+        {
+            return await uatreContext.SaveChangesAsync();
+        }
+
+        public async Task<int> CommitAsyncAllContext()
+        {
+            var t1 = context.SaveChangesAsync();
+            var t2 = uatreContext.SaveChangesAsync();
+
+            await Task.WhenAll(t1, t2);
+            
+            return t1.Result + t2.Result;
         }
 
         public void Dispose()

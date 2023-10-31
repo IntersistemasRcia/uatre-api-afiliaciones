@@ -214,6 +214,6 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
             string? jsonString = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<int>(jsonString);
-        }
+        }        
     }
 }

@@ -1,4 +1,6 @@
 ﻿using CleanArchitecture.Application.Features.Seccional.Command.Create;
+using CleanArchitecture.Application.Features.Seccional.Command.DarDeBaja;
+using CleanArchitecture.Application.Features.Seccional.Command.Reactivar;
 using CleanArchitecture.Application.Features.Seccional.Command.Update;
 using CleanArchitecture.Application.Features.Seccional.Queries;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesList;
@@ -57,6 +59,22 @@ namespace CleanArchitecture.API.Controllers
         public async Task<ActionResult<int>> Update([FromBody] UpdateSeccionalCommand command)
         {
             var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPatch("DarDeBaja")]
+        public async Task<ActionResult<int>> DarDeBaja([FromBody] DarDeBajaCommand request)
+        {
+            var response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
+        [HttpPatch("Reactivar")]
+        public async Task<ActionResult<int>> Reactivar([FromBody] ReactivarCommand request)
+        {
+            var response = await _mediator.Send(request);
+
             return Ok(response);
         }
     }

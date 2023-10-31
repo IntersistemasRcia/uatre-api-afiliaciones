@@ -26,6 +26,26 @@ namespace CleanArchitecture.Infrastructure.Persistence
             modelBuilder.Entity<RefMotivosBaja>().ToTable("RefMotivosBaja", t => t.ExcludeFromMigrations());
         }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries<EntidadAuditable>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedDate = DateTime.Now;
+                        entry.Entity.CreatedBy = "test";
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.LastModifiedDate = DateTime.Now;
+                        entry.Entity.LastModifiedBy = "change";
+                        break;
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         public DbSet<Empresa>? Empresas { get; set; }
         public DbSet<RefDelegacion>? RefDelegaciones { get; set; }
         public DbSet<DocumentacionEntidad>? DocumentacionEntidades { get; set; }

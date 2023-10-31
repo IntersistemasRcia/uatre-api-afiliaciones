@@ -38,7 +38,7 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Update
                     foreach (var item in request.Documentacion!)
                     {
                         var reg = await unitOfWork.RefRepository.GetById<DocumentacionEntidad>(item.Id);
-                        if (reg != null)
+                        if (reg == null)
                         {
                             await unitOfWork.RefRepository.AddAsync(item);
                         }
