@@ -36,7 +36,7 @@ public class ReactivarCommandHandler : IRequestHandler<ReactivarCommand, int>
             patchModel.Replace(nameof(Domain.Seccional.DeletedBy), null);
             patchModel.Replace(nameof(Domain.Seccional.DeletedObs), null);
 
-            unitOfWork.Repository<Domain.Seccional>().DarDeBajaAsync(entidad, patchModel);
+            unitOfWork.Repository<Domain.Seccional>().ReactivarAsync(entidad, patchModel);
             return await unitOfWork.CommitAsync();
         }
         catch (Exception)

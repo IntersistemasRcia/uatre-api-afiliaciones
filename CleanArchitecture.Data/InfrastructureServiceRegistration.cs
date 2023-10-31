@@ -46,7 +46,7 @@ namespace CleanArchitecture.Infrastructure
             //var contextOptions = new DbContextOptionsBuilder<AfiliacionesDbContext>()
             //    .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
             //    .Options;
-            
+
             //    using var context = new AfiliacionesDbContext(contextOptions);
             //    {
             //        context.Database.EnsureCreated();

@@ -1,4 +1,6 @@
 ﻿using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.CreateSeccionalAutoridad;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.DarDeBajaSeccionalAutoridad;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.ReactivarSeccionalAutoridad;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries.GetById;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries.GetBySeccional;
@@ -65,6 +67,22 @@ namespace CleanArchitecture.API.Controllers
         public async Task<ActionResult<int>> CreateSeccionalAutoridad([FromBody] CreateSeccionalAutoridadCommand command)
         {
             return await _mediator.Send(command);
-        }       
+        }
+
+        [HttpPatch("DarDeBaja")]
+        public async Task<ActionResult<int>> DarDeBaja([FromBody] DarDeBajaSeccionalAutoridadCommand request)
+        {
+            var response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
+        [HttpPatch("Reactivar")]
+        public async Task<ActionResult<int>> Reactivar([FromBody] ReactivarDarDeBajaSeccionalAutoridadCommand request)
+        {
+            var response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
     }
 }

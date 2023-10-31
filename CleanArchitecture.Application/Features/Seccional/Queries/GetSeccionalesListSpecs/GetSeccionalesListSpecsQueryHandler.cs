@@ -2,6 +2,7 @@
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Specification.Implements;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs
 {
