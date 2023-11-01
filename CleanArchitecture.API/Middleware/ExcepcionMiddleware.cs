@@ -76,7 +76,7 @@ namespace CleanArchitecture.API.Middleware
             }
         }
 
-        public string? ValidateToken(string token)
+        private string? ValidateToken(string token)
         {
             if (token == null)
                 return null;

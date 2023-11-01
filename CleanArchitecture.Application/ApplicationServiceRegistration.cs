@@ -1,4 +1,4 @@
-﻿//using CleanArchitecture.Application.Behaviours;
+﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +16,7 @@ namespace CleanArchitecture.Application
             //Servicios
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            //services.AddValidatorsFromAssemblyContaining<GetSeccionalesListSpecsQueryValidator>(ServiceLifetime.Transient);
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             ////Behaviours
@@ -29,10 +30,9 @@ namespace CleanArchitecture.Application
             })
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                 .AddPolicyHandler(GetRetryPolicy());
-                //.AddPolicyHandler(GetCircuitBreakerPolicy());
+            //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
             //Cors
-
 
             return services;
         }

@@ -34,10 +34,10 @@ namespace CleanArchitecture.API.Controllers
             return Ok(list);
         }
 
-        [HttpGet("GetSeccionalesSpecs", Name = "GetSeccionalesSpecs")]
+        [HttpPost("GetSeccionalesSpecs", Name = "GetSeccionalesSpecs")]
         //[Authorize]
         [ProducesResponseType(typeof(IReadOnlyList<SeccionalVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IReadOnlyCollection<SeccionalVm>>> GetSeccionalesSpecs([FromQuery] GetSeccionalesListSpecsQuery query)
+        public async Task<ActionResult<IReadOnlyCollection<SeccionalVm>>> GetSeccionalesSpecs([FromBody] GetSeccionalesListSpecsQuery query)
         {
             var list = await _mediator.Send(query);
 

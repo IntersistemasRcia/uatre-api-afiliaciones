@@ -1,10 +1,11 @@
 using CleanArchitecture.API.Middleware;
 using CleanArchitecture.Application;
+using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Persistence;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
