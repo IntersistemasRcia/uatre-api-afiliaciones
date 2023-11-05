@@ -2,7 +2,6 @@
 using CleanArchitecture.Domain.Commom;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
@@ -21,7 +20,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             //var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-            var userId = _httpContextAccessor.HttpContext.Items["User"].ToString() ?? "SinDatos";
+            var userId = _httpContextAccessor.HttpContext.Items["User"]?.ToString() ?? "SinDatos";
 
             foreach (var entry in ChangeTracker.Entries<EntidadAuditable>())
             {

@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Models;
+﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
+using CleanArchitecture.Application.Models;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList
@@ -21,6 +22,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         public int? EstadoSolicitudId { get; set; }
         public int? EmpresaId { get; set; }
         public bool SoloActivos { get; set; } = true;
+        public ICollection<Ambito> Ambitos { get; set; }
 
         //public string? FilterBy { get; set; }
         //public string? FilterValue { get; set; }

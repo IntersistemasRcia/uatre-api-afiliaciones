@@ -23,6 +23,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             //Agrego tablas relacionadas
             AgregarIncludes(a => a.Include(e => e.EstadoSolicitud!));
             AgregarIncludes(a => a.Include(e => e.Seccional!));
+            AgregarIncludes(a => a.Include(e => e.Seccional!).ThenInclude(r => r.SeccionalLocalidad).ThenInclude(s => s.RefLocalidad));
             AgregarIncludes(a => a.Include(e => e.Sexo!));
             AgregarIncludes(a => a.Include(e => e.Actividad!));
             AgregarIncludes(a => a.Include(e => e.Puesto!));

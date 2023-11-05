@@ -8,7 +8,8 @@ namespace CleanArchitecture.Application.Specification.Implements
         public SeccionalAutoridadSpecification(GetSeccionalAutoridadBySpecsQuery query)
             : base(x =>
                 (x.SeccionalId == query.SeccionalId)  &&
-                (!query.SoloActivos || x.DeletedDate == null)
+                (!query.SoloActivos || x.DeletedDate == null) &&
+                (!query.SoloVigentes || x.FechaVigenciaDesde <= DateTime.Now.Date && x.FechaVigenciaHasta >= DateTime.Now.Date)
             )
         {
 

@@ -24,10 +24,10 @@ namespace CleanArchitecture.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("GetAfiliadosWithSpec", Name = "GetAfiliadosAll")]
+        [HttpPost("GetAfiliadosWithSpec", Name = "GetAfiliadosAll")]
         //[Authorize]
         [ProducesResponseType(typeof(Pagination<AfiliadoVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Pagination<AfiliadoVm>>> GetAfiliadosWithSpec([FromQuery] GetAfiliadoListQuery query)
+        public async Task<ActionResult<Pagination<AfiliadoVm>>> GetAfiliadosWithSpec([FromBody] GetAfiliadoListQuery query)
         {
             _logger.LogInformation("Query", query);
             //var query = new GetPadronListQuery(parameters);

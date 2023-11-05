@@ -52,10 +52,10 @@ namespace CleanArchitecture.API.Controllers
         {
             //var query = new GetPadronListQuery(parameters);
             var list = await _mediator.Send(query);
-            if (!list.Any())
-            {
-                return NotFound();
-            }
+            //if (!list.Any())
+            //{
+            //    return NotFound();
+            //}
 
             return Ok(list);
         }

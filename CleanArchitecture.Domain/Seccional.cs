@@ -15,9 +15,9 @@ namespace CleanArchitecture.Domain
         [StringLength(2000)]
         public string? Observaciones { get; set; }
         [StringLength(20)]
-        [RegularExpression("^Normalizada$|^Transitoria$|^Acefala$|^Fusionada$|^Activa$|^Inactiva$", ErrorMessage = "Valor NO Aceoptado")]
+        [RegularExpression("^Normalizada$|^Transitoria$|^Acefala$|^Fusionada$|^Activa$|^Inactiva$", ErrorMessage = "Valor NO Aceptado")]
         public string? Estado { get; set; }
-        public int RefDelegacionId { get; set; }
+        public int RefDelegacionId { get; set; }        
         public int RefLocalidadesId { get; set; }
         public RefLocalidad? RefLocalidades { get; set; }
         [NotMapped]

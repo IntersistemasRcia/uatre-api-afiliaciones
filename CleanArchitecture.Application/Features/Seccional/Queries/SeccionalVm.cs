@@ -12,6 +12,8 @@ namespace CleanArchitecture.Application.Features.Seccional.Queries
         public int RefLocalidadesId { get; set; }
         public string? LocalidadNombre { get; set; }
         public int LocalidadCodPostal { get; set; }
+        public int RefDelegacionId { get; set; }
+        public string? RefDelegacionDescripcion { get; set; }
         public ICollection<SeccionalLocalidadVm>? SeccionalLocalidad { get; set; }
     }
 
