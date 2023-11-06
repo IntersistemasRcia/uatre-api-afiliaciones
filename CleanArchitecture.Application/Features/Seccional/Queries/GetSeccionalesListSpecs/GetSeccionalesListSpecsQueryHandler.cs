@@ -66,20 +66,20 @@ namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionale
                     var refDelegacion = await _unitOfWork.RefRepository.GetDelegacionById(item.RefDelegacionId);
 
                     item.RefDelegacionDescripcion = refDelegacion?.Nombre ?? string.Empty;
-                }
-                return _mapper.Map<List<SeccionalVm>>(returnList);
+                }                
             }
             else
             {
+                returnList.AddRange(list);
                 foreach (var item in returnList)
                 {
                     var refDelegacion = await _unitOfWork.RefRepository.GetDelegacionById(item.RefDelegacionId);
 
-                    item.RefDelegacionDescripcion = refDelegacion.Nombre;
+                    item.RefDelegacionDescripcion = refDelegacion?.Nombre ?? string.Empty;
                 }
-
-                return _mapper.Map<List<SeccionalVm>>(list);
             }
+
+            return _mapper.Map<List<SeccionalVm>>(returnList);
         }
     }
 }
