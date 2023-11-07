@@ -17,6 +17,6 @@ public class GetAfiliadoListQueryValidator : AbstractValidator<GetAfiliadoListQu
 {
     public GetAfiliadoListQueryValidator()
     {
-        RuleForEach(x => x.Ambitos).SetValidator(new AmbitoValidator());
+        //RuleForEach(x => x.Ambitos).SetValidator(new AmbitoValidator());
     }
 }

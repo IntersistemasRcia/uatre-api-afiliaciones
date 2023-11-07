@@ -13,7 +13,10 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (string.IsNullOrEmpty(query.Localidad) || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Nombre == query.Localidad).Any()) &&
                 (!query.LocalidadId.HasValue|| x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Id == query.LocalidadId).Any()) &&
                 (!query.CodigoPostal.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.CodPostal == query.CodigoPostal).Any()) &&
-                (!query.SoloActivos || x.DeletedDate == null)
+                (!query.SoloActivos || x.DeletedDate == null) &&
+                ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.Id)) &&
+                ((query.AmbitoTodos != null || query.AmbitoDelegaciones == null) || query.AmbitoDelegaciones.Ids.Contains(x.RefDelegacionId)) &&
+                ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.RefLocalidades.ProvinciaId))
             )
         {
             AgregarIncludes(x => x.Include(e => e.SeccionalLocalidad!).ThenInclude(er => er.RefLocalidad));

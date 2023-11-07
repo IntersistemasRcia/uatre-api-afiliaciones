@@ -6,8 +6,8 @@ public class AmbitoValidator : AbstractValidator<Ambito>
 {
     public AmbitoValidator()
     {
-        RuleFor(x => x.Tipo).NotEmpty().WithMessage("Debe especificar el Tipo");
-        RuleFor(x => x.Id).NotEmpty().WithMessage("Debe especificar AmbitoId");
+        //RuleFor(x => x.Tipo).NotEmpty().WithMessage("Debe especificar el Tipo");
+        //RuleFor(x => x.Id).NotEmpty().WithMessage("Debe especificar AmbitoId");
     }
     
 }
@@ -16,6 +16,6 @@ public class GetSeccionalesListSpecsQueryValidator : AbstractValidator<GetSeccio
 {
     public GetSeccionalesListSpecsQueryValidator()
     {
-        RuleForEach(x => x.Ambitos).SetValidator(new AmbitoValidator());        
+        //RuleForEach(x => x.Ambitos).SetValidator(new AmbitoValidator());        
     }
 }

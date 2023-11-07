@@ -22,7 +22,10 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         public int? EstadoSolicitudId { get; set; }
         public int? EmpresaId { get; set; }
         public bool SoloActivos { get; set; } = true;
-        public ICollection<Ambito> Ambitos { get; set; }
+        public Ambito? AmbitoTodos { get; set; }
+        public Ambito? AmbitoDelegaciones { get; set; }
+        public Ambito? AmbitoSeccionales { get; set; }
+        public Ambito? AmbitoProvincias { get; set; }
 
         //public string? FilterBy { get; set; }
         //public string? FilterValue { get; set; }
