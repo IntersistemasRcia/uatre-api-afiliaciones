@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="Constants\" />
     <Folder Include="Features\Actividad\Commands\" />
-    <Folder Include="Features\SeccionalAutoridad\Command\UpdateSeccionalAutoridad\" />
     <Folder Include="Features\Sexo\Commands\" />
   </ItemGroup>
 

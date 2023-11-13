@@ -14,7 +14,9 @@ using CleanArchitecture.Application.Features.RefLocalidad.Queries;
 using CleanArchitecture.Application.Features.Seccional.Command.Create;
 using CleanArchitecture.Application.Features.Seccional.Command.Update;
 using CleanArchitecture.Application.Features.Seccional.Queries;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.UpdateSeccionalAutoridad;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
+using CleanArchitecture.Application.Features.SeccionalContacto.Command.UpdateSeccionalContacto;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
 using CleanArchitecture.Application.Features.TipoDocumento.Queries;
@@ -75,6 +77,8 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<CreateSeccionalLocalidad, SeccionalLocalidad>();
             CreateMap<CreateRefLocalidadCommand, RefLocalidad>();
             CreateMap<UpdateRefLocalidadCommand, RefLocalidad>();
+            CreateMap<UpdateSeccionalAutoridadCommand, SeccionalAutoridad>();
+            CreateMap<UpdateSeccionalContactoCommand, SeccionalContacto>();
         }
     }
 }

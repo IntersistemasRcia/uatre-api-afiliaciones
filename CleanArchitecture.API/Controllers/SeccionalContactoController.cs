@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Features.SeccionalContacto.Command.Create;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.DarDeBajaSeccionalContacto;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.ReactivarSeccionalContacto;
+using CleanArchitecture.Application.Features.SeccionalContacto.Command.UpdateSeccionalContacto;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries.GetById;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries.GetBySpecs;
@@ -61,6 +62,16 @@ namespace CleanArchitecture.API.Controllers
 
         [HttpPatch("Reactivar")]
         public async Task<ActionResult<int>> Reactivar([FromBody] ReactivarSeccionalContactoCommand request)
+        {
+            var response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<int>> Update([FromBody] UpdateSeccionalContactoCommand request)
         {
             var response = await _mediator.Send(request);
 
