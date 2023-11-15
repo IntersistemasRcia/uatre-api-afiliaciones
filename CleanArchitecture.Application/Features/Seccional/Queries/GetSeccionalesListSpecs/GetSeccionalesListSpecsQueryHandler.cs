@@ -7,58 +7,54 @@ using CleanArchitecture.Application.Specification;
 using CleanArchitecture.Application.Specification.Implements;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Common.Helpers;
-using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs
+namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
+
+public class GetSeccionalesListSpecsQueryHandler : IRequestHandler<GetSeccionalesListSpecsQuery, Pagination<SeccionalVm>>
 {
-    public class GetSeccionalesListSpecsQueryHandler : IRequestHandler<GetSeccionalesListSpecsQuery, Pagination<SeccionalVm>>
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+
+    public GetSeccionalesListSpecsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public GetSeccionalesListSpecsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
+    }
+    public async Task<Pagination<SeccionalVm>> Handle(GetSeccionalesListSpecsQuery request, CancellationToken cancellationToken)
+    {
+        var todos = request.AmbitoTodos != null ? true : false;
+        if (!todos)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            var validator = new GetSeccionalesListSpecsQueryValidator();
+            var result = validator.Validate(request);
+            if (!result.IsValid)
+            {
+                throw new BadRequestException(result.Errors.Select(x => x.ErrorMessage).ToList().ToJsonString());
+            }
         }
-        public async Task<Pagination<SeccionalVm>> Handle(GetSeccionalesListSpecsQuery request, CancellationToken cancellationToken)
+
+        var spec = new SeccionalSpecification(request);
+        var list = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(spec);
+        
+        foreach (var item in list)
         {
-            var todos = request.AmbitoTodos != null ? true : false;
-            if (!todos)
-            {
-                var validator = new GetSeccionalesListSpecsQueryValidator();
-                var result = validator.Validate(request);
-                if (!result.IsValid)
-                {
-                    throw new BadRequestException(result.Errors.Select(x => x.ErrorMessage).ToList().ToJsonString());
-                }
-            }
+            var refDelegacion = await _unitOfWork.RefRepository.GetDelegacionById(item.RefDelegacionId);
 
-            var spec = new SeccionalSpecification(request);
-            var list = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(spec);
-            
-            foreach (var item in list)
-            {
-                var refDelegacion = await _unitOfWork.RefRepository.GetDelegacionById(item.RefDelegacionId);
-
-                item.RefDelegacionDescripcion = refDelegacion?.Nombre ?? string.Empty;
-            }
-
-            var totalRecords = await _unitOfWork.Repository<Domain.Seccional>().CountAsync(new BaseSpecification<Domain.Seccional>(spec.Criteria));
-            var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
-            var data = _mapper.Map<List<SeccionalVm>>(list);
-
-            return new Pagination<SeccionalVm>()
-            {
-                Index = request.GetPageIndex(),
-                Size = request.GetPageSize(),
-                Pages = totalPages,
-                Count = totalRecords,
-                Data = data
-            };
+            item.RefDelegacionDescripcion = refDelegacion?.Nombre ?? string.Empty;
         }
+
+        var totalRecords = await _unitOfWork.Repository<Domain.Seccional>().CountAsync(new BaseSpecification<Domain.Seccional>(spec.Criteria));
+        var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
+        var data = _mapper.Map<List<SeccionalVm>>(list);
+
+        return new Pagination<SeccionalVm>()
+        {
+            Index = request.GetPageIndex(),
+            Size = request.GetPageSize(),
+            Pages = totalPages,
+            Count = totalRecords,
+            Data = data
+        };
     }
 }

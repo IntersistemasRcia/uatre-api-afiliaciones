@@ -14,8 +14,10 @@ using CleanArchitecture.Application.Features.RefLocalidad.Queries;
 using CleanArchitecture.Application.Features.Seccional.Command.Create;
 using CleanArchitecture.Application.Features.Seccional.Command.Update;
 using CleanArchitecture.Application.Features.Seccional.Queries;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.CreateSeccionalAutoridad;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.UpdateSeccionalAutoridad;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
+using CleanArchitecture.Application.Features.SeccionalContacto.Command.Create;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.UpdateSeccionalContacto;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
@@ -46,7 +48,7 @@ namespace CleanArchitecture.Application.Mappings
                 //.ForMember(a => a.Empresa, x => x.MapFrom(b => b.Empresa!.RazonSocial))
                 .ForMember(a => a.Nacionalidad, x => x.MapFrom(b => b.Nacionalidad!.Descripcion))
                 .ForMember(a => a.EstadoCivil, x => x.MapFrom(b => b.EstadoCivil!.Descripcion))
-                .ForMember(a => a.TipoDocumento, x => x.MapFrom(b => b.EstadoCivil!.Descripcion))
+                .ForMember(a => a.TipoDocumento, x => x.MapFrom(b => b.TipoDocumento!.Descripcion))
                 ;
             CreateMap<Puesto, PuestoVm>();
             CreateMap<RefLocalidad, SeccionalLocalidadVm>();
@@ -79,6 +81,8 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<UpdateRefLocalidadCommand, RefLocalidad>();
             CreateMap<UpdateSeccionalAutoridadCommand, SeccionalAutoridad>();
             CreateMap<UpdateSeccionalContactoCommand, SeccionalContacto>();
+            CreateMap<CreateSeccionalAutoridadCommand, SeccionalAutoridad>();
+            CreateMap<CreateSeccionalContactoCommand, SeccionalContacto>();
         }
     }
 }

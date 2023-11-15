@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Features.Seccional.Command.DarDeBaja;
 using CleanArchitecture.Application.Features.Seccional.Command.Reactivar;
 using CleanArchitecture.Application.Features.Seccional.Command.Update;
 using CleanArchitecture.Application.Features.Seccional.Queries;
+using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalById;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesList;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Common.Exceptions;
@@ -22,6 +23,16 @@ namespace CleanArchitecture.API.Controllers
         public SeccionalController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("{Id}")]
+        //[Authorize]
+        [ProducesResponseType(typeof(SeccionalVm), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<SeccionalVm>> GetById(int Id)
+        {
+            var record = await _mediator.Send(new GetSeccionalByIdQuery(Id));
+
+            return Ok(record);
         }
 
         [HttpGet(Name = "GetSeccionalesAll")]
