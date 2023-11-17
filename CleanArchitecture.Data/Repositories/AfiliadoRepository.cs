@@ -182,6 +182,11 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public async Task CrearAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)
         {
             afiliado.EmpresaId = await BuscarEmpresa(empresa);
+            if (afiliado.EstadoSolicitudId == 2)
+            {
+                afiliado.NroAfiliado = _context.Afiliados?.OrderByDescending(x => x.NroAfiliado).FirstOrDefault()?.NroAfiliado + 1 ?? 1;
+                afiliado.FechaIngreso = DateTime.Now.Date;
+            }
             await _context.Set<Afiliado>().AddAsync(afiliado);
         }
 

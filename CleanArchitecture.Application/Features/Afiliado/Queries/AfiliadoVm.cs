@@ -44,6 +44,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? Telefono { get; set; }
         public string? Correo { get; set; }
         public DateTime? FechaNacimiento { get; set; }
+        public int RefMotivoBajaId { get; set; }
+        public string? RefMotivoBajaDescripcion { get; set; }
         public long? AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         public string? AFIPNombre { get; set; }

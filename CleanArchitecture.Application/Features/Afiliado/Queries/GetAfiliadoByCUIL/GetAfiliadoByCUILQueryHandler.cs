@@ -20,6 +20,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByC
         {
             var spec = new AfiliadoByCUILSpecification(request);
             var afiliado = await _unitOfWork.AfiliadoRepository.BuscarAfiliadoPorSpecs(spec);
+            var refMotivoBaja = await _unitOfWork.RefRepository.GetById<RefMotivosBaja>(afiliado.RefMotivoBajaId);
+            afiliado.RefMotivoBajaDescripcion = refMotivoBaja.Descripcion;
 
             var documentacion = await _unitOfWork.RefRepository.GetDocumentacionEntidadById("A", afiliado.Id);
 
