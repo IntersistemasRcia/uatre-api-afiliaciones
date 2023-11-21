@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
     {
         Task<IReadOnlyList<T>> GetAllAsync();        
         Task<IReadOnlyList<T>> GetAllWithSpecsAsync(ISpecification<T> spec, bool disableTracking = true);
-        Task<T> GetOneWithSpecsAsync(ISpecification<T> spec);
+        Task<T?> GetOneWithSpecsAsync(ISpecification<T> spec);
         Task<T> GetByIdAsync (int id);
         Task<T> AddAsync(T Entity);
         Task<T> UpdateAsync(T Entity);

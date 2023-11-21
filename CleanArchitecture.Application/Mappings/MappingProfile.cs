@@ -20,6 +20,7 @@ using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.Create;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.UpdateSeccionalContacto;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
 using CleanArchitecture.Application.Features.TipoDocumento.Queries;
 using CleanArchitecture.Domain;
@@ -69,6 +70,11 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
             CreateMap<SeccionalContacto, SeccionalContactoResponse>()
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
+            CreateMap<SeccionalLocalidad, SeccionalLocalidadVm>()
+                .ForMember(a => a.Codigo, x => x.MapFrom(b => b.RefLocalidad!.Codigo))
+                .ForMember(a => a.Nombre, x => x.MapFrom(b => b.RefLocalidad!.Nombre))
+                .ForMember(a => a.LitProvincia, x => x.MapFrom(b => b.RefLocalidad!.LitProvincia));
+
 
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();

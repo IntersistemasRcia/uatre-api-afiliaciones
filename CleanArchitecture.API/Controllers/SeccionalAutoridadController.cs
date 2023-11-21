@@ -79,7 +79,7 @@ namespace CleanArchitecture.API.Controllers
         }
 
         [HttpPatch("Reactivar")]
-        public async Task<ActionResult<int>> Reactivar([FromBody] ReactivarDarDeBajaSeccionalAutoridadCommand request)
+        public async Task<ActionResult<int>> Reactivar([FromBody] ReactivarSeccionalAutoridadCommand request)
         {
             var response = await _mediator.Send(request);
 

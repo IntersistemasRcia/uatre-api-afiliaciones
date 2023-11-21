@@ -76,16 +76,16 @@ namespace CleanArchitecture.Infrastructure.Repositories
             return SpecificationEvaluator<T>.GetQuery(context.Set<T>().AsQueryable(), spec);
         }
 
-        public async Task<T> GetOneWithSpecsAsync(ISpecification<T> spec)
+        public async Task<T?> GetOneWithSpecsAsync(ISpecification<T> spec)
         {
-            var entity = await ApplySpecification(spec).FirstOrDefaultAsync();
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
 
-            if (entity == null)
-            {
-                throw new NotFoundException(typeof(T).Name, "No se encontró la Entidad con el Specification indicado");
-            }
+            //if (entity == null)
+            //{
+            //    throw new NotFoundException(typeof(T).Name, "No se encontró la Entidad con el Specification indicado");
+            //}
 
-            return entity;
+            //return entity;
         }
 
         public void DarDeBajaAsync(T Entity, JsonPatchDocument model)

@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Domain.Commom;
+﻿using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
+using CleanArchitecture.Domain.Commom;
 
 namespace CleanArchitecture.Application.Features.Seccional.Queries
 {
@@ -17,9 +18,11 @@ namespace CleanArchitecture.Application.Features.Seccional.Queries
         public ICollection<SeccionalLocalidadVm>? SeccionalLocalidad { get; set; }
     }
 
-    public class SeccionalLocalidadVm
-    {
-        public int Id { get; set; }
-        public string? Nombre { get; set; }
-    }
+    //public class SeccionalLocalidadVm
+    //{
+    //    public int Id { get; set; }
+    //    public string? Nombre { get; set; }
+    //    public string? Codigo { get; set; }
+    //    public string? LitProvincia { get; set; }
+    //}
 }

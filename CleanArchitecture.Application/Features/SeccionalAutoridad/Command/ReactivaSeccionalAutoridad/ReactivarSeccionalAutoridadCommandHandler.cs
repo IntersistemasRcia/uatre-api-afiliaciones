@@ -7,20 +7,20 @@ using Microsoft.Extensions.Logging;
 
 namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Command.ReactivarSeccionalAutoridad;
 
-public class ReactivarDarDeBajaSeccionalAutoridadCommandHandler : IRequestHandler<ReactivarDarDeBajaSeccionalAutoridadCommand, int>
+public class ReactivarSeccionalAutoridadCommandHandler : IRequestHandler<ReactivarSeccionalAutoridadCommand, int>
 {
-    private readonly ILogger<ReactivarDarDeBajaSeccionalAutoridadCommandHandler> logger;
+    private readonly ILogger<ReactivarSeccionalAutoridadCommandHandler> logger;
     private readonly IMapper mapper;
     private readonly IUnitOfWork unitOfWork;
 
-    public ReactivarDarDeBajaSeccionalAutoridadCommandHandler(ILogger<ReactivarDarDeBajaSeccionalAutoridadCommandHandler> logger, IMapper mapper, IUnitOfWork unitOfWork)
+    public ReactivarSeccionalAutoridadCommandHandler(ILogger<ReactivarSeccionalAutoridadCommandHandler> logger, IMapper mapper, IUnitOfWork unitOfWork)
     {
         this.logger = logger;
         this.mapper = mapper;
         this.unitOfWork = unitOfWork;
     }
 
-    public async Task<int> Handle(ReactivarDarDeBajaSeccionalAutoridadCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(ReactivarSeccionalAutoridadCommand request, CancellationToken cancellationToken)
     {
         var entidad = await unitOfWork.Repository<Domain.SeccionalAutoridad>().GetByIdAsync(request.Id);
         if (entidad == null || entidad.DeletedDate == null)
