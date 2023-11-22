@@ -73,7 +73,8 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<SeccionalLocalidad, SeccionalLocalidadVm>()
                 .ForMember(a => a.Codigo, x => x.MapFrom(b => b.RefLocalidad!.Codigo))
                 .ForMember(a => a.Nombre, x => x.MapFrom(b => b.RefLocalidad!.Nombre))
-                .ForMember(a => a.LitProvincia, x => x.MapFrom(b => b.RefLocalidad!.LitProvincia));
+                .ForMember(a => a.LitProvincia, x => x.MapFrom(b => b.RefLocalidad!.LitProvincia))
+                .ForMember(a => a.CodPostal, x => x.MapFrom(b => b.RefLocalidad!.CodPostal));
 
 
             // Requests

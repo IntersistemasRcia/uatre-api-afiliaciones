@@ -22,7 +22,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
             _httpClientFactory = httpClientFactory;
         }
        
-        public async Task<IReadOnlyCollection<SeccionalAutoridad>> GetSeccionalAutoridadesBySeccional(int seccionalId, bool soloVigentes = true)
+        public async Task<IReadOnlyCollection<SeccionalAutoridad>> GetSeccionalAutoridadesBySeccional(int seccionalId, bool soloVigentes, bool soloActivos)
         {
             string SQL = $"SELECT SA.*, A.*, S.* FROM SeccionalAutoridades SA INNER JOIN Afiliados A ON SA.AfiliadoId = A.Id INNER JOIN Seccionales S ON SA.SeccionalId = S.Id WHERE SA.SeccionalId = {seccionalId}";
 
@@ -46,6 +46,11 @@ namespace CleanArchitecture.Infrastructure.Repositories
             if (soloVigentes == true)
             {
                 seccionalAutoridades = seccionalAutoridades.Where(x => x.FechaVigenciaDesde <= DateTime.Now.Date && x.FechaVigenciaHasta >= DateTime.Now.Date).ToList();
+            }
+
+            if (soloActivos)
+            {
+                seccionalAutoridades = seccionalAutoridades.Where(x => x.DeletedDate == null).ToList();
             }
 
             if (seccionalAutoridades.Any())

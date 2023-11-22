@@ -25,14 +25,13 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
             
             try
             {
-                await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);                
+                await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);
+                var result = await unitOfWork.CommitAsync();
 
                 if (request.Documentacion?.Count > 0)
                 {
                     unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entidad.Id);
                 }
-
-                var result = await unitOfWork.CommitAsync();
 
                 return entidad.Id;
             }

@@ -16,7 +16,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Queries.GetB
         }
         public async Task<IReadOnlyCollection<SeccionalAutoridadResponse>> Handle(GetSeccionalAutoridadesBySeccionalQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitOfWork.SeccionalAutoridadRepository.GetSeccionalAutoridadesBySeccional(request.SeccionalId, request.SoloActivos);
+            var list = await _unitOfWork.SeccionalAutoridadRepository.GetSeccionalAutoridadesBySeccional(request.SeccionalId, request.SoloVigentes, request.SoloActivos);
 
             return _mapper.Map<IReadOnlyCollection<SeccionalAutoridadResponse>>(list);
         }
