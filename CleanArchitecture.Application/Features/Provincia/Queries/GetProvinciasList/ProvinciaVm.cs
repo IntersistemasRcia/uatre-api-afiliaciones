@@ -8,5 +8,7 @@ namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvincias
         public int IdProvinciaAFIP { get; set; }
         public int SeccionalIdPorDefecto { get; set; }
         public string? SeccionalDescripcionPorDefecto { get; set; }
+        public int LocalidadIdPorDefecto { get; set; }
+        public string? LocalidadDescripcionPorDefecto { get; set; }
     }
 }

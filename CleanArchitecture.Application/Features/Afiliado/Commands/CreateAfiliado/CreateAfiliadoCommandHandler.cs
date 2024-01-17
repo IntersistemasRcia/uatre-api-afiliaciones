@@ -22,7 +22,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         public async Task<int> Handle(CreateAfiliadoCommand request, CancellationToken cancellationToken)
         {
             var entidad = mapper.Map<Domain.Afiliado>(request);
-            
+            entidad.CUILValidado = request.CUIL;
+
             try
             {
                 await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);

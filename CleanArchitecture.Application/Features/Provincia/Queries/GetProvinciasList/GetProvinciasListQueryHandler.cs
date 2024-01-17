@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Specification.Implements;
+using CleanArchitecture.Domain;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList
@@ -19,8 +20,21 @@ namespace CleanArchitecture.Application.Features.Provincia.Queries.GetProvincias
         {
             var spec = new ProvinciasGetAllSpec(request);
             var list = await _unitOfWork.Repository<Domain.Provincia>().GetAllWithSpecsAsync(spec);
+            var data = _mapper.Map<List<ProvinciaVm>>(list);
+            foreach (var item in data)
+            {
+                if (item.LocalidadIdPorDefecto > 0)
+                {
+                    var localidadDefecto = await _unitOfWork.Repository<Domain.RefLocalidad>().GetByIdAsync(item.LocalidadIdPorDefecto);
+                    item.LocalidadDescripcionPorDefecto = localidadDefecto?.Nombre ?? "Sin Datos";
+                }
+                else
+                {
+                    item.LocalidadDescripcionPorDefecto = "Sin Datos";
+                }
+            }
 
-            return _mapper.Map<List<ProvinciaVm>>(list);
+            return data;
         }
     }
 }

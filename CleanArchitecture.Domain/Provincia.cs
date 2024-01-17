@@ -16,5 +16,6 @@ namespace CleanArchitecture.Domain
         public int IdProvinciaAFIP { get; set; }
         public int SeccionalIdPorDefecto { get; set; }
         public Seccional Seccional { get; set; }
+        public int LocalidadIdPorDefecto { get; set; }
     }
 }
