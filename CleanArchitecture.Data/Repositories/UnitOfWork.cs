@@ -10,6 +10,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
     {
         private readonly AfiliacionesDbContext context;
         private readonly UATRERefDbContext uatreContext;
+        private readonly AfiliacionesDapperContext dapperContext;
         private Hashtable repositories;
         private IConfiguration configuration;
         private IHttpClientFactory httpClientFactory;
@@ -18,23 +19,31 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private IAfiliadoRepository afiliadoRepository;
         private ISeccionalAutoridadRepository seccionalAutoridadRepository;
         private ISeccionalRepository _seccionalRepository;
+        private IRefLocalidadRepository _refLocalidadRepository;
 
         //Repositorios especiales no se inyectan, de definen x propiedades
         public IRefRepository RefRepository => _refRepository ??= new RefRepository(uatreContext, configuration);
         public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context, httpClientFactory, configuration, new RefRepository(uatreContext, configuration));
         public ISeccionalAutoridadRepository SeccionalAutoridadRepository => seccionalAutoridadRepository ??= new SeccionalAutoridadRepository(configuration, httpClientFactory);
-        public ISeccionalRepository SeccionalRepository => _seccionalRepository ??= new SeccionalRepository(context);
+        public ISeccionalRepository SeccionalRepository => _seccionalRepository ??= new SeccionalRepository(context, dapperContext);
+        public IRefLocalidadRepository RefLocalidadRepository => _refLocalidadRepository ??= new RefLocalidadRepository(dapperContext);
 
-        public UnitOfWork(AfiliacionesDbContext context, IConfiguration configuration, IHttpClientFactory httpClientFactory, UATRERefDbContext uatreContext)
+        public UnitOfWork(AfiliacionesDbContext context, 
+            IConfiguration configuration, 
+            IHttpClientFactory httpClientFactory, 
+            UATRERefDbContext uatreContext,
+            AfiliacionesDapperContext dapperContext)
         {
             this.context = context;
             this.configuration = configuration;
             this.httpClientFactory = httpClientFactory;
             this.uatreContext = uatreContext;
+            this.dapperContext = dapperContext;
         }
 
         public AfiliacionesDbContext AfiliacionesDbContext => context;
         public UATRERefDbContext UATRERefDbContext => uatreContext;
+        public AfiliacionesDapperContext AfiliacionesDapperContext => dapperContext;
 
         public async Task<int> CommitAsync()
         {

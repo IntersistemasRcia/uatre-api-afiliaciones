@@ -23,6 +23,7 @@ namespace CleanArchitecture.Infrastructure
             services.AddDbContext<UATRERefDbContext>(opt => {
                 opt.UseSqlServer(configuration.GetConnectionString("UATRERefConnection") ?? throw new ArgumentNullException("UATRERefConnection no seteado"));
             });
+            services.AddScoped<AfiliacionesDapperContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));               

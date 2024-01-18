@@ -29,7 +29,8 @@ namespace CleanArchitecture.Application.Specification.Implements
 
         public SeccionalSpecification(int pId) : base(x => x.Id == pId)
         {
-            AgregarIncludes(x => x.Include(e => e.SeccionalLocalidad!));
+            AgregarIncludes(x => x.Include(e => e.SeccionalLocalidad!).ThenInclude(er => er.RefLocalidad));
+            AgregarIncludes(x => x.Include(e => e.RefLocalidades!).ThenInclude(rl => rl.Provincia!));
             AgregarIncludes(x => x.Include(e => e.SeccionalContacto!));
             AgregarIncludes(x => x.Include(e => e.SeccionalAutoridades!));
             AgregarIncludes(x => x.Include(e => e.RefLocalidades!));

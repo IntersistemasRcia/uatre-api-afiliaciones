@@ -2,6 +2,7 @@
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Domain;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +12,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
     {
         private readonly ILogger<CreateAfiliadoCommandHandler> logger;
         private readonly IMapper mapper;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;        
 
         public CreateAfiliadoCommandHandler(ILogger<CreateAfiliadoCommandHandler> logger, IMapper mapper, IUnitOfWork unitOfWork)
         {

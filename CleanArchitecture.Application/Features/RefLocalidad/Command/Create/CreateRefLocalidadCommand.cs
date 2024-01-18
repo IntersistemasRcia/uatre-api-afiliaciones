@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using CleanArchitecture.Application.Features.RefLocalidad.Queries;
+using MediatR;
 
 namespace CleanArchitecture.Application.Features.RefLocalidad.Command.Create;
 
-public class CreateRefLocalidadCommand : IRequest<int>
+public class CreateRefLocalidadCommand : IRequest<RefLocalidadVm>
 {
     public int Codigo { get; set; }
     public string Nombre { get; set; }

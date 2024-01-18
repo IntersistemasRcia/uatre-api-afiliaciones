@@ -1,31 +1,64 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
+using CleanArchitecture.Application.Features.RefLocalidad.Queries;
+using CleanArchitecture.Common.Exceptions;
+using CleanArchitecture.Domain;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace CleanArchitecture.Application.Features.RefLocalidad.Command.Create;
 
-public class CreateRefLocalidadCommandHandler : IRequestHandler<CreateRefLocalidadCommand, int>
+public class CreateRefLocalidadCommandHandler : IRequestHandler<CreateRefLocalidadCommand, RefLocalidadVm>
 {
     private readonly ILogger<CreateRefLocalidadCommandHandler> logger;
     private readonly IMapper mapper;
     private readonly IUnitOfWork unitOfWork;
+    private readonly IValidator<CreateRefLocalidadCommand> validator;
 
-    public CreateRefLocalidadCommandHandler(ILogger<CreateRefLocalidadCommandHandler> logger, IMapper mapper, IUnitOfWork unitOfWork)
+    public CreateRefLocalidadCommandHandler(ILogger<CreateRefLocalidadCommandHandler> logger,
+        IMapper mapper, 
+        IUnitOfWork unitOfWork, 
+        IValidator<CreateRefLocalidadCommand> validator)
     {
         this.logger = logger;
         this.mapper = mapper;
         this.unitOfWork = unitOfWork;
+        this.validator = validator;
     }
-    public async Task<int> Handle(CreateRefLocalidadCommand request, CancellationToken cancellationToken)
+    public async Task<RefLocalidadVm> Handle(CreateRefLocalidadCommand request, CancellationToken cancellationToken)
     {
+        var validationResult = await validator.ValidateAsync(request);
+        if (!validationResult.IsValid) 
+        {
+            throw new BadRequestException(string.Join(Environment.NewLine, validationResult.Errors));
+        }
+
+        if (await unitOfWork.RefLocalidadRepository.ExisteRefLocalidadCodPostal(request.CodPostal) == true)
+        {
+            throw new BadRequestException($"Ya existe una Localidad con el Codigo Postal {request.CodPostal}");
+        }
+
         var entidad = mapper.Map<Domain.RefLocalidad>(request);
 
-        try
-        {
-            await unitOfWork.Repository<Domain.RefLocalidad>().AddAsync(entidad);
+        var provincia = await unitOfWork.Repository<Domain.Provincia>().GetByIdAsync(entidad.ProvinciaId);
+        entidad.LitProvincia = provincia.Nombre ?? entidad.LitProvincia;
+        entidad.NombreCompleto = $"{entidad.Nombre} - {provincia.Nombre}";
 
-            return await unitOfWork.CommitAsync();
+        try
+        {            
+            await unitOfWork.Repository<Domain.RefLocalidad>().AddAsync(entidad);            
+
+            await unitOfWork.CommitAsync();
+            
+            await unitOfWork.Repository<Domain.SeccionalLocalidad>().AddAsync(new Domain.SeccionalLocalidad()
+            {
+                RefLocalidadId = entidad.Id,
+                SeccionalId = provincia.SeccionalIdPorDefecto,
+            });
+
+            return mapper.Map<RefLocalidadVm>(entidad);
         }
         catch (Exception)
         {

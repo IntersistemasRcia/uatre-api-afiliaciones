@@ -6,5 +6,6 @@ namespace CleanArchitecture.Application.Contracts.Persistence
     public interface ISeccionalRepository
     {
         Task CrearSeccional(Seccional seccional);
+        Task<Seccional>? GetFirstSeccionalLocalidadByRefLocalidadId(int localidadId);
     }
 }

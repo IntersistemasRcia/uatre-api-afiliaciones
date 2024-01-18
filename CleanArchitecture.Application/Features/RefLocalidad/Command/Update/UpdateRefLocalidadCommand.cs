@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using CleanArchitecture.Application.Features.RefLocalidad.Queries;
+using MediatR;
 
 namespace CleanArchitecture.Application.Features.RefLocalidad.Command.Update
 {
-    public class UpdateRefLocalidadCommand : IRequest<int>
+    public class UpdateRefLocalidadCommand : IRequest<RefLocalidadVm>
     {
         public  int Id { get; set; }
         public int Codigo { get; set; }

@@ -38,12 +38,16 @@ namespace CleanArchitecture.Application.Specification
 
         protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
-            OrderBy.Add(orderByExpression);
+            //OrderBy.Add(orderByExpression);
+            ISpecification<T>.OrderDetails item = new() { Order = orderByExpression, descending = false };
+            Order.Add(item);
         }
 
         protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescExpression)
         {
-            OrderByDesc.Add(orderByDescExpression);
+            //OrderByDesc.Add(orderByDescExpression);
+            ISpecification<T>.OrderDetails item = new() { Order = orderByDescExpression, descending = true };
+            Order.Add(item);
         }
 
         protected void AddOrder(string sortExpression)

@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
+﻿using CleanArchitecture.Application.Features.RefLocalidad.Command.Create;
+using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -15,8 +16,7 @@ namespace CleanArchitecture.Application
         {
             //Servicios
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            //services.AddValidatorsFromAssemblyContaining<GetSeccionalesListSpecsQueryValidator>(ServiceLifetime.Transient);
+            services.AddValidatorsFromAssemblyContaining<CreateRefLocalidadCommandValidator>(includeInternalTypes: true);
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             ////Behaviours

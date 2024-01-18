@@ -86,8 +86,8 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<UpdateSeccionalCommand, Seccional>();
             CreateMap<CreateSeccionalAutoridad, SeccionalAutoridad>();
             CreateMap<CreateSeccionalLocalidad, SeccionalLocalidad>();
-            CreateMap<CreateRefLocalidadCommand, RefLocalidad>();
-            CreateMap<UpdateRefLocalidadCommand, RefLocalidad>();
+            CreateMap<CreateRefLocalidadCommand, RefLocalidad>().ReverseMap();
+            CreateMap<UpdateRefLocalidadCommand, RefLocalidad>().ReverseMap();
             CreateMap<UpdateSeccionalAutoridadCommand, SeccionalAutoridad>();
             CreateMap<UpdateSeccionalContactoCommand, SeccionalContacto>();
             CreateMap<CreateSeccionalAutoridadCommand, SeccionalAutoridad>();

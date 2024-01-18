@@ -9,6 +9,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         IAfiliadoRepository AfiliadoRepository { get; }
         ISeccionalAutoridadRepository SeccionalAutoridadRepository { get; }
         ISeccionalRepository SeccionalRepository { get; }
+        IRefLocalidadRepository RefLocalidadRepository { get; }
         IAsyncRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel;
         Task<int> CommitAsync();
         Task<int> CommitAsyncUatreRefContext();

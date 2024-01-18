@@ -9,8 +9,6 @@ using CleanArchitecture.Common.Helpers;
 using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList
 {
