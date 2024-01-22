@@ -18,7 +18,7 @@ public class GetRefLocalidadPaginationSpecs : BaseSpecification<Domain.RefLocali
         if (!string.IsNullOrEmpty(query.SortBy) && (query.SortBy.StartsWith('+') || query.SortBy.StartsWith('-')))
         {
             var startWith = query.SortBy.Substring(0, 1);
-            switch (query.SortBy.Substring(1))
+            switch (query.SortBy.ToLower().Substring(1))
             {
                 case "nombre":
                     if (startWith == "+")

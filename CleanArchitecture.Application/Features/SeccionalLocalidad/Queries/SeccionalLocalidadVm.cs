@@ -9,4 +9,6 @@ public class SeccionalLocalidadVm : EntidadAuditable
     public string? Nombre { get; set; }
     public string? Codigo { get; set; }
     public string? LitProvincia { get; set; }
+    public int SeccionalId { get; set; }
+    public string? SeccionalDescripcion { get; set; }
 }

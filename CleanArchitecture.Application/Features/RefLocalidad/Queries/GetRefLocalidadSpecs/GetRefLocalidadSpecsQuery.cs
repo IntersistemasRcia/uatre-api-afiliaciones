@@ -3,7 +3,7 @@ using System.Runtime;
 
 namespace CleanArchitecture.Application.Features.RefLocalidad.Queries.GetRefLocalidadSpecs
 {
-    public class GetRefLocalidadSpecsQuery : IRequest<List<RefLocalidadVm>>
+    public class GetRefLocalidadSpecsQuery : IRequest<IReadOnlyList<RefLocalidadVm>>
     {
         public int? CodigoPostal { get; set; }
         public int? CodigoPostalUATRE { get; set; }

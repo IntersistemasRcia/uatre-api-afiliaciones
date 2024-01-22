@@ -20,6 +20,9 @@ using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.Create;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.UpdateSeccionalContacto;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.CreateSeccionalLocalidad;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateRecordSeccionalLocalidad;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
 using CleanArchitecture.Application.Features.TipoDocumento.Queries;
@@ -76,8 +79,8 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.Codigo, x => x.MapFrom(b => b.RefLocalidad!.Codigo))
                 .ForMember(a => a.Nombre, x => x.MapFrom(b => b.RefLocalidad!.Nombre))
                 .ForMember(a => a.LitProvincia, x => x.MapFrom(b => b.RefLocalidad!.LitProvincia))
-                .ForMember(a => a.CodPostal, x => x.MapFrom(b => b.RefLocalidad!.CodPostal));
-
+                .ForMember(a => a.CodPostal, x => x.MapFrom(b => b.RefLocalidad!.CodPostal))
+                .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
 
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();
@@ -92,6 +95,9 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<UpdateSeccionalContactoCommand, SeccionalContacto>();
             CreateMap<CreateSeccionalAutoridadCommand, SeccionalAutoridad>();
             CreateMap<CreateSeccionalContactoCommand, SeccionalContacto>();
+            CreateMap<CreateSeccionalLocalidadCommand, SeccionalLocalidad>();
+            CreateMap<UpdateSeccionalLocalidadCommand, SeccionalLocalidad>();
+            CreateMap<UpdateRecordSeccionalLocalidadCommand, SeccionalLocalidad>();            
         }
     }
 }

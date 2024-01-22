@@ -48,6 +48,7 @@ public class UpdateRefLocalidadCommandHandler : IRequestHandler<UpdateRefLocalid
         var provincia = await unitOfWork.Repository<Domain.Provincia>().GetByIdAsync(entidad.ProvinciaId);
         entidad.LitProvincia = provincia.Nombre ?? entidad.LitProvincia;
         entidad.NombreCompleto = $"{entidad.Nombre} - {provincia.Nombre}";
+        entidad.Tipo = "L";
 
         try
         {
@@ -55,7 +56,16 @@ public class UpdateRefLocalidadCommandHandler : IRequestHandler<UpdateRefLocalid
 
             await unitOfWork.CommitAsync();
 
-            return mapper.Map<RefLocalidadVm>(entidad);
+            var data = mapper.Map<RefLocalidadVm>(entidad);
+
+            //Busco el primer dato de SeccionalLocalidad
+            var seccional = await unitOfWork.SeccionalRepository.GetFirstSeccionalLocalidadByRefLocalidadId(data.Id);
+
+            data.SeccionalId = seccional.Id;
+            data.SeccionalDescripcion = seccional.Descripcion;
+            data.SeccionalCodigo = seccional.Codigo;
+
+            return data;
         }
         catch (Exception)
         {

@@ -8,6 +8,9 @@ using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateSe
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.DarDeBajaSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.ReactivarSeccionalLocalidad;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries.GetSeccionalLocalidadByRefLocalidadId;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.CreateSeccionalLocalidad;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateRecordSeccionalLocalidad;
 
 namespace CleanArchitecture.API.Controllers;
 
@@ -29,9 +32,37 @@ public class SeccionalLocalidadController : BaseApiController
         return Ok(data);
     }
 
+    [HttpGet("GetSeccionalLocalidadByRefLocalidadId", Name = "GetSeccionalLocalidadByRefLocalidadId")]
+    //[Authorize]
+    [ProducesResponseType(typeof(IReadOnlyCollection<SeccionalLocalidadVm>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<IReadOnlyCollection<SeccionalLocalidadVm>>> GetSeccionalLocalidadByRefLocalidadId([FromQuery] GetSeccionalLocalidadByRefLocalidadIdCommand query)
+    {
+        var data = await _mediator.Send(query);
+
+        return Ok(data);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(SeccionalLocalidadVm), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<SeccionalLocalidadVm>> UpdateSeccionalLocalidad([FromBody] CreateSeccionalLocalidadCommand request)
+    {
+        var result = await _mediator.Send(request);
+
+        return Ok(result);
+    }
+
     [HttpPut]
     [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<int>> UpdateSeccionalLocalidad([FromBody] UpdateSeccionalLocalidadCommand request)
+    {
+        var result = await _mediator.Send(request);
+
+        return Ok(result);
+    }
+
+    [HttpPut("UpdateRecordSeccionalLocalidad")]
+    [ProducesResponseType(typeof(SeccionalLocalidadVm), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<SeccionalLocalidadVm>> UpdateRecordSeccionalLocalidad([FromBody] UpdateRecordSeccionalLocalidadCommand request)
     {
         var result = await _mediator.Send(request);
 

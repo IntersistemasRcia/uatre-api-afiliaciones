@@ -7,5 +7,10 @@ namespace CleanArchitecture.Application.Features.SeccionalLocalidad.Command.Upda
 public class UpdateSeccionalLocalidadCommand : IRequest<int>
 {
     public int SeccionalId { get; set; }
-    public ICollection<CreateSeccionalLocalidad>? SeccionalLocalidad { get; set; }
+    public ICollection<RefLocalidadIdList>? SeccionalLocalidad { get; set; }
+}
+
+public class RefLocalidadIdList
+{
+    public int RefLocalidadId { get; set; }
 }

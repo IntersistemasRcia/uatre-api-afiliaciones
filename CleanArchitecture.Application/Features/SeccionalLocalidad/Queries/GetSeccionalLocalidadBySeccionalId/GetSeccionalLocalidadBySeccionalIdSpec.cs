@@ -12,5 +12,6 @@ public class GetSeccionalLocalidadBySeccionalIdSpec : BaseSpecification<Domain.S
     )
     {
         AgregarIncludes(x => x.Include(e => e.RefLocalidad));
+        AgregarIncludes(x => x.Include(e => e.Seccional));
     }
 }
