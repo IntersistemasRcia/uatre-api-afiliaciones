@@ -24,7 +24,7 @@ public class UpdateRecordSeccionalLocalidadCommandHandler : IRequestHandler<Upda
 
     public async Task<SeccionalLocalidadVm> Handle(UpdateRecordSeccionalLocalidadCommand request, CancellationToken cancellationToken)
     {
-        var entidad = await unitOfWork.Repository<Domain.SeccionalLocalidad>().GetByIdAsync(request.SeccionalId);
+        var entidad = await unitOfWork.Repository<Domain.SeccionalLocalidad>().GetByIdAsync(request.Id);
         if (entidad == null || entidad.DeletedDate != null)
         {
             logger.LogError("No existe SeccionalLocalidad");

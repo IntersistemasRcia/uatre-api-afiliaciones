@@ -58,10 +58,10 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public virtual async Task<T> GetByIdAsync(int id)
         {
             var entity = await context.Set<T>().FindAsync(id);
-            if (entity == null)
-            {
-                throw new NotFoundException(typeof(T).Name, id);
-            }
+            //if (entity == null)
+            //{
+            //    throw new NotFoundException(typeof(T).Name, id);
+            //}
 
             return entity;
         }        

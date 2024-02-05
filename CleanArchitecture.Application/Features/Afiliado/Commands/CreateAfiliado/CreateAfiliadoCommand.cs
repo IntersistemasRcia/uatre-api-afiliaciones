@@ -7,6 +7,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
     public class CreateAfiliadoCommand : IRequest<int>
     {
         public Int64 CUIL { get; set; }
+        public Int64 CUILValidado { get; set; }
         public int NroAfiliado { get; set; }
         public string? Nombre { get; set; }
         public int PuestoId { get; set; }
