@@ -34,7 +34,7 @@ public class DarDeBajaCommandHandler : IRequestHandler<DarDeBajaCommand, int>
         try
         {
             patchModel.Replace(nameof(Domain.Seccional.DeletedObs), request.DeletedObs);
-            patchModel.Replace(nameof(Domain.Seccional.Estado), "Inactiva");
+            //patchModel.Replace(nameof(Domain.Seccional.SeccionalEstadoId), "Inactiva");
             unitOfWork.Repository<Domain.Seccional>().DarDeBajaAsync(entidad, patchModel);
             return await unitOfWork.CommitAsync();
         }

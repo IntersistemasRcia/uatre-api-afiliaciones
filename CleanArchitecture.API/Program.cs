@@ -78,7 +78,7 @@ app.MapControllers();
 // Ensure DB created
 using var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 using var context = serviceScope.ServiceProvider.GetService<AfiliacionesDbContext>();
-{
+{    
     context!.Database.Migrate();
 
     AfiliacionesDbContextSeed.SeedAsync(context).Wait();

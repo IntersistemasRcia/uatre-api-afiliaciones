@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    partial class AfiliacionesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240219165448_SeccionalEstados")]
+    partial class SeccionalEstados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -722,14 +725,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int>("RefLocalidadesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeccionalEstadoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RefLocalidadesId");
-
-                    b.HasIndex("SeccionalEstadoId");
 
                     b.ToTable("Seccionales");
                 });
@@ -1147,15 +1145,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CleanArchitecture.Domain.SeccionalEstado", "SeccionalEstado")
-                        .WithMany()
-                        .HasForeignKey("SeccionalEstadoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("RefLocalidades");
-
-                    b.Navigation("SeccionalEstado");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SeccionalAutoridad", b =>

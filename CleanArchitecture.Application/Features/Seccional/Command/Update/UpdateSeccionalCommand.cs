@@ -11,7 +11,7 @@ public class UpdateSeccionalCommand : IRequest<int>
     public string? Descripcion { get; set; }
     public string? Domicilio { get; set; }
     public string? Observaciones { get; set; }
-    public string? Estado { get; set; }
+    public int SeccionalEstadoId { get; set; }
     public int RefDelegacionId { get; set; }
     public int RefLocalidadesId { get; set; }
     public string? Email { get; set; }

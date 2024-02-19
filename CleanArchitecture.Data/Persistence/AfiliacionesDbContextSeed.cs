@@ -31,6 +31,12 @@ namespace CleanArchitecture.Infrastructure.Persistence
                 context.TiposDocumentos!.AddRange(GetPreconfiguredTiposDocumentos());
                 await context.SaveChangesAsync();
             }
+
+            if (!context.SeccionalEstados.Any())
+            {
+                context.SeccionalEstados!.AddRange(GetPreconfiguredSeccionalEstados());
+                await context.SaveChangesAsync();
+            }
         }
 
         private static IEnumerable<EstadoSolicitud> GetPreconfiguredEstadosSolicitud()
@@ -76,6 +82,20 @@ namespace CleanArchitecture.Infrastructure.Persistence
                 new TipoDocumento { Descripcion = "DNI" },
                 new TipoDocumento { Descripcion = "LC" },
                 new TipoDocumento { Descripcion = "LE" },
+            };
+        }
+
+        private static IEnumerable<SeccionalEstado> GetPreconfiguredSeccionalEstados()
+        {
+            return new List<SeccionalEstado>
+            {
+                new SeccionalEstado { Descripcion = "NORMALIZADA" },
+                new SeccionalEstado { Descripcion = "TRANSITORIA" },
+                new SeccionalEstado { Descripcion = "EN LITIGIO" },
+                new SeccionalEstado { Descripcion = "INACTIVA (NO TIENE AUTORIDADES)" },
+                new SeccionalEstado { Descripcion = "BAJA" },
+                new SeccionalEstado { Descripcion = "ABSORBIDA" },
+
             };
         }
     }
