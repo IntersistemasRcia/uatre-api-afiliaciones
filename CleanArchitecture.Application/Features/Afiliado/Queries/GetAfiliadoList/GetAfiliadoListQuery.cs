@@ -21,6 +21,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         public DateTime? FechaEgreso { get; set; }
         public int? EstadoSolicitudId { get; set; }
         public int? EmpresaId { get; set; }
+        public int? RefMotivoBajaId { get; set; }
         public bool SoloActivos { get; set; } = true;
         public Ambito? AmbitoTodos { get; set; }
         public Ambito? AmbitoDelegaciones { get; set; }

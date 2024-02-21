@@ -32,6 +32,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             (!query.FechaEgreso.HasValue || x.FechaEgreso == query.FechaEgreso) &&
             (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
             (!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId) &&
+            (!query.RefMotivoBajaId.HasValue || x.RefMotivoBajaId == query.RefMotivoBajaId) &&
             (!query.SoloActivos || x.DeletedDate == null) &&            
             ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.SeccionalId)) &&
             ((query.AmbitoTodos != null || query.AmbitoDelegaciones == null) || query.AmbitoDelegaciones.Ids.Contains(x.Seccional.RefDelegacionId)) &&

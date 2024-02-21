@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
-using CleanArchitecture.Domain;
+using CleanArchitecture.Application.Specification.Implements;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesList
@@ -18,7 +17,8 @@ namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionale
         }
         public async Task<List<SeccionalVm>> Handle(GetSeccionalesListQuery request, CancellationToken cancellationToken)
         {
-            var list = await _unitOfWork.Repository<Domain.Seccional>().GetAllAsync();
+            var spec = new SeccionalSpecification();
+            var list = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(spec);
             if (request.SoloActivos)
             {
                 var listActivos = list.Where(x => x.DeletedDate == null).ToList();

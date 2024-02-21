@@ -20,6 +20,9 @@ using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.Create;
 using CleanArchitecture.Application.Features.SeccionalContacto.Command.UpdateSeccionalContacto;
 using CleanArchitecture.Application.Features.SeccionalContacto.Queries;
+using CleanArchitecture.Application.Features.SeccionalEstado.Commands.CreateSeccionalEstado;
+using CleanArchitecture.Application.Features.SeccionalEstado.Commands.UpdateSeccionalEstado;
+using CleanArchitecture.Application.Features.SeccionalEstado.Responses;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.CreateSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateRecordSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateSeccionalLocalidad;
@@ -83,6 +86,7 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.LitProvincia, x => x.MapFrom(b => b.RefLocalidad!.LitProvincia))
                 .ForMember(a => a.CodPostal, x => x.MapFrom(b => b.RefLocalidad!.CodPostal))
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
+            CreateMap<SeccionalEstado, SeccionalEstadoResponse>();
 
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();
@@ -99,7 +103,9 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<CreateSeccionalContactoCommand, SeccionalContacto>();
             CreateMap<CreateSeccionalLocalidadCommand, SeccionalLocalidad>();
             CreateMap<UpdateSeccionalLocalidadCommand, SeccionalLocalidad>();
-            CreateMap<UpdateRecordSeccionalLocalidadCommand, SeccionalLocalidad>();            
+            CreateMap<UpdateRecordSeccionalLocalidadCommand, SeccionalLocalidad>();
+            CreateMap<CreateSeccionalEstadoCommand, SeccionalEstado>();
+            CreateMap<UpdateSeccionalEstadoCommand, SeccionalEstado>();
         }
     }
 }
