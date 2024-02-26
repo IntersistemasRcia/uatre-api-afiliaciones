@@ -26,6 +26,9 @@ namespace CleanArchitecture.Application.Specification.Implements
             AgregarIncludes(x => x.Include(e => e.SeccionalAutoridades!));
             AgregarIncludes(x => x.Include(e => e.RefLocalidades!));
             AgregarIncludes(x => x.Include(e => e.SeccionalEstado!));
+
+            //Paginacion
+            ApplyPaging(query.PageSize * (query.PageIndex - 1), query.PageSize);
         }
 
         public SeccionalSpecification(int pId) : base(x => x.Id == pId)

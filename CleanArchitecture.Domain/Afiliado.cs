@@ -104,6 +104,8 @@ namespace CleanArchitecture.Domain
         public string? AFIPDomicilioDatoAdicional { get; set; }
         [StringLength(255)]
         public string? AFIPDomicilioTipoDatoAdicional { get; set; }
+        public int SeccionalIdSolicitudAfiliacion { get; set; }
+
         [NotMapped]
         public int SeccionalAutoridadId { get; set; }
         [NotMapped]
