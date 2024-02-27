@@ -30,7 +30,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByC
             var afiliadoVm = _mapper.Map<Domain.Afiliado, AfiliadoVm>(afiliado);
             afiliadoVm.Documentacion = new List<DocumentacionEntidad>();
             afiliadoVm.SeccionalDescripcionSolicitudAfiliacion = 
-                (await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(afiliadoVm.SeccionalIdSolicitudAfiliacion)).Descripcion ?? string.Empty;
+                (await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(afiliadoVm.SeccionalIdSolicitudAfiliacion))?.Descripcion ?? string.Empty;
 
             foreach (var item in documentacion)
             {
