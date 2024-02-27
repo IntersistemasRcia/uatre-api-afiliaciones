@@ -85,6 +85,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
 
         public int SeccionalIdSolicitudAfiliacion { get; set; }
         public string? SeccionalDescripcionSolicitudAfiliacion { get; set; }
+        public string? SeccionalCodigoSolicitudAfiliacion { get; set; }
 
         public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }

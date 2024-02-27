@@ -55,8 +55,9 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
                 afiliado.Documentacion = new List<DocumentacionEntidad>();
                 afiliado.Documentacion = (List<DocumentacionEntidad>)documentacion;
 
-                afiliado.SeccionalDescripcionSolicitudAfiliacion =
-                (await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(afiliado.SeccionalIdSolicitudAfiliacion))?.Descripcion ?? string.Empty;
+                var seccionalAfiliacion = await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(afiliado.SeccionalIdSolicitudAfiliacion);
+                afiliado.SeccionalDescripcionSolicitudAfiliacion = seccionalAfiliacion?.Descripcion ?? string.Empty;
+                afiliado.SeccionalCodigoSolicitudAfiliacion = seccionalAfiliacion?.Codigo ?? string.Empty;
             }
 
             return new Pagination<AfiliadoVm>()

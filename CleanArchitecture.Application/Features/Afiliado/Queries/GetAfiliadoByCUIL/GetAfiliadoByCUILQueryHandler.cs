@@ -29,8 +29,10 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByC
 
             var afiliadoVm = _mapper.Map<Domain.Afiliado, AfiliadoVm>(afiliado);
             afiliadoVm.Documentacion = new List<DocumentacionEntidad>();
-            afiliadoVm.SeccionalDescripcionSolicitudAfiliacion = 
-                (await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(afiliadoVm.SeccionalIdSolicitudAfiliacion))?.Descripcion ?? string.Empty;
+
+            var seccionalAfiliacion = await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(afiliado.SeccionalIdSolicitudAfiliacion);
+            afiliadoVm.SeccionalDescripcionSolicitudAfiliacion = seccionalAfiliacion?.Descripcion ?? string.Empty;
+            afiliadoVm.SeccionalCodigoSolicitudAfiliacion = seccionalAfiliacion?.Codigo ?? string.Empty;          
 
             foreach (var item in documentacion)
             {
