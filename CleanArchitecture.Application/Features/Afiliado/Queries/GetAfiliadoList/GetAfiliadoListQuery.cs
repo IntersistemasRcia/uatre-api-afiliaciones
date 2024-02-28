@@ -23,6 +23,8 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         public int? EmpresaId { get; set; }
         public int? RefMotivoBajaId { get; set; }
         public bool SoloActivos { get; set; } = true;
+        public DateTime? CreatedDateDesde { get; set; }
+        public DateTime? CreatedDateHasta { get; set; }
         public Ambito? AmbitoTodos { get; set; }
         public Ambito? AmbitoDelegaciones { get; set; }
         public Ambito? AmbitoSeccionales { get; set; }
