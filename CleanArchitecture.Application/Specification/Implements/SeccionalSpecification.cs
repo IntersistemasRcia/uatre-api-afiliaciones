@@ -27,6 +27,63 @@ namespace CleanArchitecture.Application.Specification.Implements
             AgregarIncludes(x => x.Include(e => e.RefLocalidades!));
             AgregarIncludes(x => x.Include(e => e.SeccionalEstado!));
 
+            //Sorting 
+            if (!string.IsNullOrEmpty(query.Sort))
+            {
+                var startsWith = query.Sort.Substring(0, 1);
+                var sortBy = query.Sort.Substring(1).ToLower();
+
+                switch (sortBy)
+                {
+                    case "codigo":
+                        if (startsWith == "-")
+                        {
+                            AddOrderByDescending(x => x.Codigo);
+                        }
+                        else
+                        {
+                            AddOrderBy(x => x.Codigo);
+                        }
+                        break;
+
+                    case "nombre":
+                        if (startsWith == "-")
+                        {
+                            AddOrderByDescending(x => x.Descripcion);
+                        }
+                        else
+                        {
+                            AddOrderBy(x => x.Descripcion);
+                        }
+                        break;
+
+                    case "estadoid":
+                        if (startsWith == "-")
+                        {
+                            AddOrderByDescending(x => x.SeccionalEstadoId);
+                        }
+                        else
+                        {
+                            AddOrderBy(x => x.SeccionalEstadoId);
+                        }
+                        break;
+
+                    case "delegacionid":
+                        if (startsWith == "-")
+                        {
+                            AddOrderByDescending(x => x.RefDelegacionId);
+                        }
+                        else
+                        {
+                            AddOrderBy(x => x.RefDelegacionId);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
             //Paginacion
             ApplyPaging(query.PageSize * (query.PageIndex - 1), query.PageSize);
         }

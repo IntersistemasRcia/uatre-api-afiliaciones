@@ -16,6 +16,7 @@ public class GetSeccionalesListSpecsQuery : IRequest<Pagination<SeccionalVm>>
     public int? CodigoPostal { get; set; }
     public int? RefDelegacionId { get; set; }
     public bool SoloActivos { get; set; } = true;
+    public string? Sort { get; set; }
     public Ambito? AmbitoTodos { get; set; }
     public Ambito? AmbitoSeccionales { get; set; }
     public Ambito? AmbitoDelegaciones { get; set; }
