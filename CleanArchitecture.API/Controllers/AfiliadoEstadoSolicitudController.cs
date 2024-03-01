@@ -20,8 +20,9 @@ namespace CleanArchitecture.API.Controllers
         //[Authorize]
         [ProducesResponseType(typeof(IReadOnlyList<AfiliadoEstadoSolicitudVm>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IReadOnlyList<AfiliadoEstadoSolicitudVm>), (int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<IReadOnlyCollection<AfiliadoEstadoSolicitudVm>>> GetByAfiliado([FromQuery] GetByAfiliadoIdQuery query)
+        public async Task<ActionResult<IReadOnlyCollection<AfiliadoEstadoSolicitudVm>>> GetByAfiliado(int AfiliadoId, [FromQuery] string Sort)
         {
+            var query = new GetByAfiliadoIdQuery(AfiliadoId, Sort);
             var list = await _mediator.Send(query);
 
             return Ok(list);

@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
 using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
+using CleanArchitecture.Application.Features.AfiliadoEstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.EstadoCivil.Queries;
 using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidadesList;
@@ -87,6 +88,7 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.CodPostal, x => x.MapFrom(b => b.RefLocalidad!.CodPostal))
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
             CreateMap<SeccionalEstado, SeccionalEstadoResponse>();
+            CreateMap<AfiliadoEstadoSolicitud, AfiliadoEstadoSolicitudVm>();
 
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();

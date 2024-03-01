@@ -8,11 +8,11 @@ namespace CleanArchitecture.Application.Specification.Implements
     {
         public SeccionalSpecification(GetSeccionalesListSpecsQuery query)
             : base(x =>
-                (string.IsNullOrEmpty(query.Provincia) || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Provincia.Nombre == query.Provincia).Any()) &&
-                (!query.ProvinciaId.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Provincia.Id == query.ProvinciaId).Any()) &&
-                (string.IsNullOrEmpty(query.Localidad) || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Nombre == query.Localidad).Any()) &&
-                (!query.LocalidadId.HasValue|| x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.Id == query.LocalidadId).Any()) &&
-                (!query.CodigoPostal.HasValue || x.SeccionalLocalidad.Where(sl => sl.RefLocalidad.CodPostal == query.CodigoPostal).Any()) &&
+                (string.IsNullOrEmpty(query.Provincia) || x.RefLocalidades.Provincia.Nombre.Contains(query.Provincia)) &&
+                (!query.ProvinciaId.HasValue || x.RefLocalidades.ProvinciaId == query.ProvinciaId) &&
+                (string.IsNullOrEmpty(query.Localidad) || x.RefLocalidades.Nombre.Contains(query.Localidad)) &&
+                (!query.LocalidadId.HasValue|| x.RefLocalidadesId == query.LocalidadId) &&
+                (!query.CodigoPostal.HasValue || x.RefLocalidades.CodPostal == query.CodigoPostal) &&
                 (!query.RefDelegacionId.HasValue || x.RefDelegacionId == query.RefDelegacionId) &&
                 (!query.SoloActivos || x.DeletedDate == null) &&
                 ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.Id)) &&
