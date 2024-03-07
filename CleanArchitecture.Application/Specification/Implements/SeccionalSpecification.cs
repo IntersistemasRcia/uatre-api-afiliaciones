@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
+﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesList;
+using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -98,7 +99,10 @@ namespace CleanArchitecture.Application.Specification.Implements
             AgregarIncludes(x => x.Include(e => e.SeccionalEstado!));
         }
 
-        public SeccionalSpecification()
+        public SeccionalSpecification(GetSeccionalesListQuery query) : base(x => 
+        ((!query.SoloActivos.HasValue || query.SoloActivos == false) || x.DeletedDate == null) &&
+        (!query.LocalidadId.HasValue || x.RefLocalidadesId == query.LocalidadId) &&
+        (!query.ProvinciaId.HasValue || x.RefLocalidades.ProvinciaId == query.ProvinciaId))
         {
             AgregarIncludes(x => x.Include(e => e.SeccionalLocalidad!).ThenInclude(er => er.RefLocalidad));
             AgregarIncludes(x => x.Include(e => e.RefLocalidades!).ThenInclude(rl => rl.Provincia!));
