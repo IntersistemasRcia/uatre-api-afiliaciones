@@ -30,6 +30,13 @@ namespace CleanArchitecture.Application
             })
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                 .AddPolicyHandler(GetRetryPolicy());
+
+            services.AddHttpClient("APIAuditoria", client =>
+            {
+                client.BaseAddress = new Uri(configuration["APIAuditoria"] ?? throw new ArgumentNullException(nameof(client)));
+            })
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                .AddPolicyHandler(GetRetryPolicy());
             //.AddPolicyHandler(GetCircuitBreakerPolicy());
 
             //Cors

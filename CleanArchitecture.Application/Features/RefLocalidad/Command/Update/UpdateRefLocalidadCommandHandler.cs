@@ -46,7 +46,7 @@ public class UpdateRefLocalidadCommandHandler : IRequestHandler<UpdateRefLocalid
         mapper.Map(request, entidad, typeof(UpdateRefLocalidadCommand), typeof(Domain.RefLocalidad));
 
         var provincia = await unitOfWork.Repository<Domain.Provincia>().GetByIdAsync(entidad.ProvinciaId);
-        entidad.LitProvincia = provincia.Nombre ?? entidad.LitProvincia;
+        entidad.LitProvincia = provincia.Nombre ?? entidad.LitProvincia ?? string.Empty;
         entidad.NombreCompleto = $"{entidad.Nombre} - {provincia.Nombre}";
         entidad.Tipo = "L";
 

@@ -1,114 +1,217 @@
-﻿using CleanArchitecture.Domain;
+﻿using CleanArchitecture.Application.Models.APIAudit;
+using CleanArchitecture.Domain;
 using CleanArchitecture.Domain.Commom;
+using Dapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 
-namespace CleanArchitecture.Infrastructure.Persistence
+namespace CleanArchitecture.Infrastructure.Persistence;
+
+public class AfiliacionesDbContext : DbContext
 {
-    public class AfiliacionesDbContext : DbContext
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpClientFactory httpClientFactory;
+    private readonly IServiceProvider serviceProvider;
+    private readonly List<AuditoriaCambioDatos> cambioDatos;
+
+    public AfiliacionesDbContext(DbContextOptions<AfiliacionesDbContext> options,
+        IServiceProvider serviceProvider) : base(options)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public AfiliacionesDbContext(DbContextOptions<AfiliacionesDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+        _httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+        httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+        cambioDatos = new();
+        this.serviceProvider = serviceProvider;
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        //var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+        var userId = _httpContextAccessor.HttpContext.Items["User"]?.ToString() ?? "SinDatos";
+
+        foreach (var entry in ChangeTracker.Entries<EntidadAuditable>())
         {
-            _httpContextAccessor = httpContextAccessor;
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedDate = DateTime.Now;
+                    entry.Entity.CreatedBy = userId;
+                    entry.Entity.Guid = Guid.NewGuid();
+                    RegistrarAuditoriaDatos(entry, userId, EntityState.Added);
+
+                    break;
+
+                case EntityState.Modified:
+                    entry.Entity.LastModifiedDate = DateTime.Now;
+                    entry.Entity.LastModifiedBy = userId;
+
+                    RegistrarAuditoriaDatos(entry, userId, EntityState.Modified);
+
+                    break;
+
+                case EntityState.Deleted:
+                    entry.State = EntityState.Modified;
+                    entry.Entity.DeletedDate = DateTime.Now;
+                    entry.Entity.DeletedBy = userId;
+
+                    RegistrarAuditoriaDatos(entry, userId, EntityState.Modified);
+                    break;
+            }
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            //var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-            var userId = _httpContextAccessor.HttpContext.Items["User"]?.ToString() ?? "SinDatos";
+        var ret = await base.SaveChangesAsync(cancellationToken);
 
-            foreach (var entry in ChangeTracker.Entries<EntidadAuditable>())
+        //Envio las auditorias
+        await GrabarAuditorias();
+        
+        return ret;
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        //excluidas de migrations
+        //modelBuilder.Entity<DDJJUatre>().ToTable(nameof(DDJJUatre), t => t.ExcludeFromMigrations());
+
+
+        //No dejar borrar registros padres con hijos
+        foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+        {
+            foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+        }
+    }
+
+    public DbSet<Afiliado>? Afiliados { get; set; }
+    public DbSet<Actividad>? Actividades { get; set; }
+    public DbSet<Provincia>? Provincias { get; set; }
+    public DbSet<Puesto>? Puestos { get; set; }
+    public DbSet<Seccional>? Seccionales { get; set; }
+    public DbSet<Sexo>? Sexos { get; set; }
+    public DbSet<EstadoSolicitud>? EstadosSolicitudes { get; set; }
+    public DbSet<Nacionalidad>? Nacionalidades { get; set; }
+    public DbSet<SeccionalLocalidad>? SeccionalesLocalidades { get; set; }
+    public DbSet<EstadoCivil>? EstadosCiviles { get; set; }
+    public DbSet<TipoDocumento>? TiposDocumentos { get; set; }
+    public DbSet<RefLocalidad>? RefLocalidades { get; set; }
+    public DbSet<SeccionalContacto>? SeccionalContactos { get; set; }
+    public DbSet<SeccionalAutoridad>? SeccionalAutoridades { get; set; }
+    public DbSet<AfiliadoEstadoSolicitud> AfiliadoEstadosSolicitud { get; set; }
+
+    public DbSet<SeccionalEstado> SeccionalEstados { get; set; }
+
+    private void RegistrarAuditoriaDatos(EntityEntry entity, string userId, EntityState entityState)
+    {
+        cambioDatos.Clear();
+
+        IProperty idProp;
+        object idValue;
+        idProp = entity.OriginalValues.Properties.FirstOrDefault(x => x.Name == "Guid");
+
+        if (entityState == EntityState.Modified)
+        {            
+            idValue = entity.OriginalValues[idProp];
+        }
+        else
+        {
+            idValue = entity.CurrentValues[idProp];
+        }
+
+        var entityType = entity.Entity.GetType();
+        var mapping = entity.Context.Model.FindEntityType(entityType);
+        var auditoriaCambioDatos = new AuditoriaCambioDatos()
+        {
+            Usuario = userId,
+            Tabla = mapping!.GetTableName()!,
+            TablaIdentificador = (Guid)idValue,
+            Accion = GetAccion(entity.State.ToString()),
+            Timestamp = DateTime.Now,
+            Cambios = GetChanges(entity, entityState)
+        };
+
+        cambioDatos.Add(auditoriaCambioDatos);       
+    }
+
+    private static string GetChanges(EntityEntry entity, EntityState entityState)
+    {
+        var ignoreCols = new List<string>() { "Id", "Guid", "CreatedBy", "LasModifiedBy", "CreatedDate", "LastModifiedDate", "LastModifiedBy" };
+        var changes = new StringBuilder();
+
+        if (entityState == EntityState.Modified)
+        {
+            foreach (var property in entity.OriginalValues.Properties)
             {
-                switch (entry.State)
+                if (!ignoreCols.Contains(property.Name))
                 {
-                    case EntityState.Added:
-                        entry.Entity.CreatedDate = DateTime.Now;
-                        entry.Entity.CreatedBy = userId;
-                        break;
-                    case EntityState.Modified:
-                        entry.Entity.LastModifiedDate = DateTime.Now;
-                        entry.Entity.LastModifiedBy = userId;
-                        break;
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.Entity.DeletedDate = DateTime.Now;
-                        entry.Entity.DeletedBy = userId;
-                        break;
+                    var originalValue = entity.OriginalValues[property];
+                    var currentValue = entity.CurrentValues[property];
+                    if (!Equals(originalValue, currentValue))
+                    {
+                        changes.AppendLine($"{property.Name}: De '{originalValue}' a '{currentValue}'");
+                    }
+                }                
+            }
+        }
+        else
+        {
+            foreach (var property in entity.OriginalValues.Properties)
+            {
+                if (!ignoreCols.Contains(property.Name))
+                {
+                    var currentValue = entity.CurrentValues[property];                    
+                    changes.AppendLine($"{property.Name}: '{currentValue}'");
                 }
-            }
-
-            return base.SaveChangesAsync(cancellationToken);
+            };
         }
+        return changes.ToString();
+    }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    private static string GetAccion(string entityState)
+    {
+        switch (entityState)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            case "Added":
+                return "Agrega";
 
-            //excluidas de migrations
-            //modelBuilder.Entity<DDJJUatre>().ToTable(nameof(DDJJUatre), t => t.ExcludeFromMigrations());
-
-
-            //No dejar borrar registros padres con hijos
-            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
-                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
-            }
+            case "Modified":
+                return "Modifica";
+            default:
+                return string.Empty;
         }
+    }
 
-        private string? ValidateToken(string token)
+    private async Task GrabarAuditorias()
+    {
+        var httpClient = httpClientFactory.CreateClient("APIAuditoria");
+        if (string.IsNullOrEmpty(httpClient.BaseAddress?.AbsoluteUri))
         {
-            if (token == null)
-                return null;
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("KJ823762381kjhsKJAKJ78782");
-            try
-            {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
-
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = jwtToken.Claims.First(x => x.Type == "email").Value;
-
-                // return user id from JWT token if validation successful
-                return userId;
-            }
-            catch
-            {
-                // return null if validation fails
-                return null;
-            }
+            return;
         }
 
-        public DbSet<Afiliado>? Afiliados { get; set; }
-        public DbSet<Actividad>? Actividades { get; set; }
-        public DbSet<Provincia>? Provincias { get; set; }
-        public DbSet<Puesto>? Puestos { get; set; }
-        public DbSet<Seccional>? Seccionales { get; set; }
-        public DbSet<Sexo>? Sexos { get; set; }
-        public DbSet<EstadoSolicitud>? EstadosSolicitudes { get; set; }
-        public DbSet<Nacionalidad>? Nacionalidades { get; set; }
-        public DbSet<SeccionalLocalidad>? SeccionalesLocalidades { get; set; }
-        public DbSet<EstadoCivil>? EstadosCiviles { get; set; }        
-        public DbSet<TipoDocumento>? TiposDocumentos { get; set; }
-        public DbSet<RefLocalidad>? RefLocalidades { get; set; }
-        public DbSet<SeccionalContacto>? SeccionalContactos { get; set; }
-        public DbSet<SeccionalAutoridad>? SeccionalAutoridades { get; set; }
-        public DbSet<AfiliadoEstadoSolicitud> AfiliadoEstadosSolicitud { get; set; }
+        foreach (var cambio in cambioDatos)
+        {                  
+            var json = JsonSerializer.Serialize(cambio);
+            var content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync("/api/AuditoriasDatos/registrar", content);
+            if (response.IsSuccessStatusCode)
+            {
+                //string? jsonString = await response.Content.ReadAsStringAsync();
 
-        public DbSet<SeccionalEstado> SeccionalEstados { get; set; }
+                //return JsonSerializer.Deserialize<int>(jsonString);
+            }
+            else
+            {
+                //return 0;
+            }
+        }
     }
 }
+
+

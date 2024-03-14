@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using MediatR;
 using Microsoft.Extensions.Logging;
