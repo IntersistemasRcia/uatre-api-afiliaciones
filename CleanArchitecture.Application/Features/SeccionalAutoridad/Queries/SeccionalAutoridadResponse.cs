@@ -13,6 +13,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Queries
         public DateTime? FechaVigenciaDesde { get; set; }
         public DateTime? FechaVigenciaHasta { get; set; }
         public string? RefCargosDescripcion { get; set; }
+        public int RefCargoJerarquia { get; set; }
         public string? AfiliadoNombre { get; set; }
         public int AfiliadoNumero { get; set; }
     }

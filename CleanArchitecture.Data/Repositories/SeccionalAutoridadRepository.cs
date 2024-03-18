@@ -64,6 +64,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     foreach (var item in seccionalAutoridades)
                     {
                         item.RefCargosDescripcion = refCargos!.FirstOrDefault(x => x.id == item.RefCargosId)!.cargo;
+                        item.RefCargosJerarquia = refCargos!.FirstOrDefault(x => x.id == item.RefCargosId)!.jerarquia;
                     }
                 }                    
             }            
@@ -94,6 +95,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
                 string? jsonString = await response.Content.ReadAsStringAsync();
                 var refCargo = JsonSerializer.Deserialize<APIRefCargoResponse>(jsonString);
                 seccionalAutoridad.RefCargosDescripcion = refCargo!.cargo;
+                seccionalAutoridad.RefCargosJerarquia = refCargo!.jerarquia;
             }
 
             return seccionalAutoridad;

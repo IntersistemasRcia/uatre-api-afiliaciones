@@ -15,6 +15,8 @@ namespace CleanArchitecture.Domain
         [NotMapped]
         public string? RefCargosDescripcion { get; set; }
         [NotMapped]
+        public int RefCargosJerarquia { get; set; }
+        [NotMapped]
         public string? AfiliadoNombre { get; set; }
         [NotMapped]
         public int AfiliadoNumero { get; set; }
