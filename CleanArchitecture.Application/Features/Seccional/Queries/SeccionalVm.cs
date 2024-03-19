@@ -19,6 +19,8 @@ public class SeccionalVm : EntidadAuditable
     public int RefDelegacionId { get; set; }
     public string? RefDelegacionDescripcion { get; set; }
     public string? Email { get; set; }
+    public float Latitud { get; set; }
+    public float Longitud { get; set; }
     public ICollection<SeccionalLocalidadVm>? SeccionalLocalidad { get; set; }
 }
 

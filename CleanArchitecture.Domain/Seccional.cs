@@ -31,6 +31,10 @@ public class Seccional : EntidadAuditable
 
     public SeccionalEstado? SeccionalEstado { get; set; }
 
+    public float Latitud { get; set; }
+
+    public float Longitud { get; set; }
+
     [NotMapped]
     public string? RefDelegacionDescripcion { get; set; }
 

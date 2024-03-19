@@ -15,6 +15,8 @@ public class UpdateSeccionalCommand : IRequest<int>
     public int RefDelegacionId { get; set; }
     public int RefLocalidadesId { get; set; }
     public string? Email { get; set; }
+    public float Latitud { get; set; }
+    public float Longitud { get; set; }
     public ICollection<CreateSeccionalAutoridad>? SeccionalAutoridades { get; set; }
     public ICollection<CreateSeccionalLocalidad>? SeccionalLocalidad { get; set; }
     public ICollection<DocumentacionEntidad>? Documentacion { get; set; }

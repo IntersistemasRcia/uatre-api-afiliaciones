@@ -13,7 +13,9 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Create
         public int RefDelegacionId { get; set; }
         public int RefLocalidadesId { get; set; }
         public string? Email { get; set; }
-        
+        public float Latitud { get; set; }
+        public float Longitud { get; set; }
+
         //public IReadOnlyCollection<CreateSeccionalContactoCommand>? Contactos { get; set; }
         public ICollection<CreateSeccionalAutoridad>? SeccionalAutoridades { get; set; }
         public ICollection<CreateSeccionalLocalidad>? SeccionalLocalidad { get; set; }
