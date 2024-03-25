@@ -43,11 +43,11 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolic
                         var nroAfiliado = unitOfWork.AfiliadoRepository.GetNroAfiliado();
                         patchModel.Replace(nameof(Domain.Afiliado.NroAfiliado), nroAfiliado);
                     }
-                    patchModel.Replace(nameof(Domain.Afiliado.FechaIngreso), DateTime.Now);
+                    patchModel.Replace(nameof(Domain.Afiliado.FechaIngreso), request.FechaIngreso ?? DateTime.Now);
                     break;
 
                 case 3: //no activo
-                    patchModel.Replace(nameof(Domain.Afiliado.FechaEgreso), DateTime.Now);
+                    patchModel.Replace(nameof(Domain.Afiliado.FechaEgreso), request.FechaEgreso ?? DateTime.Now);
                     break;
 
                 default:

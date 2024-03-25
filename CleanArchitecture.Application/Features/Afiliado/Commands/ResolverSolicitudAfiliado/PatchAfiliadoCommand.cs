@@ -8,8 +8,8 @@ public class PatchAfiliadoCommand : IRequest<int>
     {
         Id = afiliadoId;
         EstadoSolicitudId = dto.EstadoSolicitudId;
-        FechaIngreso = dto.FechaIngreso;
         FechaEgreso = dto.FechaEgreso;
+        FechaIngreso = dto.FechaIngreso;
     }
 
     public int Id { get; set; }
