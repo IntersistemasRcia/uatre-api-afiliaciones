@@ -14,14 +14,14 @@ namespace CleanArchitecture.Infrastructure.Repositories
     public class SeccionalAutoridadRepository : ISeccionalAutoridadRepository
     {
         private IDbConnection _db;
-        private IHttpClientFactory _httpClientFactory;
+        private IDbConnection _dbComunes;
 
-        public SeccionalAutoridadRepository(IConfiguration configuration, IHttpClientFactory httpClientFactory)
+        public SeccionalAutoridadRepository(IConfiguration configuration)
         {
             _db = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
-            _httpClientFactory = httpClientFactory;
+            _dbComunes = new SqlConnection(configuration.GetConnectionString("UATRERefConnection"));
         }
-       
+
         public async Task<IReadOnlyCollection<SeccionalAutoridad>> GetSeccionalAutoridadesBySeccional(int seccionalId, bool soloVigentes, bool soloActivos)
         {
             string SQL = $"SELECT SA.*, A.*, S.* FROM SeccionalAutoridades SA INNER JOIN Afiliados A ON SA.AfiliadoId = A.Id INNER JOIN Seccionales S ON SA.SeccionalId = S.Id WHERE SA.SeccionalId = {seccionalId}";
@@ -30,9 +30,9 @@ namespace CleanArchitecture.Infrastructure.Repositories
             var seccionalAutoridades = await _db.QueryAsync<SeccionalAutoridad, Afiliado, Seccional, SeccionalAutoridad>(SQL, (sa, a, s) =>
             {
                 if (!seccionalAutoridadDic.TryGetValue(sa.Id, out var currentSeccionalAutoridad))
-                {                    
+                {
                     currentSeccionalAutoridad = sa;
-                    seccionalAutoridadDic.Add(currentSeccionalAutoridad.Id, currentSeccionalAutoridad);                                     
+                    seccionalAutoridadDic.Add(currentSeccionalAutoridad.Id, currentSeccionalAutoridad);
                 }
 
                 //currentSeccionalAutoridad.RefCargosDescripcion;
@@ -55,19 +55,15 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
             if (seccionalAutoridades.Any())
             {
-                var client = _httpClientFactory.CreateClient("APIComunes");
-                var response = await client.GetAsync($"/api/RefCargo/GetAll");
-                if (response.IsSuccessStatusCode)
+                foreach (var item in seccionalAutoridades)
                 {
-                    string? jsonString = await response.Content.ReadAsStringAsync();
-                    var refCargos = JsonSerializer.Deserialize<IReadOnlyCollection<APIRefCargoResponse>>(jsonString);
-                    foreach (var item in seccionalAutoridades)
-                    {
-                        item.RefCargosDescripcion = refCargos!.FirstOrDefault(x => x.id == item.RefCargosId)!.cargo;
-                        item.RefCargosJerarquia = refCargos!.FirstOrDefault(x => x.id == item.RefCargosId)!.jerarquia;
-                    }
-                }                    
-            }            
+                    var refCargo = await _dbComunes.QueryFirstOrDefaultAsync<RefCargo>("SELECT Id, Cargo, Jerarquia FROM RefCargos WHERE Id = @Id", new { Id = item.RefCargosId });
+
+                    item.RefCargosDescripcion = refCargo?.Cargo ?? string.Empty;
+                    item.RefCargosJerarquia = refCargo?.Jerarquia ?? 0;
+                }
+            }
+
 
             return (IReadOnlyCollection<SeccionalAutoridad>)seccionalAutoridades;
         }
@@ -88,15 +84,10 @@ namespace CleanArchitecture.Infrastructure.Repositories
             seccionalAutoridad.AfiliadoNombre = afiliado.Nombre;
             seccionalAutoridad.AfiliadoNumero = afiliado.NroAfiliado;
 
-            var client = _httpClientFactory.CreateClient("APIComunes");
-            var response = await client.GetAsync($"/api/RefCargo/GetById?Id={seccionalAutoridad.RefCargosId}");
-            if (response.IsSuccessStatusCode)
-            {
-                string? jsonString = await response.Content.ReadAsStringAsync();
-                var refCargo = JsonSerializer.Deserialize<APIRefCargoResponse>(jsonString);
-                seccionalAutoridad.RefCargosDescripcion = refCargo!.cargo;
-                seccionalAutoridad.RefCargosJerarquia = refCargo!.jerarquia;
-            }
+            var refCargo = await _dbComunes.QueryFirstOrDefaultAsync<RefCargo>("SELECT Id, Cargo, Jerarquia FROM RefCargos WHERE Id = @Id", new { Id = seccionalAutoridad.RefCargosId });
+            seccionalAutoridad.RefCargosDescripcion = refCargo?.Cargo ?? string.Empty;
+            seccionalAutoridad.RefCargosJerarquia = refCargo?.Jerarquia ?? 0;
+
 
             return seccionalAutoridad;
         }

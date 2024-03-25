@@ -10,6 +10,8 @@ namespace CleanArchitecture.Application.Contracts.Persistence
 
         Task<RefMotivosBaja?> GetRefMotivoBajaById(int id);
 
+        Task<RefCargo?> GetRefCargoById(int id);
+
         Task AgregarDocumentacionEntidad(ICollection<DocumentacionEntidad> documentacionEntidad, string entidadTipo, int entidadId);
 
         Task AgregarDocumentacionEntidad(DocumentacionEntidad documentacionEntidad, string entidadTipo, int entidadId);

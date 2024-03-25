@@ -35,6 +35,11 @@ public class RefRepository : IRefRepository
         return await db.QueryFirstOrDefaultAsync<Empresa>("SELECT Id, CUIT, RazonSocial FROM Empresas WHERE Id = @Id", new { Id = id });
     }
 
+    public async Task<RefCargo?> GetRefCargoById(int id)
+    {
+        return await db.QueryFirstOrDefaultAsync<RefCargo>("SELECT Id, Cargo, Jerarquia FROM RefCargos WHERE Id = @Id", new { Id = id });
+    }
+
     public async Task AgregarDocumentacionEntidad(ICollection<DocumentacionEntidad> documentacionEntidad, string entidadTipo, int entidadId)
     {
         foreach (var item in documentacionEntidad)

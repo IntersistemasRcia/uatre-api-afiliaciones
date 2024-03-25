@@ -40,7 +40,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
         //Repositorios especiales no se inyectan, de definen x propiedades
         public IRefRepository RefRepository => _refRepository ??= new RefRepository(configuration, serviceProvider);
         public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context, httpClientFactory, configuration, new RefRepository(configuration, serviceProvider));
-        public ISeccionalAutoridadRepository SeccionalAutoridadRepository => seccionalAutoridadRepository ??= new SeccionalAutoridadRepository(configuration, httpClientFactory);
+        public ISeccionalAutoridadRepository SeccionalAutoridadRepository => seccionalAutoridadRepository ??= new SeccionalAutoridadRepository(configuration);
         public ISeccionalRepository SeccionalRepository => _seccionalRepository ??= new SeccionalRepository(context, dapperContext);
         public ISQLConnection UatreAfiliaciones => uatreAfiliaciones ??= new UatreAfiliacionesConnection(configuration);
         public AfiliacionesDbContext AfiliacionesDbContext => context;

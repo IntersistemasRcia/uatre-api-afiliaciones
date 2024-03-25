@@ -18,7 +18,16 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Queries.GetB
         {
             var list = await _unitOfWork.SeccionalAutoridadRepository.GetSeccionalAutoridadesBySeccional(request.SeccionalId, request.SoloVigentes, request.SoloActivos);
 
-            return _mapper.Map<IReadOnlyCollection<SeccionalAutoridadResponse>>(list);
+            var data = _mapper.Map<IReadOnlyCollection<SeccionalAutoridadResponse>>(list);
+            foreach (var item in data)
+            {
+                var refCargo = await _unitOfWork.RefRepository.GetRefCargoById(item.RefCargosId);
+
+                item.RefCargosDescripcion = refCargo?.Cargo ?? string.Empty;
+                item.RefCargoJerarquia = refCargo?.Jerarquia ?? 0;
+            }
+
+            return data;
         }
     }
 }
