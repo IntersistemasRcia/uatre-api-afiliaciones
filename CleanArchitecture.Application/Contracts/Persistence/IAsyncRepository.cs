@@ -16,5 +16,6 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         void DarDeBajaAsync(T Entity, JsonPatchDocument model);
         void ReactivarAsync(T Entity, JsonPatchDocument model);
         Task<int> CountAsync(ISpecification<T> spec);
+        void PatchAsync(T Entity, JsonPatchDocument model);
     }
 }

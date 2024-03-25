@@ -58,17 +58,18 @@ namespace CleanArchitecture.API.Controllers
             return await _mediator.Send(command);
         }
 
-        [HttpPatch(Name = "PatchAfiliado")]
+        [HttpPatch("PatchAfiliado/{afiliadoId}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<int>> PatchAfiliado([FromRoute] PatchAfiliadoCommand command)
+        public async Task<ActionResult<int>> PatchAfiliado(int afiliadoId, [FromBody] PatchAfiliadoDto dto)
         {
             if (!ModelState.IsValid)
             {
                 throw new BadRequestException("Error");
             }
 
+            var command = new PatchAfiliadoCommand(afiliadoId, dto);
             return await _mediator.Send(command);
         }
 
@@ -82,11 +83,11 @@ namespace CleanArchitecture.API.Controllers
             return await _mediator.Send(command);
         }
 
-        [HttpPatch("ActualizarDatosAfip")]
+        [HttpPatch("ActualizarDatosAfip/{afiliadoId}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<int>> ActualizarDatosAfip([FromRoute] PatchAfiliadoDatosAfipCommand command)
+        public async Task<ActionResult<int>> ActualizarDatosAfip(int afiliadoId, [FromBody] PatchAfiliadoDatosAfipDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -94,6 +95,7 @@ namespace CleanArchitecture.API.Controllers
                 throw new BadRequestException("Error");
             }
 
+            var command = new PatchAfiliadoDatosAfipCommand(afiliadoId, dto);
             return await _mediator.Send(command);
         }
     }

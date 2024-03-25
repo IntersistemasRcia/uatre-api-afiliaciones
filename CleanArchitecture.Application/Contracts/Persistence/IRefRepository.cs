@@ -4,11 +4,11 @@ namespace CleanArchitecture.Application.Contracts.Persistence
 {
     public interface IRefRepository
     {
-        Task<Empresa> GetEmpresaById(int id);
+        Task<Empresa?> GetEmpresaById(int id);
 
-        Task<RefDelegacion> GetDelegacionById(int id);
+        Task<RefDelegacion?> GetDelegacionById(int id);
 
-        Task<RefMotivosBaja> GetRefMotivoBajaById(int id);
+        Task<RefMotivosBaja?> GetRefMotivoBajaById(int id);
 
         Task AgregarDocumentacionEntidad(ICollection<DocumentacionEntidad> documentacionEntidad, string entidadTipo, int entidadId);
 

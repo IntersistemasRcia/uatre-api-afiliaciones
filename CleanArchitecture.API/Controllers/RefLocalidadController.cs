@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Features.RefLocalidad.Command.DarDeBajaRefLo
 using CleanArchitecture.Application.Features.RefLocalidad.Command.ReactivarRefLocalidad;
 using CleanArchitecture.Application.Features.RefLocalidad.Command.Update;
 using CleanArchitecture.Application.Features.RefLocalidad.Queries;
+using CleanArchitecture.Application.Features.RefLocalidad.Queries.GetRefLocalidadById;
 using CleanArchitecture.Application.Features.RefLocalidad.Queries.GetRefLocalidadPaginationSpecs;
 using CleanArchitecture.Application.Features.RefLocalidad.Queries.GetRefLocalidadSpecs;
 using CleanArchitecture.Application.Models;
@@ -28,6 +29,18 @@ namespace CleanArchitecture.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<IReadOnlyList<RefLocalidadVm>>> GetRefLocalidadesSpecs([FromQuery] GetRefLocalidadSpecsQuery query)
         {
+            var list = await _mediator.Send(query);
+
+            return Ok(list);
+        }
+
+        [HttpGet("{id}")]
+        //[Authorize]
+        [ProducesResponseType(typeof(IReadOnlyList<RefLocalidadVm>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<RefLocalidadVm>> GetById(int id)
+        {
+            var query = new GetRefLocalidadByIdQuery(id);
             var list = await _mediator.Send(query);
 
             return Ok(list);

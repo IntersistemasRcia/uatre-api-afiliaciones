@@ -1,7 +1,5 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Contracts.Specification;
-using CleanArchitecture.Common.Exceptions;
-using CleanArchitecture.Domain;
 using CleanArchitecture.Domain.Commom;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Specification;
@@ -113,6 +111,21 @@ namespace CleanArchitecture.Infrastructure.Repositories
             catch (Exception ex)
             {
                 throw new Exception($"No se pudo Reactivar {Entity.GetType()}. Error: {ex.Message}");
+            }
+
+        }
+
+        public void PatchAsync(T Entity, JsonPatchDocument model)
+        {
+            try
+            {
+                context.Set<T>();
+                context.Entry(Entity).State = EntityState.Modified;
+                model.ApplyTo(Entity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"No se pudo actualizar {Entity.GetType()}. Error: {ex.Message}");
             }
 
         }

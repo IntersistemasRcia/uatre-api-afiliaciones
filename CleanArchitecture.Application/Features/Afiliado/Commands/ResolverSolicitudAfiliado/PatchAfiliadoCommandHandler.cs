@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
 using MediatR;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Logging;
 using Polly;
 
@@ -30,8 +31,30 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolic
                 logger.LogInformation("No existe Afiliado");
                 throw new NotFoundException(typeof(Domain.Afiliado).Name, request.Id);
             }
-            
-            await unitOfWork.AfiliadoRepository.ResolverSolicitudAsync(afiliado, request.model!);
+
+            var patchModel = new JsonPatchDocument();
+
+            patchModel.Replace(nameof(Domain.Afiliado.EstadoSolicitudId), request.EstadoSolicitudId);
+            switch (request.EstadoSolicitudId)
+            {
+                case 2: //activo
+                    if (afiliado.EstadoSolicitudId == 1)
+                    {
+                        var nroAfiliado = unitOfWork.AfiliadoRepository.GetNroAfiliado();
+                        patchModel.Replace(nameof(Domain.Afiliado.NroAfiliado), nroAfiliado);
+                    }
+                    patchModel.Replace(nameof(Domain.Afiliado.FechaIngreso), DateTime.Now);
+                    break;
+
+                case 3: //no activo
+                    patchModel.Replace(nameof(Domain.Afiliado.FechaEgreso), DateTime.Now);
+                    break;
+
+                default:
+                    break;
+            }            
+
+            unitOfWork.Repository<Domain.Afiliado>().PatchAsync(afiliado, patchModel);
 
             try
             {

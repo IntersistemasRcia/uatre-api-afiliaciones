@@ -1,21 +1,23 @@
+using CleanArchitecture.API.JsonConverters;
 using CleanArchitecture.API.Middleware;
 using CleanArchitecture.Application;
-using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Persistence;
-using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault)
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new OptionalConverter()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -41,6 +43,7 @@ builder.Services.AddHttpContextAccessor()
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Host.AddInfrastructureServices();
 
 
 builder.Services.AddCors(opt =>
@@ -51,10 +54,6 @@ builder.Services.AddCors(opt =>
         builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
     });
 });
-
-//Serilog
-Log.Logger = new LoggerConfiguration().CreateBootstrapLogger();
-builder.Host.UseSerilog(((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)));
 
 var app = builder.Build();
 

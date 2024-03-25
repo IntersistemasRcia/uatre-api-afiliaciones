@@ -20,17 +20,17 @@ public class RefRepository : IRefRepository
         httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
     }
 
-    public async Task<RefDelegacion> GetDelegacionById(int id)
+    public async Task<RefDelegacion?> GetDelegacionById(int id)
     {
         return await db.QueryFirstOrDefaultAsync<RefDelegacion>("SELECT Id, Nombre FROM RefDelegaciones WHERE Id = @Id", new { Id = id });
     }
 
-    public async Task<RefMotivosBaja> GetRefMotivoBajaById(int id)
+    public async Task<RefMotivosBaja?> GetRefMotivoBajaById(int id)
     {
         return await db.QueryFirstOrDefaultAsync<RefMotivosBaja>("SELECT Id, Tipo, Descripcion FROM RefMotivosBaja WHERE Id = @Id", new { Id = id });
     }
 
-    public async Task<Empresa> GetEmpresaById(int id)
+    public async Task<Empresa?> GetEmpresaById(int id)
     {
         return await db.QueryFirstOrDefaultAsync<Empresa>("SELECT Id, CUIT, RazonSocial FROM Empresas WHERE Id = @Id", new { Id = id });
     }
@@ -69,41 +69,12 @@ public class RefRepository : IRefRepository
             .ToList();
     }
 
-    //public async Task<T> GetById<T>(int id) where T : class
-    //{
-    //    var entity = await _context.Set<T>().FindAsync(id);
-
-    //    return entity;
-    //}
-
-    //public async Task<T> AddAsync<T>(T Entity) where T : class
-    //{
-    //    await _context.Set<T>().AddAsync(Entity);
-    //    //await context.SaveChangesAsync();
-
-    //    return Entity;
-    //}
-
-    //public async Task<T> UpdateAsync<T>(T Entity) where T : class
-    //{
-    //    _context.Set<T>().Attach(Entity);
-    //    _context.Entry(Entity).State = EntityState.Modified;
-    //    //await context.SaveChangesAsync();
-
-    //    return Entity;
-    //}
-
     public async Task BorrarDocumentacionEntidad(string tipoEntidad, int idEntidad)
     {
         try
         {
             await db
-                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE EntidadTipo = @TipoEntidad AND EntidadId = @EntidadId", new { TipoEntidad = tipoEntidad, EntidadId = idEntidad });
-            //string SQL = $;
-            //using (var connection = _db)
-            //{
-            //    var affectedRows = connection.Execute(SQL);
-            //}
+                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE EntidadTipo = @TipoEntidad AND EntidadId = @EntidadId", new { TipoEntidad = tipoEntidad, EntidadId = idEntidad });            
         }
         catch (Exception ex)
         {
@@ -116,12 +87,7 @@ public class RefRepository : IRefRepository
         try
         {
             await db
-                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE Id = @Id", new { Id = id });
-            //string SQL = $;
-            //using (var connection = _db)
-            //{
-            //    var affectedRows = connection.Execute(SQL);
-            //}
+                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE Id = @Id", new { Id = id });            
         }
         catch (Exception ex)
         {

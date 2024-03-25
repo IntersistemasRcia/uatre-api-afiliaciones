@@ -1,13 +1,19 @@
-﻿using CleanArchitecture.Domain;
-using MediatR;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
 
-namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolicitudAfiliado
+namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolicitudAfiliado;
+
+public class PatchAfiliadoCommand : IRequest<int>
 {
-    public class PatchAfiliadoCommand : IRequest<int>
+    public PatchAfiliadoCommand(int afiliadoId, PatchAfiliadoDto dto)
     {
-        [FromQuery(Name = "Id")] public int Id { get; set; }
-        [FromBody] public JsonPatchDocument? model { get; set; }
+        Id = afiliadoId;
+        EstadoSolicitudId = dto.EstadoSolicitudId;
+        FechaIngreso = dto.FechaIngreso;
+        FechaEgreso = dto.FechaEgreso;
     }
+
+    public int Id { get; set; }
+    public int EstadoSolicitudId { get; set; }
+    public DateTime? FechaIngreso { get; set; }
+    public DateTime? FechaEgreso { get; set; }
 }
