@@ -35,19 +35,15 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliad
                 if (request.Documentacion?.Count > 0)
                 {
                     await unitOfWork.RefRepository.BorrarDocumentacionEntidad("A", request.Id);
-                    foreach (var item in request.Documentacion!)
-                    {
-                        item.Id = 0;
-                        await unitOfWork.RefRepository.AddAsync(item);
-                    }
+                    await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", request.Id);
+                    //foreach (var item in request.Documentacion!)
+                    //{
+                    //    item.Id = 0;
+                    //    await unitOfWork.RefRepository.AddAsync(item);
+                    //}
                 }
 
-                var t1 = unitOfWork.CommitAsync();
-                var t2 = unitOfWork.CommitAsyncUatreRefContext();
-
-                await Task.WhenAll(t1, t2);
-
-                return t1.Result + t2.Result;
+                return await unitOfWork.CommitAsync();
             }
             catch (Exception ex)
             {

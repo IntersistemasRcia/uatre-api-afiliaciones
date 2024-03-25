@@ -8,15 +8,12 @@ using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Specification;
 using Dapper;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Polly;
 using System.Data;
-using System.Data.SqlClient;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using static Dapper.SqlMapper;
 
 namespace CleanArchitecture.Infrastructure.Repositories
 {

@@ -17,7 +17,7 @@ namespace CleanArchitecture.Application
             //Servicios
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssemblyContaining<CreateRefLocalidadCommandValidator>(includeInternalTypes: true);
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(r => r.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             ////Behaviours
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));

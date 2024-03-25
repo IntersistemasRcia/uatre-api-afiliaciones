@@ -23,19 +23,19 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Afiliaciones", Version = "v1" });
 });
 
-//Auth JWT
 //Autenticación por JWT
 builder.Services.AddHttpContextAccessor()
-    .AddAuthorization().AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
     {
         opt.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateLifetime = true,
-            ValidateAudience = false, // Because there is no audiance in the generated token
-            ValidateIssuer = false,   // Because there is no issuer in the generated token
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
         };
     });
 
@@ -59,8 +59,12 @@ builder.Host.UseSerilog(((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuratio
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 
 app.UseMiddleware<ExcepcionMiddleware>();
 

@@ -8,16 +8,15 @@ namespace CleanArchitecture.Application.Contracts.Persistence
 
         Task<RefDelegacion> GetDelegacionById(int id);
 
-        void AgregarDocumentacionEntidad(ICollection<DocumentacionEntidad> documentacionEntidad, string entidadTipo, int entidadId);
+        Task<RefMotivosBaja> GetRefMotivoBajaById(int id);
+
+        Task AgregarDocumentacionEntidad(ICollection<DocumentacionEntidad> documentacionEntidad, string entidadTipo, int entidadId);
+
+        Task AgregarDocumentacionEntidad(DocumentacionEntidad documentacionEntidad, string entidadTipo, int entidadId);
 
         Task<IReadOnlyCollection<DocumentacionEntidad>> GetDocumentacionEntidadById(string tipoEntidad, int entidadId);
 
-        Task<T> GetById<T>(int id) where T : class;
-
-        Task<T> AddAsync<T>(T Entity) where T : class;
-
-        Task<T> UpdateAsync<T>(T Entity) where T : class;
-
-        Task BorrarDocumentacionEntidad(string tipo, int id);
+        Task BorrarDocumentacionEntidad(string tipoEntidad, int idEntidad);
+        Task BorrarDocumentacionEntidad(int id);
     }
 }

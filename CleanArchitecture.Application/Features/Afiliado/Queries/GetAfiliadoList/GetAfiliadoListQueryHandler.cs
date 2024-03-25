@@ -47,7 +47,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
 
             foreach (var afiliado in data)
             {
-                var refMotivoBaja = await _unitOfWork.RefRepository.GetById<RefMotivosBaja>(afiliado.RefMotivoBajaId);
+                var refMotivoBaja = await _unitOfWork.RefRepository.GetRefMotivoBajaById(afiliado.RefMotivoBajaId);
                 afiliado.RefMotivoBajaDescripcion = refMotivoBaja?.Descripcion ?? string.Empty;
 
                 var documentacion = await _unitOfWork.RefRepository.GetDocumentacionEntidadById("A", afiliado.Id);

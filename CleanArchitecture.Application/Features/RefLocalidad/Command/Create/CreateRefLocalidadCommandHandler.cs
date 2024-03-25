@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Application.Features.RefLocalidad.Queries;
 using CleanArchitecture.Common.Exceptions;
-using CleanArchitecture.Domain;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Dapper;
+using CleanArchitecture.Domain;
 
 namespace CleanArchitecture.Application.Features.RefLocalidad.Command.Create;
 
@@ -35,7 +35,9 @@ public class CreateRefLocalidadCommandHandler : IRequestHandler<CreateRefLocalid
             throw new BadRequestException(string.Join(Environment.NewLine, validationResult.Errors));
         }
 
-        if (await unitOfWork.RefLocalidadRepository.ExisteRefLocalidadCodPostal(request.CodPostal) == true)
+        var existeRefLocalidad = await unitOfWork.UatreAfiliaciones.SQL
+            .QueryFirstOrDefaultAsync<Domain.RefLocalidad>("SELECT TOP 1 Id FROM RefLocalidades WHERE CodPostal = @CodPostal", new { CodPostal = request.CodPostal });
+        if (existeRefLocalidad != null)
         {
             throw new BadRequestException($"Ya existe una Localidad con el Codigo Postal {request.CodPostal}");
         }

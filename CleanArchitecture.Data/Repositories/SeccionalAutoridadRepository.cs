@@ -3,10 +3,10 @@ using CleanArchitecture.Application.Models;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Domain;
 using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Text.Json;
 
 namespace CleanArchitecture.Infrastructure.Repositories

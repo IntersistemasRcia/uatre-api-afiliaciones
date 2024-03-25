@@ -1,96 +1,131 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Models.APIComunes;
-using CleanArchitecture.Infrastructure.Persistence;
 using Dapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Polly;
-using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitecture.Infrastructure.Repositories
+namespace CleanArchitecture.Infrastructure.Repositories;
+
+public class RefRepository : IRefRepository
 {
-    public class RefRepository : IRefRepository
+    private readonly SqlConnection db;
+    private readonly IHttpContextAccessor httpContextAccessor;
+
+    public RefRepository(IConfiguration configuration, IServiceProvider serviceProvider)
     {
-        private readonly UATRERefDbContext _context;
-        private IDbConnection _db;
+        db = new SqlConnection(configuration.GetConnectionString("UATRERefConnection"));
+        httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+    }
 
-        public RefRepository(UATRERefDbContext context, IConfiguration configuration)
+    public async Task<RefDelegacion> GetDelegacionById(int id)
+    {
+        return await db.QueryFirstOrDefaultAsync<RefDelegacion>("SELECT Id, Nombre FROM RefDelegaciones WHERE Id = @Id", new { Id = id });
+    }
+
+    public async Task<RefMotivosBaja> GetRefMotivoBajaById(int id)
+    {
+        return await db.QueryFirstOrDefaultAsync<RefMotivosBaja>("SELECT Id, Tipo, Descripcion FROM RefMotivosBaja WHERE Id = @Id", new { Id = id });
+    }
+
+    public async Task<Empresa> GetEmpresaById(int id)
+    {
+        return await db.QueryFirstOrDefaultAsync<Empresa>("SELECT Id, CUIT, RazonSocial FROM Empresas WHERE Id = @Id", new { Id = id });
+    }
+
+    public async Task AgregarDocumentacionEntidad(ICollection<DocumentacionEntidad> documentacionEntidad, string entidadTipo, int entidadId)
+    {
+        foreach (var item in documentacionEntidad)
         {
-            _db = new SqlConnection(configuration.GetConnectionString("UATRERefConnection"));
-            _context = context;
+            item.EntidadTipo = entidadTipo;
+            item.EntidadId = entidadId;
+            item.CreatedDate = DateTime.Now;
+            item.CreatedBy = httpContextAccessor.HttpContext.User?.Claims?
+                .FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value ?? "Sin Datos";
         }
+        await db.QueryAsync("INSERT INTO DocumentacionEntidades (EntidadTipo, EntidadId, RefTipoDocumentacionId, Archivo, Observaciones, CreatedDate, CreatedBy, NombreArchivo)" +
+            "VALUES (@EntidadTipo, @EntidadId, @RefTipoDocumentacionId, @Archivo, @Observaciones, @CreatedDate, @CreatedBy, @NombreArchivo)", documentacionEntidad);
+    }
 
-        public async Task<RefDelegacion> GetDelegacionById(int id)
+    public async Task AgregarDocumentacionEntidad(DocumentacionEntidad documentacionEntidad, string entidadTipo, int entidadId)
+    {
+        documentacionEntidad.EntidadTipo = entidadTipo;
+        documentacionEntidad.EntidadId = entidadId;
+        documentacionEntidad.CreatedDate = DateTime.Now;
+        documentacionEntidad.CreatedBy = httpContextAccessor.HttpContext.User?.Claims?
+            .FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value ?? "Sin Datos";
+
+        await db.QueryAsync("INSERT INTO DocumentacionEntidades (EntidadTipo, EntidadId, RefTipoDocumentacionId, Archivo, Observaciones, CreatedDate, CreatedBy, NombreArchivo)" +
+            "VALUES (@EntidadTipo, @EntidadId, @RefTipoDocumentacionId, @Archivo, @Observaciones, @CreatedDate, @CreatedBy, @NombreArchivo)", documentacionEntidad);
+    }
+
+    public async Task<IReadOnlyCollection<DocumentacionEntidad>> GetDocumentacionEntidadById(string tipoEntidad, int entidadId)
+    {
+        return (await db
+            .QueryAsync<DocumentacionEntidad>("SELECT * FROM DocumentacionEntidades WHERE EntidadTipo = @TipoEntidad AND EntidadId = @EntidadId",
+            new { TipoEntidad = tipoEntidad, EntidadId = entidadId }))
+            .ToList();
+    }
+
+    //public async Task<T> GetById<T>(int id) where T : class
+    //{
+    //    var entity = await _context.Set<T>().FindAsync(id);
+
+    //    return entity;
+    //}
+
+    //public async Task<T> AddAsync<T>(T Entity) where T : class
+    //{
+    //    await _context.Set<T>().AddAsync(Entity);
+    //    //await context.SaveChangesAsync();
+
+    //    return Entity;
+    //}
+
+    //public async Task<T> UpdateAsync<T>(T Entity) where T : class
+    //{
+    //    _context.Set<T>().Attach(Entity);
+    //    _context.Entry(Entity).State = EntityState.Modified;
+    //    //await context.SaveChangesAsync();
+
+    //    return Entity;
+    //}
+
+    public async Task BorrarDocumentacionEntidad(string tipoEntidad, int idEntidad)
+    {
+        try
         {
-            RefDelegacion? entity = await _context.Set<RefDelegacion>().FirstOrDefaultAsync(x => x.Id == id);
-
-            return entity;
+            await db
+                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE EntidadTipo = @TipoEntidad AND EntidadId = @EntidadId", new { TipoEntidad = tipoEntidad, EntidadId = idEntidad });
+            //string SQL = $;
+            //using (var connection = _db)
+            //{
+            //    var affectedRows = connection.Execute(SQL);
+            //}
         }
-
-        public async Task<Empresa> GetEmpresaById(int id)
+        catch (Exception ex)
         {
-            Empresa? entity = await _context.Set<Empresa>().FirstOrDefaultAsync(x => x.Id == id);
-
-            return entity;
+            throw new Exception(ex.Message, ex.InnerException);
         }
+    }
 
-        public async void AgregarDocumentacionEntidad(ICollection<DocumentacionEntidad> documentacionEntidad, string entidadTipo, int entidadId)
+    public async Task BorrarDocumentacionEntidad(int id)
+    {
+        try
         {
-            foreach (var item in documentacionEntidad)
-            {
-                item.EntidadTipo = entidadTipo;
-                item.EntidadId = entidadId;
-            }
-            
-            await _context.Set<DocumentacionEntidad>().AddRangeAsync(documentacionEntidad);
-
-            await _context.SaveChangesAsync();
+            await db
+                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE Id = @Id", new { Id = id });
+            //string SQL = $;
+            //using (var connection = _db)
+            //{
+            //    var affectedRows = connection.Execute(SQL);
+            //}
         }
-
-        public async Task<IReadOnlyCollection<DocumentacionEntidad>> GetDocumentacionEntidadById(string tipoEntidad, int entidadId)
+        catch (Exception ex)
         {
-            return await _context.Set<DocumentacionEntidad>().Where(x => x.EntidadTipo == tipoEntidad && x.EntidadId == entidadId).ToListAsync();
-        }
-
-        public async Task<T> GetById<T>(int id) where T : class
-        {
-            var entity = await _context.Set<T>().FindAsync(id);
-            
-            return entity;
-        }
-
-        public async Task<T> AddAsync<T>(T Entity) where T : class
-        {
-            await _context.Set<T>().AddAsync(Entity);
-            //await context.SaveChangesAsync();
-
-            return Entity;
-        }
-
-        public async Task<T> UpdateAsync<T>(T Entity) where T : class
-        {
-            _context.Set<T>().Attach(Entity);
-            _context.Entry(Entity).State = EntityState.Modified;
-            //await context.SaveChangesAsync();
-
-            return Entity;
-        }
-
-        public async Task BorrarDocumentacionEntidad(string tipo, int id)
-        {
-            try
-            {
-                string SQL = $"DELETE FROM DocumentacionEntidades WHERE EntidadTipo = '{tipo}' AND EntidadId = {id}";
-                using (var connection = _db)
-                {
-                    var affectedRows = connection.Execute(SQL);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message, ex.InnerException);
-            }
+            throw new Exception(ex.Message, ex.InnerException);
         }
     }
 }

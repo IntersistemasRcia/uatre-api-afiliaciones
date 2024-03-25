@@ -20,9 +20,7 @@ namespace CleanArchitecture.Infrastructure
             services.AddDbContext<AfiliacionesDbContext>(opt =>
                 opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
             );
-            services.AddDbContext<UATRERefDbContext>(opt => {
-                opt.UseSqlServer(configuration.GetConnectionString("UATRERefConnection") ?? throw new ArgumentNullException("UATRERefConnection no seteado"));
-            });
+            
             services.AddScoped<AfiliacionesDapperContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -40,7 +38,7 @@ namespace CleanArchitecture.Infrastructure
             {
                 options.RouteBasePath = "/profiler";
                 options.ColorScheme = StackExchange.Profiling.ColorScheme.Dark;
-                options.Storage = new SqlServerStorage(configuration.GetConnectionString("MiniProfilerConnection"));
+                //options.Storage = new SqlServerStorage(configuration.GetConnectionString("MiniProfilerConnection"));
             }).AddEntityFramework();
 
             ////Seed

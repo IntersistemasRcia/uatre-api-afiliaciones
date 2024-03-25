@@ -16,24 +16,22 @@ namespace CleanArchitecture.Infrastructure.Persistence;
 
 public class AfiliacionesDbContext : DbContext
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor httpContextAccessor;
     private readonly IHttpClientFactory httpClientFactory;
-    private readonly IServiceProvider serviceProvider;
     private readonly List<AuditoriaCambioDatos> cambioDatos;
 
     public AfiliacionesDbContext(DbContextOptions<AfiliacionesDbContext> options,
         IServiceProvider serviceProvider) : base(options)
     {
-        _httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+        httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
         httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
         cambioDatos = new();
-        this.serviceProvider = serviceProvider;
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        //var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-        var userId = _httpContextAccessor.HttpContext.Items["User"]?.ToString() ?? "SinDatos";
+        var userId = httpContextAccessor.HttpContext.User?.Claims?
+    .FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value ?? "Sin Datos";
 
         foreach (var entry in ChangeTracker.Entries<EntidadAuditable>())
         {
@@ -142,6 +140,10 @@ public class AfiliacionesDbContext : DbContext
     private static string GetChanges(EntityEntry entity, EntityState entityState)
     {
         var ignoreCols = new List<string>() { "Id", "Guid", "CreatedBy", "LasModifiedBy", "CreatedDate", "LastModifiedDate", "LastModifiedBy" };
+        if (entityState == EntityState.Added)
+        {
+            ignoreCols.AddRange(new List<string>() { "DeletedDate", "DeletedObs" });
+        }
         var changes = new StringBuilder();
 
         if (entityState == EntityState.Modified)

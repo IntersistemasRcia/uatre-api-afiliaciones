@@ -37,14 +37,18 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Update
                 {
                     foreach (var item in request.Documentacion!)
                     {
-                        var reg = await unitOfWork.RefRepository.GetById<DocumentacionEntidad>(item.Id);
+                        var reg = await unitOfWork.RefRepository.GetDocumentacionEntidadById("A", item.Id);
                         if (reg == null)
                         {
-                            await unitOfWork.RefRepository.AddAsync(item);
+                            await unitOfWork.RefRepository.AgregarDocumentacionEntidad(item, "A", entidad.Id);
                         }
                         else
                         {
-                            await unitOfWork.RefRepository.UpdateAsync(item);
+                            if (!reg.Equals(item))
+                            {
+                                await unitOfWork.RefRepository.BorrarDocumentacionEntidad(item.Id);
+                                await unitOfWork.RefRepository.AgregarDocumentacionEntidad(item, "A", entidad.Id);
+                            }                            
                         }
                     }
                 }                             
