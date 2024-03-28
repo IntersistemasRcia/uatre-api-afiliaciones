@@ -102,8 +102,10 @@ public class AfiliacionesDbContext : DbContext
     public DbSet<SeccionalContacto>? SeccionalContactos { get; set; }
     public DbSet<SeccionalAutoridad>? SeccionalAutoridades { get; set; }
     public DbSet<AfiliadoEstadoSolicitud> AfiliadoEstadosSolicitud { get; set; }
-
     public DbSet<SeccionalEstado> SeccionalEstados { get; set; }
+    public DbSet<InformeSap> InformesSap { get; set; }
+    public DbSet<InformeSapDetalle> InformesSapDetalles { get; set; }
+    public DbSet<Notificacion> Notificaciones { get; set; }
 
     private void RegistrarAuditoriaDatos(EntityEntry entity, string userId, EntityState entityState)
     {

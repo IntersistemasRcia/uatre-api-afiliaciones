@@ -58,6 +58,9 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
             var seccionalAfiliacion = await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(afiliado.SeccionalIdSolicitudAfiliacion);
             afiliado.SeccionalDescripcionSolicitudAfiliacion = seccionalAfiliacion?.Descripcion ?? string.Empty;
             afiliado.SeccionalCodigoSolicitudAfiliacion = seccionalAfiliacion?.Codigo ?? string.Empty;
+
+            var DdjjUatre = (await _unitOfWork.DdjjRepository.GetUltimoPeriodoCuilAsync(afiliado.CUIL)) ?? new Models.APIDdjj.DdjjUatre() { Periodo = 0 };
+            afiliado.UltimaDDJJPeriodo = DdjjUatre.Periodo;
         }
 
         return new Pagination<AfiliadoVm>()

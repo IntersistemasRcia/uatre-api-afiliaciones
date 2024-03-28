@@ -22,7 +22,8 @@ namespace CleanArchitecture.Infrastructure.Repositories
         private IRefRepository _refRepository;
         private IAfiliadoRepository afiliadoRepository;
         private ISeccionalAutoridadRepository seccionalAutoridadRepository;
-        private ISeccionalRepository _seccionalRepository;        
+        private ISeccionalRepository _seccionalRepository;
+        private IDdjjRepository ddjjRepository;
 
         public UnitOfWork(AfiliacionesDbContext context,
             IConfiguration configuration,
@@ -43,6 +44,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public ISeccionalAutoridadRepository SeccionalAutoridadRepository => seccionalAutoridadRepository ??= new SeccionalAutoridadRepository(configuration);
         public ISeccionalRepository SeccionalRepository => _seccionalRepository ??= new SeccionalRepository(context, dapperContext);
         public ISQLConnection UatreAfiliaciones => uatreAfiliaciones ??= new UatreAfiliacionesConnection(configuration);
+        public IDdjjRepository DdjjRepository => ddjjRepository ??= new DdjjRepository(configuration, serviceProvider);
         public AfiliacionesDbContext AfiliacionesDbContext => context;
         public AfiliacionesDapperContext AfiliacionesDapperContext => dapperContext;
 
