@@ -38,6 +38,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolic
             var patchModel = new JsonPatchDocument();
 
             patchModel.Replace(nameof(Domain.Afiliado.EstadoSolicitudId), request.EstadoSolicitudId);
+            patchModel.Replace(nameof(Domain.Afiliado.EstadoSolicitudObservaciones), request.EstadoSolicitudObservaciones);
             switch (request.EstadoSolicitudId)
             {
                 case 2: //activo

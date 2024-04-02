@@ -16,4 +16,5 @@ public class PatchAfiliadoCommand : IRequest<int>
     public int EstadoSolicitudId { get; set; }
     public DateTime? FechaIngreso { get; set; }
     public DateTime? FechaEgreso { get; set; }
+    public string? EstadoSolicitudObservaciones { get; set; }
 }
