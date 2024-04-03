@@ -19,5 +19,6 @@ namespace CleanArchitecture.Application.Models.APIComunes
         public DateTime? DeletedDate { get; set; }
         public string? DeletedBy { get; set; }
         public string? DeletedObs { get; set; }
+        public Guid GUID { get; set; }
     }
 }

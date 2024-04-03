@@ -31,7 +31,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
 
                 if (request.Documentacion?.Count > 0)
                 {
-                    unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entidad.Id);
+                    await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entidad.Id);
                 }
 
                 return entidad.Id;

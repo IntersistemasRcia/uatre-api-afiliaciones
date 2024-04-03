@@ -49,9 +49,10 @@ public class RefRepository : IRefRepository
             item.CreatedDate = DateTime.Now;
             item.CreatedBy = httpContextAccessor.HttpContext.User?.Claims?
                 .FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value ?? "Sin Datos";
+            item.GUID = Guid.NewGuid();
         }
-        await db.QueryAsync("INSERT INTO DocumentacionEntidades (EntidadTipo, EntidadId, RefTipoDocumentacionId, Archivo, Observaciones, CreatedDate, CreatedBy, NombreArchivo)" +
-            "VALUES (@EntidadTipo, @EntidadId, @RefTipoDocumentacionId, @Archivo, @Observaciones, @CreatedDate, @CreatedBy, @NombreArchivo)", documentacionEntidad);
+        await db.ExecuteAsync("INSERT INTO DocumentacionEntidades (EntidadTipo, EntidadId, RefTipoDocumentacionId, Archivo, Observaciones, CreatedDate, CreatedBy, NombreArchivo, GUID)" + 
+            " VALUES (@EntidadTipo, @EntidadId, @RefTipoDocumentacionId, @Archivo, @Observaciones, @CreatedDate, @CreatedBy, @NombreArchivo, @GUID)", documentacionEntidad);
     }
 
     public async Task AgregarDocumentacionEntidad(DocumentacionEntidad documentacionEntidad, string entidadTipo, int entidadId)
