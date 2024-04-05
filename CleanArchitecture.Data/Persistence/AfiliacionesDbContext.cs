@@ -106,6 +106,7 @@ public class AfiliacionesDbContext : DbContext
     public DbSet<InformeSap> InformesSap { get; set; }
     public DbSet<InformeSapDetalle> InformesSapDetalles { get; set; }
     public DbSet<Notificacion> Notificaciones { get; set; }
+    public DbSet<AfiliadoFormularioAfiliacion> AfiliadosFormularioAfiliacion { get; set; }
 
     private void RegistrarAuditoriaDatos(EntityEntry entity, string userId, EntityState entityState)
     {

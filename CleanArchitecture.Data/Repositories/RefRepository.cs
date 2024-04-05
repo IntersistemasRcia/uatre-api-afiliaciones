@@ -63,7 +63,7 @@ public class RefRepository : IRefRepository
         documentacionEntidad.CreatedBy = httpContextAccessor.HttpContext.User?.Claims?
             .FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value ?? "Sin Datos";
 
-        await db.QueryAsync("INSERT INTO DocumentacionEntidades (EntidadTipo, EntidadId, RefTipoDocumentacionId, Archivo, Observaciones, CreatedDate, CreatedBy, NombreArchivo)" +
+        await db.ExecuteAsync("INSERT INTO DocumentacionEntidades (EntidadTipo, EntidadId, RefTipoDocumentacionId, Archivo, Observaciones, CreatedDate, CreatedBy, NombreArchivo)" +
             "VALUES (@EntidadTipo, @EntidadId, @RefTipoDocumentacionId, @Archivo, @Observaciones, @CreatedDate, @CreatedBy, @NombreArchivo)", documentacionEntidad);
     }
 

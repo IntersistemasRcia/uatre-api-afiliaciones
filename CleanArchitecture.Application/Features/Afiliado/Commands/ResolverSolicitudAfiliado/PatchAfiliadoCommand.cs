@@ -10,6 +10,8 @@ public class PatchAfiliadoCommand : IRequest<int>
         EstadoSolicitudId = dto.EstadoSolicitudId;
         FechaEgreso = dto.FechaEgreso;
         FechaIngreso = dto.FechaIngreso;
+        EstadoSolicitudObservaciones = dto.EstadoSolicitudObservaciones;
+        RefMotivoBajaId = dto.RefMotivoBajaId;
     }
 
     public int Id { get; set; }
@@ -17,4 +19,5 @@ public class PatchAfiliadoCommand : IRequest<int>
     public DateTime? FechaIngreso { get; set; }
     public DateTime? FechaEgreso { get; set; }
     public string? EstadoSolicitudObservaciones { get; set; }
+    public int? RefMotivoBajaId { get; set; }
 }

@@ -23,8 +23,9 @@ namespace CleanArchitecture.Application.Specification.Implements
             AgregarIncludes(a => a.Include(e => e.TipoDocumento!));
 
             // Filtros
+            if (!query.NroAfiliadoHasta.HasValue) { query.NroAfiliadoHasta = query.NroAfiliado; };
             SetCriteria(x => (!query.CUIL.HasValue || x.CUIL == query.CUIL) &&
-            (!query.NroAfiliado.HasValue || x.NroAfiliado == query.NroAfiliado) &&
+            (!query.NroAfiliado.HasValue || (x.NroAfiliado >= query.NroAfiliado && x.NroAfiliado <= query.NroAfiliadoHasta)) &&
             (string.IsNullOrEmpty(query.Nombre) || x.Nombre!.Contains(query.Nombre)) &&
             (!query.Documento.HasValue || x.Documento == query.Documento) &&
             (string.IsNullOrEmpty(query.Seccional) || x.Seccional!.Descripcion!.Contains(query.Seccional)) &&

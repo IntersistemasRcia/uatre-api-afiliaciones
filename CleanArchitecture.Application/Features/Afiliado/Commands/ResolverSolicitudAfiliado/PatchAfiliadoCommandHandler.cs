@@ -38,7 +38,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolic
             var patchModel = new JsonPatchDocument();
 
             patchModel.Replace(nameof(Domain.Afiliado.EstadoSolicitudId), request.EstadoSolicitudId);
-            patchModel.Replace(nameof(Domain.Afiliado.EstadoSolicitudObservaciones), request.EstadoSolicitudObservaciones);
+            patchModel.Replace(nameof(Domain.Afiliado.EstadoSolicitudObservaciones), request.EstadoSolicitudObservaciones ?? string.Empty);
             switch (request.EstadoSolicitudId)
             {
                 case 2: //activo
@@ -48,10 +48,14 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolic
                         patchModel.Replace(nameof(Domain.Afiliado.NroAfiliado), nroAfiliado);
                     }
                     patchModel.Replace(nameof(Domain.Afiliado.FechaIngreso), request.FechaIngreso ?? DateTime.Now);
+                    patchModel.Replace(nameof(Domain.Afiliado.FechaEgreso), null);
+                    patchModel.Replace(nameof(Domain.Afiliado.RefMotivoBajaId), 0);
                     break;
 
                 case 3: //no activo
+                    patchModel.Replace(nameof(Domain.Afiliado.FechaIngreso), afiliado.FechaIngreso);
                     patchModel.Replace(nameof(Domain.Afiliado.FechaEgreso), request.FechaEgreso ?? DateTime.Now);
+                    patchModel.Replace(nameof(Domain.Afiliado.RefMotivoBajaId), request.RefMotivoBajaId);
                     break;
 
                 default:
