@@ -8,9 +8,9 @@ namespace CleanArchitecture.Application.Contracts.Persistence
     public interface IAfiliadoRepository// : IAsyncRepository<Afiliado>
     {
         Task ResolverSolicitudAsync(Afiliado afiliado, JsonPatchDocument model);
-        Task<IReadOnlyCollection<Afiliado>> VerificarAutoridadSeccional(IReadOnlyCollection<Afiliado> afiliados);
-        Task<Afiliado> BuscarAfiliadoPorSpecs(ISpecification<Afiliado> spec);
-        Task<IReadOnlyCollection<Afiliado>> ListarAfiliados(ISpecification<Afiliado> spec, bool disableTracking = true);
+        Task<SeccionalAutoridad?> VerificarAutoridadSeccional(int id);
+        //Task<Afiliado> BuscarAfiliadoPorSpecs(ISpecification<Afiliado> spec);
+        //Task<IReadOnlyCollection<Afiliado>> ListarAfiliados(ISpecification<Afiliado> spec, bool disableTracking = true);
         Task CrearAfiliado(Afiliado afiliado, APIEmpresaCreate empresa);
         Task ModificarAfiliado(Afiliado afiliado, APIEmpresaCreate empresa);
         void UpdateDatosAfip(Afiliado afiliado, JsonPatchDocument datosAfipModel);

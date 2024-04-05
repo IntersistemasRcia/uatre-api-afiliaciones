@@ -39,6 +39,9 @@ namespace CleanArchitecture.Domain
         public RefLocalidad? RefLocalidad { get; set; }
         //[StringLength(1000)]
         //public string? ResolucionSolicitudObservaciones { get; set; }
+        public int SeccionalIdSolicitudAfiliacion { get; set; }
+        public int RefMotivoBajaId { get; set; }
+
         [StringLength(255)]
         public string? Domicilio { get; set; }
         [StringLength(255)]
@@ -103,17 +106,15 @@ namespace CleanArchitecture.Domain
         [StringLength(255)]
         public string? AFIPDomicilioDatoAdicional { get; set; }
         [StringLength(255)]
-        public string? AFIPDomicilioTipoDatoAdicional { get; set; }
-        public int SeccionalIdSolicitudAfiliacion { get; set; }
+        public string? AFIPDomicilioTipoDatoAdicional { get; set; }        
 
-        [NotMapped]
-        public int SeccionalAutoridadId { get; set; }
-        [NotMapped]
-        public string? EmpresaDescripcion { get; set; }
-        [NotMapped]
-        public double? EmpresaCUIT { get; set; }
-        public int RefMotivoBajaId { get; set; }
-        [NotMapped]
-        public string? RefMotivoBajaDescripcion { get; set; }
+        //[NotMapped]
+        //public int SeccionalAutoridadId { get; set; }
+        //[NotMapped]
+        //public string? EmpresaDescripcion { get; set; }
+        //[NotMapped]
+        //public double? EmpresaCUIT { get; set; }        
+        //[NotMapped]
+        //public string? RefMotivoBajaDescripcion { get; set; }
     }
 }

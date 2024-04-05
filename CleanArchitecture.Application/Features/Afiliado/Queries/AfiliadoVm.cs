@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Domain.Commom;
+using System.Text.Json.Serialization;
 
 namespace CleanArchitecture.Application.Features.Afiliado.Queries
 {
@@ -47,6 +48,11 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public DateTime? FechaNacimiento { get; set; }
         public int RefMotivoBajaId { get; set; }
         public string? RefMotivoBajaDescripcion { get; set; }
+        public int SeccionalAutoridadId { get; set; }
+        public int SeccionalIdSolicitudAfiliacion { get; set; }
+        public string? SeccionalDescripcionSolicitudAfiliacion { get; set; }
+        public string? SeccionalCodigoSolicitudAfiliacion { get; set; }
+        public int UltimaDDJJPeriodo { get; set; }
         public long? AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         public string? AFIPNombre { get; set; }
@@ -80,12 +86,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? AFIPDomicilioTipo { get; set; }
         public string? AFIPDomicilioEstado { get; set; }
         public string? AFIPDomicilioDatoAdicional { get; set; }
-        public string? AFIPDomicilioTipoDatoAdicional { get; set; }
-        public int SeccionalAutoridadId { get; set; }
-        public int SeccionalIdSolicitudAfiliacion { get; set; }
-        public string? SeccionalDescripcionSolicitudAfiliacion { get; set; }
-        public string? SeccionalCodigoSolicitudAfiliacion { get; set; }
-        public int UltimaDDJJPeriodo { get; set; }
+        public string? AFIPDomicilioTipoDatoAdicional { get; set; }        
         public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
 }

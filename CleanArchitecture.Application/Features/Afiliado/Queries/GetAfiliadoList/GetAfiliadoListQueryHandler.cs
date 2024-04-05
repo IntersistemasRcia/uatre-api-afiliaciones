@@ -38,15 +38,21 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
         }
 
         var spec = new AfiliadoSpecification(request);
-        var padronList = await _unitOfWork.AfiliadoRepository.ListarAfiliados(spec);
-        var padronListConMarcaAutoridad = await _unitOfWork.AfiliadoRepository.VerificarAutoridadSeccional(padronList);
+        var padronList = await _unitOfWork.Repository<Domain.Afiliado>().GetAllWithSpecsAsync(spec);
+        //var padronListConMarcaAutoridad = await _unitOfWork.AfiliadoRepository.VerificarAutoridadSeccional(padronList);
 
         var totalRecords = await _unitOfWork.Repository<Domain.Afiliado>().CountAsync(new BaseSpecification<Domain.Afiliado>(spec.Criteria));
         var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
-        var data = _mapper.Map<List<AfiliadoVm>>(padronListConMarcaAutoridad);
+        var data = _mapper.Map<List<AfiliadoVm>>(padronList);
 
         foreach (var afiliado in data)
         {
+            var empresa = await _unitOfWork.RefRepository.GetEmpresaById(afiliado.EmpresaId);
+            afiliado.EmpresaDescripcion = empresa?.RazonSocial ?? "";
+            afiliado.EmpresaCUIT = empresa?.CUIT ?? 0;
+
+            afiliado.SeccionalAutoridadId = (await _unitOfWork.AfiliadoRepository.VerificarAutoridadSeccional(afiliado.Id))?.SeccionalId ?? 0;
+
             var refMotivoBaja = await _unitOfWork.RefRepository.GetRefMotivoBajaById(afiliado.RefMotivoBajaId);
             afiliado.RefMotivoBajaDescripcion = refMotivoBaja?.Descripcion ?? string.Empty;
 
