@@ -5,4 +5,5 @@ public class RefMotivosBaja
     public int Id { get; set; }
     public char? Tipo { get; set; }
     public string? Descripcion { get; set; }
+    public bool NoPermitirReactivarAfiliado { get; set; }
 }

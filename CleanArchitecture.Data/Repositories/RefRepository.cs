@@ -27,7 +27,7 @@ public class RefRepository : IRefRepository
 
     public async Task<RefMotivosBaja?> GetRefMotivoBajaById(int id)
     {
-        return await db.QueryFirstOrDefaultAsync<RefMotivosBaja>("SELECT Id, Tipo, Descripcion FROM RefMotivosBaja WHERE Id = @Id", new { Id = id });
+        return await db.QueryFirstOrDefaultAsync<RefMotivosBaja>("SELECT Id, Tipo, Descripcion, NoPermitirReactivarAfiliado FROM RefMotivosBaja WHERE Id = @Id", new { Id = id });
     }
 
     public async Task<Empresa?> GetEmpresaById(int id)

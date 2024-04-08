@@ -2,6 +2,7 @@
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Application.Specification.Implements;
+using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
 using MediatR;
 
@@ -21,6 +22,11 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByC
         {
             var spec = new AfiliadoByCUILSpecification(request);
             var afiliado = await _unitOfWork.Repository<Domain.Afiliado>().GetOneWithSpecsAsync(spec);
+            if (afiliado == null)
+            {
+                throw new NotFoundException(nameof(Domain.Afiliado), request.CUIL);
+            }
+
             var afiliadoVm = _mapper.Map<AfiliadoVm>(afiliado);
 
             var empresa = await _unitOfWork.RefRepository.GetEmpresaById(afiliadoVm.EmpresaId);

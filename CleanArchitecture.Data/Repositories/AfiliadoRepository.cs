@@ -31,64 +31,7 @@ public class AfiliadoRepository : IAfiliadoRepository
         _context = context;
         _refRepository = refRepository;
     }
-
-    public async Task ResolverSolicitudAsync(Afiliado afiliado, JsonPatchDocument model)
-    {
-        int estadoSolicitudAnt = afiliado.EstadoSolicitudId;
-        int.TryParse(model.Operations[0].value.ToString(), out int EstadoSolicitud);
-        switch (EstadoSolicitud) //Estado enviado
-        {
-            case 2: //Activo
-                var nroAfiliado = afiliado.NroAfiliado;
-
-                //Solo busco el siguiente nro afiliado si el afiliado estaba pendiente
-                if (afiliado.EstadoSolicitudId == 1)
-                {
-                    lock (_context.Afiliados!)
-                    {
-                        nroAfiliado = _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault() + 1;
-                    }
-                }
-
-                model.Operations[1].value = DateTime.Now.Date; //Convert.ToDateTime(model.Operations[1].value).Date;
-                model.Operations[2].value = nroAfiliado;
-                model.Operations[4].value = null;
-
-
-                break;
-
-            case 3: //No activo
-                model.Operations[1].value = afiliado.FechaIngreso;
-                model.Operations[2].value = afiliado.NroAfiliado;
-                model.Operations[4].value = Convert.ToDateTime(model.Operations[4].value).Date;
-
-                break;
-
-            default:
-                break;
-        }
-
-        model.ApplyTo(afiliado);
-
-        if (estadoSolicitudAnt != EstadoSolicitud)
-        {
-            //Auditoria con estado Anterior
-            AfiliadoEstadoSolicitud afiliadoEstadoSolicitud = new AfiliadoEstadoSolicitud(afiliado.Id, estadoSolicitudAnt);
-            await _context.Set<AfiliadoEstadoSolicitud>().AddAsync(afiliadoEstadoSolicitud);
-        }
-    }
-
-    //public async Task<IReadOnlyCollection<Afiliado>> VerificarAutoridadSeccional(IReadOnlyCollection<Afiliado> afiliados)
-    //{
-    //    foreach (var item in afiliados)
-    //    {
-    //        string SQL = $"SELECT * FROM SeccionalAutoridades WHERE AfiliadoId = {item.Id}";
-    //        var seccionalAutoridades = await _db.QueryAsync<SeccionalAutoridad>(SQL);
-    //        var seccionalAutoridad = seccionalAutoridades?.FirstOrDefault(x => x.FechaVigenciaDesde <= DateTime.Now.Date && x.FechaVigenciaHasta >= DateTime.Now.Date);
-    //        item.SeccionalAutoridadId = seccionalAutoridad != null ? seccionalAutoridad.Id : 0;
-    //    }
-    //    return afiliados;
-    //}
+    
     public async Task<SeccionalAutoridad?> VerificarAutoridadSeccional(int id)
     {
         string SQL = $"SELECT * FROM SeccionalAutoridades WHERE AfiliadoId = {id}";
@@ -96,49 +39,7 @@ public class AfiliadoRepository : IAfiliadoRepository
         return seccionalAutoridades?.FirstOrDefault(x => x.FechaVigenciaDesde <= DateTime.Now.Date && x.FechaVigenciaHasta >= DateTime.Now.Date);        
     }
 
-    //public async Task<Afiliado> BuscarAfiliadoPorSpecs(ISpecification<Afiliado> spec)
-    //{
-    //    Afiliado? afiliado = await ApplySpecification(spec).FirstOrDefaultAsync();
-
-    //    if (afiliado == null)
-    //    {
-    //        throw new NotFoundException(typeof(Afiliado).Name, "No se encontró Afiliado con el Specification indicado");
-    //    }
-
-    //    var empresa = await _refRepository.GetEmpresaById(afiliado.EmpresaId);
-    //    var refDelegacion = await _refRepository.GetDelegacionById(afiliado.Seccional!.RefDelegacionId);
-
-    //    afiliado.EmpresaDescripcion = empresa?.RazonSocial ?? "";
-    //    afiliado.EmpresaCUIT = empresa?.CUIT ?? 0;
-    //    afiliado.Seccional!.RefDelegacionDescripcion = refDelegacion?.Nombre ?? "";
-
-    //    return afiliado;
-    //}
-
-    //public async Task<IReadOnlyCollection<Afiliado>> ListarAfiliados(ISpecification<Afiliado> spec, bool disableTracking = true)
-    //{
-    //    IReadOnlyCollection<Afiliado> list;
-    //    if (disableTracking)
-    //        list = await ApplySpecification(spec).AsNoTracking().ToListAsync();
-    //    else
-    //        list = await ApplySpecification(spec).ToListAsync();
-
-    //    if (list.Any())
-    //    {
-    //        foreach (var afiliado in list)
-    //        {
-    //            var empresa = await _refRepository.GetEmpresaById(afiliado.EmpresaId);
-    //            var refDelegacion = await _refRepository.GetDelegacionById(afiliado.Seccional!.RefDelegacionId);
-
-    //            afiliado.EmpresaDescripcion = empresa?.RazonSocial ?? "";
-    //            afiliado.EmpresaCUIT = empresa?.CUIT ?? 0;
-    //            afiliado.Seccional!.RefDelegacionDescripcion = refDelegacion?.Nombre ?? "";
-    //        }
-    //    }
-
-    //    return list;
-    //}
-
+    
     private IQueryable<Afiliado> ApplySpecification(ISpecification<Afiliado> spec)
     {
         return SpecificationEvaluator<Afiliado>.GetQuery(_context.Set<Afiliado>().AsQueryable(), spec);
