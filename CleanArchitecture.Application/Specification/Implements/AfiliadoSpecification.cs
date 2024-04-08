@@ -24,12 +24,14 @@ namespace CleanArchitecture.Application.Specification.Implements
 
             // Filtros
             if (!query.NroAfiliadoHasta.HasValue) { query.NroAfiliadoHasta = query.NroAfiliado; };
+            if (!query.FechaIngresoHasta.HasValue) { query.FechaIngresoHasta = query.FechaIngreso; };
+
             SetCriteria(x => (!query.CUIL.HasValue || x.CUIL == query.CUIL) &&
             (!query.NroAfiliado.HasValue || (x.NroAfiliado >= query.NroAfiliado && x.NroAfiliado <= query.NroAfiliadoHasta)) &&
             (string.IsNullOrEmpty(query.Nombre) || x.Nombre!.Contains(query.Nombre)) &&
             (!query.Documento.HasValue || x.Documento == query.Documento) &&
             (string.IsNullOrEmpty(query.Seccional) || x.Seccional!.Descripcion!.Contains(query.Seccional)) &&
-            (!query.FechaIngreso.HasValue || x.FechaIngreso == query.FechaIngreso) &&
+            (!query.FechaIngreso.HasValue || (x.FechaIngreso >= query.FechaIngreso && x.FechaIngreso <= query.FechaIngresoHasta)) &&
             (!query.FechaEgreso.HasValue || x.FechaEgreso == query.FechaEgreso) &&
             (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
             (!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId) &&
