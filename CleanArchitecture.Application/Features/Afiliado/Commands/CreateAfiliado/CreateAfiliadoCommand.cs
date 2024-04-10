@@ -21,6 +21,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         public Int64 Documento { get; set; }
         public int ActividadId { get; set; }
         public int EstadoSolicitudId { get; set; }
+        public string? EstadoSolicitudObservaciones { get; set; }
         public int EstadoCivilId { get; set; }
         public int RefLocalidadId { get; set; }
         public string? Domicilio { get; set; }
