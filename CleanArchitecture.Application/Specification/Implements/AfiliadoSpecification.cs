@@ -31,8 +31,8 @@ namespace CleanArchitecture.Application.Specification.Implements
             (string.IsNullOrEmpty(query.Nombre) || x.Nombre!.Contains(query.Nombre)) &&
             (!query.Documento.HasValue || x.Documento == query.Documento) &&
             (string.IsNullOrEmpty(query.Seccional) || x.Seccional!.Descripcion!.Contains(query.Seccional)) &&
-            (!query.FechaIngreso.HasValue || (x.FechaIngreso >= query.FechaIngreso && x.FechaIngreso <= query.FechaIngresoHasta)) &&
-            (!query.FechaEgreso.HasValue || x.FechaEgreso == query.FechaEgreso) &&
+            (!query.FechaIngreso.HasValue || (x.FechaIngreso.Value.Date >= query.FechaIngreso.Value.Date && x.FechaIngreso.Value.Date <= query.FechaIngresoHasta.Value.Date)) &&
+            (!query.FechaEgreso.HasValue || x.FechaEgreso.Value.Date == query.FechaEgreso.Value.Date) &&
             (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
             (!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId) &&
             (!query.RefMotivoBajaId.HasValue || x.RefMotivoBajaId == query.RefMotivoBajaId) &&

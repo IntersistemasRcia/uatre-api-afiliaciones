@@ -30,8 +30,8 @@ public class AfiliacionesDbContext : DbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var userId = httpContextAccessor.HttpContext.User?.Claims?
-    .FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value ?? "Sin Datos";
+        var userId = httpContextAccessor.HttpContext?.User?.Claims?
+            .FirstOrDefault(x => x.Type == "userId")?.Value ?? "Sin Datos";
 
         foreach (var entry in ChangeTracker.Entries<EntidadAuditable>())
         {
