@@ -28,7 +28,7 @@ public class AfiliacionesDbContext : DbContext
         cambioDatos = new();
     }
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var userId = httpContextAccessor.HttpContext?.User?.Claims?
             .FirstOrDefault(x => x.Type == "userId")?.Value ?? "Sin Datos";
@@ -65,9 +65,12 @@ public class AfiliacionesDbContext : DbContext
 
         var ret = await base.SaveChangesAsync(cancellationToken);
 
-        //Envio las auditorias
-        await GrabarAuditorias();
-        
+        if (ret > 0)
+        {
+            //Envio las auditorias
+            _= Task.Run(GrabarAuditorias);            
+        }
+                
         return ret;
     }
 

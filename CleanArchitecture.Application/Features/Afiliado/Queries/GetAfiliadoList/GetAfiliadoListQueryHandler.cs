@@ -55,6 +55,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
 
             var refMotivoBaja = await _unitOfWork.RefRepository.GetRefMotivoBajaById(afiliado.RefMotivoBajaId);
             afiliado.RefMotivoBajaDescripcion = refMotivoBaja?.Descripcion ?? string.Empty;
+            afiliado.RefMotivoBajaNoPermitirReactivarAfiliado = refMotivoBaja?.NoPermitirReactivarAfiliado ?? false;
 
             var documentacion = await _unitOfWork.RefRepository.GetDocumentacionEntidadById("A", afiliado.Id);
 

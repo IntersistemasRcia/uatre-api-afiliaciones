@@ -38,6 +38,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByC
 
             var refMotivoBaja = await _unitOfWork.RefRepository.GetRefMotivoBajaById(afiliadoVm.RefMotivoBajaId);
             afiliadoVm.RefMotivoBajaDescripcion = refMotivoBaja?.Descripcion ?? string.Empty;
+            afiliadoVm.RefMotivoBajaNoPermitirReactivarAfiliado = refMotivoBaja?.NoPermitirReactivarAfiliado ?? false;
 
             var seccionalAfiliacion = await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(afiliadoVm.SeccionalIdSolicitudAfiliacion);
             afiliadoVm.SeccionalDescripcionSolicitudAfiliacion = seccionalAfiliacion?.Descripcion ?? string.Empty;

@@ -48,6 +48,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public DateTime? FechaNacimiento { get; set; }
         public int RefMotivoBajaId { get; set; }
         public string? RefMotivoBajaDescripcion { get; set; }
+        public bool RefMotivoBajaNoPermitirReactivarAfiliado { get; set; }
         public int SeccionalAutoridadId { get; set; }
         public int SeccionalIdSolicitudAfiliacion { get; set; }
         public string? SeccionalDescripcionSolicitudAfiliacion { get; set; }
