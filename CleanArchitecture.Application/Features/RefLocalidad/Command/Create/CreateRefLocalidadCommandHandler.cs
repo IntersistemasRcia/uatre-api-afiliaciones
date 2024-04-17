@@ -45,8 +45,8 @@ public class CreateRefLocalidadCommandHandler : IRequestHandler<CreateRefLocalid
         var entidad = mapper.Map<Domain.RefLocalidad>(request);
 
         var provincia = await unitOfWork.Repository<Domain.Provincia>().GetByIdAsync(entidad.ProvinciaId);
-        entidad.LitProvincia = provincia.Nombre ?? entidad.LitProvincia;
-        entidad.NombreCompleto = $"{entidad.Nombre} - {provincia.Nombre}";
+        entidad.LitProvincia = provincia?.Nombre ?? entidad.LitProvincia ?? string.Empty;
+        entidad.NombreCompleto = $"{entidad.Nombre} - {provincia?.Nombre ?? string.Empty}";
         entidad.Tipo = "L";
 
         try

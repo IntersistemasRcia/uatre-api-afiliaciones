@@ -9,7 +9,6 @@ public class Notificacion : EntidadAuditable
 
     public int DestinoId { get; set; }
 
-    [StringLength(100)]
     public required string Email { get; set; }
 
     [StringLength(200)]
@@ -26,4 +25,9 @@ public class Notificacion : EntidadAuditable
     public required string Estado { get; set; }
 
     public required byte[] Archivo { get; set; }
+
+    [StringLength(3000)]
+    public required string Adjuntos { get; set; }
+
+    public ICollection<NotificacionDetalle>? NotificacionesDetalle { get; set; }
 }

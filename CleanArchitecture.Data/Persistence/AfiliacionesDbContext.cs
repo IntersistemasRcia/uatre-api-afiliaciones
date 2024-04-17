@@ -110,6 +110,7 @@ public class AfiliacionesDbContext : DbContext
     public DbSet<InformeSapDetalle> InformesSapDetalles { get; set; }
     public DbSet<Notificacion> Notificaciones { get; set; }
     public DbSet<AfiliadoFormularioAfiliacion> AfiliadosFormularioAfiliacion { get; set; }
+    public DbSet<NotificacionDetalle> NotificacionesDetalle { get; set; }
 
     private void RegistrarAuditoriaDatos(EntityEntry entity, string userId, EntityState entityState)
     {
@@ -136,7 +137,6 @@ public class AfiliacionesDbContext : DbContext
             Tabla = mapping!.GetTableName()!,
             TablaIdentificador = (Guid)idValue,
             Accion = GetAccion(entity.State.ToString()),
-            Timestamp = DateTime.Now,
             Cambios = GetChanges(entity, entityState)
         };
 
