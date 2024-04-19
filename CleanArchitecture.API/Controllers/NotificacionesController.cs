@@ -32,9 +32,8 @@ public class NotificacionesController : BaseApiController
 
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyList<NotificacionesResponse>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<IReadOnlyList<NotificacionesResponse>>> NotificacionesGet()
+    public async Task<ActionResult<IReadOnlyList<NotificacionesResponse>>> NotificacionesGet([FromQuery] NotificacionesGetQuery query)
     {
-        var query = new NotificacionesGetQuery();
         var list = await _mediator.Send(query);
 
         return Ok(list);

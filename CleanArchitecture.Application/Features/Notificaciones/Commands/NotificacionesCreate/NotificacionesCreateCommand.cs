@@ -16,6 +16,8 @@ public class NotificacionesCreateCommand : IRequest<int>
 
     public string Observaciones { get; set; } = string.Empty;
 
+    public required DateTime FechaEnvio { get; set; }
+
     public required string Estado { get; set; }
 
     public byte[]? Archivo { get; set; }
