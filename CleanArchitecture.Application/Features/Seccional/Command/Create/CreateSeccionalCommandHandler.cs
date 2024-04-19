@@ -27,17 +27,17 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Create
 
                 if (request.Documentacion?.Count > 0)
                 {
-                    unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "S", entidad.Id);
+                    await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "S", entidad.Id);
                 }
 
                 var result = await unitOfWork.CommitAsync();
 
                 return mapper.Map<CreateSeccionalVm>(entidad);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                logger.LogError("No se insertó el registro de SeccionalAutoridad");
-                throw new Exception("No se pudo insertar SeccionalAutoridad");
+                logger.LogError($"No se insertó el registro de SeccionalAutoridad {ex.Message}");
+                throw new Exception($"No se pudo insertar SeccionalAutoridad. {ex.Message}");
             }  
         }
     }

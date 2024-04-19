@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Models.APIComunes;
+using CleanArchitecture.Common.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -24,8 +25,22 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Update
             if (entidad == null)
             {
                 logger.LogError("No existe Seccional");
-                throw new Exception("No existe Seccional");
+                throw new BadRequestException($"No existe Seccional con Id {request.Id}");
             }
+
+            if (request.SeccionalLocalidad != null)
+            {
+                foreach (var item in request.SeccionalLocalidad)
+                {
+                    var refLocalidad = await unitOfWork.Repository<Domain.RefLocalidad>().GetByIdAsync(item.RefLocalidadId);
+                    if (refLocalidad == null)
+                    {
+                        logger.LogError("No existe RefLocalidad");
+                        throw new BadRequestException($"No existe RefLocalidad con Id {item.RefLocalidadId}");
+                    }                    
+                }                
+            }
+            
 
             mapper.Map(request, entidad, typeof(UpdateSeccionalCommand), typeof(Domain.Seccional));
 
@@ -55,10 +70,10 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Update
 
                 return await unitOfWork.CommitAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 logger.LogError("No se actualizó el registro de Seccional");
-                throw new Exception("No se pudo insertar Seccional");
+                throw new Exception("No se pudo insertar Seccional " + ex.Message);
             }
         }
     }

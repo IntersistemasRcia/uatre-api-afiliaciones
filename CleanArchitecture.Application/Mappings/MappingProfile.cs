@@ -48,9 +48,9 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.Seccional, x => x.MapFrom(b => b.Seccional!.Descripcion))
                 .ForMember(a => a.SeccionalCodigo, x => x.MapFrom(b => b.Seccional!.Codigo))
                 .ForMember(a => a.RefDelegacionId, x => x.MapFrom(b => b.Seccional!.RefDelegacionId))
-                .ForMember(a => a.RefDelegacionDescripcion, x => x.MapFrom(b => b.Seccional!.RefDelegacionDescripcion))
+                //.ForMember(a => a.RefDelegacionDescripcion, x => x.MapFrom(b => b.Seccional!.RefDelegacionDescripcion))
                 .ForMember(a => a.ProvinciaId, x => x.MapFrom(b => b.RefLocalidad!.ProvinciaId))
-                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.RefLocalidad!.Provincia!.Nombre))                
+                .ForMember(a => a.Provincia, x => x.MapFrom(b => b.RefLocalidad!.Provincia!.Nombre))
                 .ForMember(a => a.Puesto, x => x.MapFrom(b => b.Puesto!.Descripcion))
                 .ForMember(a => a.Nacionalidad, x => x.MapFrom(b => b.Nacionalidad!.Descripcion))
                 //.ForMember(a => a.EmpresaCUIT, x => x.MapFrom(b => b.Empresa!.CUIT))
@@ -62,12 +62,13 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<Puesto, PuestoVm>();
             CreateMap<RefLocalidad, SeccionalLocalidadVm>();
             CreateMap<Seccional, SeccionalVm>()
-                .ForMember(a => a.SeccionalLocalidad, x => x.MapFrom(s => s.SeccionalLocalidad!.Select(x => x.RefLocalidad)))
+                //.ForMember(a => a.SeccionalLocalidad, x => x.MapFrom(s => s.SeccionalLocalidad!.Select(x => x.RefLocalidad)))
                 .ForMember(a => a.LocalidadNombre, x => x.MapFrom(s => s.RefLocalidades!.Nombre))
                 .ForMember(a => a.LocalidadCodPostal, x => x.MapFrom(s => s.RefLocalidades!.CodPostal))
                 .ForMember(a => a.ProvinciaId, x => x.MapFrom(s => s.RefLocalidades!.ProvinciaId))
                 .ForMember(a => a.ProvinciaDescripcion, x => x.MapFrom(s => s.RefLocalidades!.Provincia!.Nombre))
                 .ForMember(a => a.SeccionalEstadoDescripcion, x => x.MapFrom(s => s.SeccionalEstado!.Descripcion));
+                //.ForMember(s => s.SeccionalLocalidad, opt => opt.MapFrom(x => x.SeccionalLocalidad.Select(y => y.RefLocalidad).ToList()));
             CreateMap<Seccional, CreateSeccionalVm>();
             CreateMap<Provincia, ProvinciaVm>()
                 .ForMember(a => a.SeccionalDescripcionPorDefecto, x => x.MapFrom(s => s.Seccional.Descripcion));
@@ -82,11 +83,14 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<SeccionalContacto, SeccionalContactoResponse>()
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
             CreateMap<SeccionalLocalidad, SeccionalLocalidadVm>()
+                .ForMember(a => a.Id, x => x.MapFrom(b => b.Id))
+                .ForMember(a => a.RefLocalidadId, x => x.MapFrom(b => b.RefLocalidadId))
                 .ForMember(a => a.Codigo, x => x.MapFrom(b => b.RefLocalidad!.Codigo))
                 .ForMember(a => a.Nombre, x => x.MapFrom(b => b.RefLocalidad!.Nombre))
                 .ForMember(a => a.LitProvincia, x => x.MapFrom(b => b.RefLocalidad!.LitProvincia))
                 .ForMember(a => a.CodPostal, x => x.MapFrom(b => b.RefLocalidad!.CodPostal))
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
+
             CreateMap<SeccionalEstado, SeccionalEstadoResponse>();
             CreateMap<AfiliadoEstadoSolicitud, AfiliadoEstadoSolicitudVm>();
 

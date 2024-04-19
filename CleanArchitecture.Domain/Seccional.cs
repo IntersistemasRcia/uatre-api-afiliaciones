@@ -35,9 +35,6 @@ public class Seccional : EntidadAuditable
 
     public float Longitud { get; set; }
 
-    [NotMapped]
-    public string? RefDelegacionDescripcion { get; set; }
-
     public ICollection<SeccionalLocalidad>? SeccionalLocalidad { get; set; }
 
     public ICollection<SeccionalContacto>? SeccionalContacto { get; set; }
