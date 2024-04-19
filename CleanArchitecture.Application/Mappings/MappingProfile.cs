@@ -6,6 +6,9 @@ using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.AfiliadoEstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.EstadoCivil.Queries;
 using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
+using CleanArchitecture.Application.Features.Notificaciones.Commands.NotificacionesCreate;
+using CleanArchitecture.Application.Features.Notificaciones.Commands.NotificacionesUpdate;
+using CleanArchitecture.Application.Features.Notificaciones.Queries;
 using CleanArchitecture.Application.Features.Provincia.Queries.GetNacionalidadesList;
 using CleanArchitecture.Application.Features.Provincia.Queries.GetProvinciasList;
 using CleanArchitecture.Application.Features.Puesto.Queries;
@@ -92,7 +95,11 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
 
             CreateMap<SeccionalEstado, SeccionalEstadoResponse>();
+
             CreateMap<AfiliadoEstadoSolicitud, AfiliadoEstadoSolicitudVm>();
+
+            CreateMap<Notificacion, NotificacionesResponse>();
+            CreateMap<NotificacionDetalle, NotificacionesDetalleResponse>();
 
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();
@@ -112,6 +119,10 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<UpdateRecordSeccionalLocalidadCommand, SeccionalLocalidad>();
             CreateMap<CreateSeccionalEstadoCommand, SeccionalEstado>();
             CreateMap<UpdateSeccionalEstadoCommand, SeccionalEstado>();
+            CreateMap<NotificacionesCreateCommand, Notificacion>();
+            CreateMap<NotificacionDetalleCreateCommand, NotificacionDetalle>();
+            CreateMap<NotificacionesUpdateCommand, Notificacion>();
+            CreateMap<NotificacionDetalleUpdateCommand, NotificacionDetalle>();
         }
     }
 }
