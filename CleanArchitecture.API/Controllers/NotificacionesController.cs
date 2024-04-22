@@ -42,7 +42,7 @@ public class NotificacionesController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(CodeErrorResponse), (int)HttpStatusCode.BadRequest)]
-    public async Task<ActionResult<NotificacionesResponse>> NotificacionesCreate([FromBody] NotificacionesCreateCommand body)
+    public async Task<ActionResult<int>> NotificacionesCreate([FromBody] NotificacionesCreateCommand body)
     {
         var list = await _mediator.Send(body);
 
@@ -52,7 +52,7 @@ public class NotificacionesController : BaseApiController
     [HttpPut("{Id}")]
     [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(CodeErrorResponse), (int)HttpStatusCode.BadRequest)]
-    public async Task<ActionResult<NotificacionesResponse>> NotificacionesUpdate(int Id, [FromBody] NotificacionesUpdateDTO body)
+    public async Task<ActionResult<int>> NotificacionesUpdate(int Id, [FromBody] NotificacionesUpdateDTO body)
     {
         var command = new NotificacionesUpdateCommand(Id, body);
         var list = await _mediator.Send(command);

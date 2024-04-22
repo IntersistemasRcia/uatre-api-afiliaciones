@@ -21,6 +21,7 @@ public class GetSeccionalesListSpecsQuery : IRequest<Pagination<SeccionalVm>>
     public Ambito? AmbitoSeccionales { get; set; }
     public Ambito? AmbitoDelegaciones { get; set; }
     public Ambito? AmbitoProvincias { get; set; }
+    public bool? VerSeccionalesLocalidades { get; set; } = true;
 
     public int PageIndex
     {
