@@ -19,13 +19,16 @@ namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionale
         {
             var spec = new SeccionalSpecification(request);
             var list = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(spec);
-            //if (request.SoloActivos)
-            //{
-            //    var listActivos = list.Where(x => x.DeletedDate == null).ToList();
-            //    return _mapper.Map<List<SeccionalVm>>(listActivos);
-            //}
 
-            return _mapper.Map<List<SeccionalVm>>(list.OrderBy(x => x.Descripcion));
+            var data = _mapper.Map<List<SeccionalVm>>(list.OrderBy(x => x.Descripcion));
+
+            foreach (var item in data)
+            {
+                var refDelegacion = await _unitOfWork.RefRepository.GetDelegacionById(item.RefDelegacionId);
+                item.RefDelegacionDescripcion = refDelegacion?.Nombre ?? string.Empty;
+            }
+
+            return data;
         }
     }
 }

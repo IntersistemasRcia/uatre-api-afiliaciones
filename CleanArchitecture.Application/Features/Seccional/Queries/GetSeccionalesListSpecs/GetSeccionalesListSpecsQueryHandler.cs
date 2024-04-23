@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Features.Afiliado.Queries;
-using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using CleanArchitecture.Application.Models;
-using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Application.Specification;
 using CleanArchitecture.Application.Specification.Implements;
 using CleanArchitecture.Common.Exceptions;

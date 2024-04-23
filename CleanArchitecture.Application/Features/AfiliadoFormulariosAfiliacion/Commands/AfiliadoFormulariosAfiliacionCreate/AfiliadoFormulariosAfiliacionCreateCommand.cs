@@ -14,11 +14,11 @@ public class AfiliadoFormulariosAfiliacionCreateCommand : IRequest<int>
 
     public required string? Domicilio { get; set; }
 
-    public required string? Telefono { get; set; }
+    public string? Telefono { get; set; }
 
-    public required string? Celular { get; set; }
+    public string? Celular { get; set; }
 
-    public required string? Email { get; set; }
+    public string? Email { get; set; }
 
     public required int SexoId { get; set; }
 
@@ -32,7 +32,7 @@ public class AfiliadoFormulariosAfiliacionCreateCommand : IRequest<int>
 
     public required int SeccionalId { get; set; }
 
-    public required string? Seccional { get; set; }
+    public string? Seccional { get; set; }
 
     public required int OficioId { get; set; }
 
@@ -68,17 +68,17 @@ public class AfiliadoFormulariosAfiliacionCreateCommand : IRequest<int>
 
     public required string? ActividadEmpresa { get; set; }
 
-    public required string? TelefonoEmpresa { get; set; }
+    public string? TelefonoEmpresa { get; set; }
 
-    public required string? CelularEmpresa { get; set; }
+    public string? CelularEmpresa { get; set; }
 
-    public required string? EmailEmpresa { get; set; }
+    public string? EmailEmpresa { get; set; }
 
     public required DateTime FechaNacimiento { get; set; }
 
-    public required DateTime FechaIncorporacion { get; set; }
+    public DateTime FechaIncorporacion { get; set; }
 
-    public required int AfiliadoIdAsignado { get; set; }
+    public int AfiliadoIdAsignado { get; set; }
 
-    public required string? Observaciones { get; set; }
+    public string? Observaciones { get; set; }
 }
