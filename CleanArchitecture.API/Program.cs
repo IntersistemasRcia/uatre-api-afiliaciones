@@ -30,7 +30,7 @@ builder.Services.AddHttpContextAccessor()
         opt.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             ValidateIssuer = false,
@@ -48,7 +48,6 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", builder =>
     {
-        //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
         builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
     });
 });

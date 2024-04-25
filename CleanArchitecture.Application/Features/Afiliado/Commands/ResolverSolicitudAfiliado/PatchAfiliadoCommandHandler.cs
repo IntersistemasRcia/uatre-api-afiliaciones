@@ -33,7 +33,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolic
                 throw new NotFoundException(typeof(Domain.Afiliado).Name, request.Id);
             }
 
-            int estadoSolicitudAnt = afiliado.EstadoSolicitudId; 
+            int estadoSolicitudAnt = afiliado.EstadoSolicitudId;
 
             var patchModel = new JsonPatchDocument();
 
@@ -60,26 +60,33 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolic
 
                 default:
                     break;
-            }                        
-
-            try
-            {
-                unitOfWork.Repository<Domain.Afiliado>().PatchAsync(afiliado, patchModel);                
-
-                if (estadoSolicitudAnt != request.EstadoSolicitudId)
-                {
-                    //Auditoria con estado Anterior
-                    Domain.AfiliadoEstadoSolicitud afiliadoEstadoSolicitud = new (afiliado.Id, estadoSolicitudAnt);
-                    await unitOfWork.Repository<Domain.AfiliadoEstadoSolicitud>().AddAsync(afiliadoEstadoSolicitud);
-                }
-
-                return await unitOfWork.CommitAsync();
             }
-            catch (Exception)
+
+            using (var transaction = await unitOfWork.BeginTransactionAsync())
             {
-                logger.LogError("No se actualizó el registro de Afiliado");
-                throw new Exception("No se pudo resolver solicitud Afiliado");
-            }              
+                try
+                {
+                    unitOfWork.Repository<Domain.Afiliado>().PatchAsync(afiliado, patchModel);
+
+                    if (estadoSolicitudAnt != request.EstadoSolicitudId)
+                    {
+                        //Auditoria con estado Anterior
+                        Domain.AfiliadoEstadoSolicitud afiliadoEstadoSolicitud = new(afiliado.Id, estadoSolicitudAnt);
+                        await unitOfWork.Repository<Domain.AfiliadoEstadoSolicitud>().AddAsync(afiliadoEstadoSolicitud);
+                    }
+
+                    await transaction.CommitAsync();
+
+                    return await unitOfWork.CommitAsync();
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync();
+
+                    logger.LogError("No se actualizó el registro de Afiliado");
+                    throw new Exception("No se pudo resolver solicitud Afiliado");
+                }
+            }
         }
     }
 }

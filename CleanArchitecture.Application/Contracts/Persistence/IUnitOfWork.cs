@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Domain.Commom;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArchitecture.Application.Contracts.Persistence
 {
@@ -14,5 +15,6 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         Task<int> CommitAsync();
 
         ISQLConnection UatreAfiliaciones { get; }
+        Task<IDbContextTransaction> BeginTransactionAsync();
     }
 }

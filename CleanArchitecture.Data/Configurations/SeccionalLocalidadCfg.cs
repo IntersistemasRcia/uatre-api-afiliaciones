@@ -13,6 +13,8 @@ namespace CleanArchitecture.Infrastructure.Configurations
                 .Property(a => a.Id)
                 .UseIdentityColumn();
 
+            builder.Property(rv => rv.RowVersion).IsRowVersion();
+
             //Relaciones
             builder.HasOne(sl => sl.Seccional).WithMany(s => s.SeccionalLocalidad).HasForeignKey(sl => sl.SeccionalId);
             builder.HasOne(sl => sl.RefLocalidad).WithMany(l => l.SeccionalLocalidad).HasForeignKey(sl => sl.RefLocalidadId);

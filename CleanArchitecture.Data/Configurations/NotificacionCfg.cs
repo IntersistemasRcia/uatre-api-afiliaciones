@@ -12,6 +12,8 @@ public class NotificacionCfg : IEntityTypeConfiguration<Notificacion>
             .Property(a => a.Id)
             .UseIdentityColumn();
 
+        builder.Property(rv => rv.RowVersion).IsRowVersion();
+
         builder.HasMany(x => x.NotificacionesDetalle).WithOne().HasForeignKey(x => x.NotificacionesId);
     }
 }

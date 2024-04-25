@@ -1,11 +1,8 @@
 ﻿using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Contracts.Specification;
-using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Infrastructure.Persistence;
-using CleanArchitecture.Infrastructure.Specification;
 using Dapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Data.SqlClient;
@@ -31,26 +28,26 @@ public class AfiliadoRepository : IAfiliadoRepository
         _context = context;
         _refRepository = refRepository;
     }
-    
+
     public async Task<SeccionalAutoridad?> VerificarAutoridadSeccional(int id)
     {
         string SQL = $"SELECT * FROM SeccionalAutoridades WHERE AfiliadoId = {id}";
         var seccionalAutoridades = await _db.QueryAsync<SeccionalAutoridad>(SQL);
-        return seccionalAutoridades?.FirstOrDefault(x => x.FechaVigenciaDesde <= DateTime.Now.Date && x.FechaVigenciaHasta >= DateTime.Now.Date);        
+        return seccionalAutoridades?.FirstOrDefault(x => x.FechaVigenciaDesde <= DateTime.Now.Date && x.FechaVigenciaHasta >= DateTime.Now.Date);
     }
 
-    
-    private IQueryable<Afiliado> ApplySpecification(ISpecification<Afiliado> spec)
-    {
-        return SpecificationEvaluator<Afiliado>.GetQuery(_context.Set<Afiliado>().AsQueryable(), spec);
-    }
+
+    //private IQueryable<Afiliado> ApplySpecification(ISpecification<Afiliado> spec)
+    //{
+    //    return SpecificationEvaluator<Afiliado>.GetQuery(_context.Set<Afiliado>().AsQueryable(), spec);
+    //}
 
     public async Task CrearAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)
     {
         afiliado.EmpresaId = await BuscarEmpresa(empresa);
         if (afiliado.EstadoSolicitudId == 2)
         {
-            afiliado.NroAfiliado = _context.Afiliados?.OrderByDescending(x => x.NroAfiliado).FirstOrDefault()?.NroAfiliado + 1 ?? 1;
+            afiliado.NroAfiliado = await GetNroAfiliado(); //_context.Afiliados?.OrderByDescending(x => x.NroAfiliado).FirstOrDefault()?.NroAfiliado + 1 ?? 1;
             afiliado.FechaIngreso = DateTime.Now.Date;
         }
         await _context.Set<Afiliado>().AddAsync(afiliado);
@@ -70,15 +67,17 @@ public class AfiliadoRepository : IAfiliadoRepository
         datosAfipModel.ApplyTo(afiliado);
     }
 
-    public int GetNroAfiliado()
+    public async Task<int> GetNroAfiliado()
     {
-        lock (_context.Afiliados!)
-        {
-            return _context.Afiliados!.OrderByDescending(x => x.NroAfiliado).Take(1)!.Select(x => x.NroAfiliado).FirstOrDefault() + 1;
-        }
+        return await _context.Afiliados!
+        .AsNoTracking()
+        .OrderByDescending(x => x.NroAfiliado)
+        .Take(1)!
+        .Select(x => x.NroAfiliado)
+        .FirstOrDefaultAsync() + 1;
     }
 
-    private async Task<int> BuscarEmpresa(APIEmpresaCreate empresa)
+    public async Task<int> BuscarEmpresa(APIEmpresaCreate empresa)
     {
         //Creo la empresa primero
         var httpClient = _httpClientFactory.CreateClient("APIComunes");

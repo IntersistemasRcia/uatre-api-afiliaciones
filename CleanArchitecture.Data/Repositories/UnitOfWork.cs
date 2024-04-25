@@ -2,10 +2,9 @@
 using CleanArchitecture.Domain.Commom;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Persistence.SQLConnections;
-using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using System.Collections;
-using System.Data.SqlClient;
 
 namespace CleanArchitecture.Infrastructure.Repositories
 {
@@ -56,6 +55,12 @@ namespace CleanArchitecture.Infrastructure.Repositories
         public void Dispose()
         {
             context.Dispose();
+        }
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            //return new EntityDatabaseTransaction(context);
+            return await context.Database.BeginTransactionAsync();
         }
 
         public IAsyncRepository<TEntity> Repository<TEntity>() where TEntity : BaseDomainModel

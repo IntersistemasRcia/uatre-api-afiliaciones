@@ -12,6 +12,8 @@ public class InformeSapCfg : IEntityTypeConfiguration<InformeSap>
             .Property(a => a.Id)
             .UseIdentityColumn();
 
+        builder.Property(rv => rv.RowVersion).IsRowVersion();
+
         builder.HasMany(x => x.InformeSapDetalles).WithOne().HasForeignKey(x => x.InformeSapId);
     }
 }

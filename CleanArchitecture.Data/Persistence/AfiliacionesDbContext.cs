@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -18,6 +19,7 @@ public class AfiliacionesDbContext : DbContext
 {
     private readonly IHttpContextAccessor httpContextAccessor;
     private readonly IHttpClientFactory httpClientFactory;
+    private readonly ILogger<AfiliacionesDbContext> logger;
     private readonly List<AuditoriaCambioDatos> cambioDatos;
 
     public AfiliacionesDbContext(DbContextOptions<AfiliacionesDbContext> options,
@@ -25,6 +27,7 @@ public class AfiliacionesDbContext : DbContext
     {
         httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
         httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+        logger = serviceProvider.GetRequiredService<ILogger<AfiliacionesDbContext>>();
         cambioDatos = new();
     }
 
@@ -208,15 +211,9 @@ public class AfiliacionesDbContext : DbContext
             var json = JsonSerializer.Serialize(cambio);
             var content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync("/api/AuditoriasDatos/registrar", content);
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                //string? jsonString = await response.Content.ReadAsStringAsync();
-
-                //return JsonSerializer.Deserialize<int>(jsonString);
-            }
-            else
-            {
-                //return 0;
+                logger.LogError("Error grabando Auditoria de Datos", json.ToString(), cambio.TablaIdentificador);
             }
         }
     }

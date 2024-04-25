@@ -12,7 +12,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
     {
         private readonly ILogger<CreateAfiliadoCommandHandler> logger;
         private readonly IMapper mapper;
-        private readonly IUnitOfWork unitOfWork;        
+        private readonly IUnitOfWork unitOfWork;
 
         public CreateAfiliadoCommandHandler(ILogger<CreateAfiliadoCommandHandler> logger, IMapper mapper, IUnitOfWork unitOfWork)
         {
@@ -24,23 +24,38 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         {
             var entidad = mapper.Map<Domain.Afiliado>(request);
 
-            try
+            using (var transaction = await unitOfWork.BeginTransactionAsync())
             {
-                await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);
-                var result = await unitOfWork.CommitAsync();
-
-                if (request.Documentacion?.Count > 0)
+                try
                 {
-                    await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entidad.Id);
-                }
+                    //await unitOfWork.AfiliadoRepository.CrearAfiliado(entidad, request.Empresa!);
+                    entidad.EmpresaId = await unitOfWork.AfiliadoRepository.BuscarEmpresa(request.Empresa);
+                    if (entidad.EmpresaId == 0)
+                    {
+                        throw new Exception("Error buscando/creando Empresa");
+                    }
 
-                return entidad.Id;
+                    entidad.NroAfiliado = await unitOfWork.AfiliadoRepository.GetNroAfiliado();
+                    await unitOfWork.Repository<Domain.Afiliado>().AddAsync(entidad);
+                    var result = await unitOfWork.CommitAsync();
+
+                    if (request.Documentacion?.Count > 0)
+                    {
+                        await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entidad.Id);
+                    }
+
+                    await transaction.CommitAsync();
+
+                    return entidad.Id;
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+
+                    logger.LogError("No se insertó el registro de Afiliado");
+                    throw new Exception("No se pudo insertar Afiliado. " + ex.InnerException);
+                }
             }
-            catch (Exception ex)
-            {
-                logger.LogError("No se insertó el registro de Afiliado");
-                throw new Exception("No se pudo insertar Afiliado. " + ex.InnerException);
-            }            
         }
     }
 }

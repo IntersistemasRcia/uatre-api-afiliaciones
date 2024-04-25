@@ -28,27 +28,34 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliad
 
             entityToUpdate = (Domain.Afiliado)mapper.Map(request, entityToUpdate, typeof(UpdateAfiliadoCommand), typeof(Domain.Afiliado));
 
-            try
+            using (var transaction = await unitOfWork.BeginTransactionAsync())
             {
-                await unitOfWork.AfiliadoRepository.ModificarAfiliado(entityToUpdate, request.Empresa!);
-
-                if (request.Documentacion?.Count > 0)
+                try
                 {
-                    await unitOfWork.RefRepository.BorrarDocumentacionEntidad("A", request.Id);
-                    await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", request.Id);
-                    //foreach (var item in request.Documentacion!)
-                    //{
-                    //    item.Id = 0;
-                    //    await unitOfWork.RefRepository.AddAsync(item);
-                    //}
-                }
+                    await unitOfWork.AfiliadoRepository.ModificarAfiliado(entityToUpdate, request.Empresa!);
 
-                return await unitOfWork.CommitAsync();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError("No se actualizó el registro de Afiliado");
-                throw new Exception("No se pudo actualizar Afiliado. " + ex.Message);
+                    if (request.Documentacion?.Count > 0)
+                    {
+                        await unitOfWork.RefRepository.BorrarDocumentacionEntidad("A", request.Id);
+                        await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", request.Id);
+                        //foreach (var item in request.Documentacion!)
+                        //{
+                        //    item.Id = 0;
+                        //    await unitOfWork.RefRepository.AddAsync(item);
+                        //}
+                    }
+
+                    await transaction.CommitAsync();
+
+                    return await unitOfWork.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+
+                    logger.LogError("No se actualizó el registro de Afiliado");
+                    throw new Exception("No se pudo actualizar Afiliado. " + ex.Message);
+                }
             }
         }
     }

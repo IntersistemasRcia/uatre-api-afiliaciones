@@ -12,6 +12,8 @@ public class ProvinciaCfg : IEntityTypeConfiguration<Provincia>
             .Property(a => a.Id)
             .UseIdentityColumn();
 
+        builder.Property(rv => rv.RowVersion).IsRowVersion();
+
         builder.HasOne(a => a.Seccional).WithMany().HasForeignKey(a => a.SeccionalIdPorDefecto);
     }
 }

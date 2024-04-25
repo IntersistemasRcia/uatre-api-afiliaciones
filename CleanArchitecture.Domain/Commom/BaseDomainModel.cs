@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CleanArchitecture.Domain.Commom
@@ -10,5 +9,8 @@ namespace CleanArchitecture.Domain.Commom
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid? Guid { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }
