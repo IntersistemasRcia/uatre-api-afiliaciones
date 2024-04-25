@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Models.APIAudit;
+﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
+using CleanArchitecture.Application.Models.APIAudit;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Domain.Commom;
 using Dapper;
@@ -71,7 +72,7 @@ public class AfiliacionesDbContext : DbContext
         if (ret > 0)
         {
             //Envio las auditorias
-            _= Task.Run(GrabarAuditorias);            
+            await Task.Run(() => GrabarAuditorias(), CancellationToken.None);
         }
                 
         return ret;
@@ -203,18 +204,27 @@ public class AfiliacionesDbContext : DbContext
         var httpClient = httpClientFactory.CreateClient("APIAuditoria");
         if (string.IsNullOrEmpty(httpClient.BaseAddress?.AbsoluteUri))
         {
+            logger.LogError("No se pudo establecer BaseAdress para API Auditoria");
             return;
         }
 
         foreach (var cambio in cambioDatos)
-        {                  
-            var json = JsonSerializer.Serialize(cambio);
-            var content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync("/api/AuditoriasDatos/registrar", content);
-            if (!response.IsSuccessStatusCode)
+        {
+            try
             {
-                logger.LogError("Error grabando Auditoria de Datos", json.ToString(), cambio.TablaIdentificador);
+                var json = JsonSerializer.Serialize(cambio);
+                var content = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync("/api/AuditoriasDatos/registrar", content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    logger.LogWarning("Error {err} grabando Auditoria de Datos - json {js} - GUID {g}", response.StatusCode, json.ToString(), cambio.TablaIdentificador);
+                }
             }
+            catch (Exception ex)
+            {
+                logger.LogError("Exception {ex} intentando grabar AuditoriaDatos", ex.Message);
+                //throw;
+            }            
         }
     }
 }

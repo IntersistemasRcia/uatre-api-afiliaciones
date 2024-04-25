@@ -24,7 +24,7 @@ namespace CleanArchitecture.Infrastructure
             services.AddScoped<AfiliacionesDapperContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));               
+            //services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));               
 
             services.Configure<EmailSettings>(e => configuration.GetSection("EmailSettings"));
             services.AddTransient<IEmailService, EmailService>();

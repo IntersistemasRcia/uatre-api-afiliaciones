@@ -44,7 +44,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolic
                 case 2: //activo
                     if (afiliado.EstadoSolicitudId == 1)
                     {
-                        var nroAfiliado = unitOfWork.AfiliadoRepository.GetNroAfiliado();
+                        var nroAfiliado = await unitOfWork.AfiliadoRepository.GetNroAfiliado();
                         patchModel.Replace(nameof(Domain.Afiliado.NroAfiliado), nroAfiliado);
                     }
                     patchModel.Replace(nameof(Domain.Afiliado.FechaIngreso), request.FechaIngreso ?? DateTime.Now);
