@@ -15,8 +15,11 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (!query.LocalidadId.HasValue|| x.RefLocalidadesId == query.LocalidadId) &&
                 (!query.CodigoPostal.HasValue || x.RefLocalidades.CodPostal == query.CodigoPostal) &&
                 (!query.RefDelegacionId.HasValue || x.RefDelegacionId == query.RefDelegacionId) &&
-                (!query.SoloActivos || x.DeletedDate == null) &&
-                ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.Id)) &&
+                (string.IsNullOrEmpty(query.Codigo) || x.Codigo.Contains(query.Codigo)) &&
+                (string.IsNullOrEmpty(query.Descripcion) || x.Descripcion.Contains(query.Descripcion)) &&
+                (!query.SeccionalEstadoId.HasValue || x.SeccionalEstadoId == query.SeccionalEstadoId) &&
+				(!query.SoloActivos || x.DeletedDate == null) &&
+				((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.Id)) &&
                 ((query.AmbitoTodos != null || query.AmbitoDelegaciones == null) || query.AmbitoDelegaciones.Ids.Contains(x.RefDelegacionId)) &&
                 ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.RefLocalidades.ProvinciaId))
             )
