@@ -35,7 +35,10 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
                         throw new Exception("Error buscando/creando Empresa");
                     }
 
-                    entidad.NroAfiliado = await unitOfWork.AfiliadoRepository.GetNroAfiliado();
+                    if (entidad.EstadoSolicitudId == 2)
+                    {
+                        entidad.NroAfiliado = await unitOfWork.AfiliadoRepository.GetNroAfiliado();
+                    }
                     await unitOfWork.Repository<Domain.Afiliado>().AddAsync(entidad);
                     var result = await unitOfWork.CommitAsync();
 

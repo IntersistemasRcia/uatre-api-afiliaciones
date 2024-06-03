@@ -1,5 +1,10 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Features.Afiliado.Queries;
+using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByCUIL;
+using CleanArchitecture.Application.Models.APIComunes;
+using CleanArchitecture.Application.Specification.Implements;
+using CleanArchitecture.Common.Exceptions;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.SeccionalLocalidad.Queries.GetSeccionalLocalidadByRefLocalidadId;
@@ -21,6 +26,14 @@ public class GetSeccionalLocalidadByRefLocalidadIdCommandHandler : IRequestHandl
         var list = await _unitOfWork.Repository<Domain.SeccionalLocalidad>().GetAllWithSpecsAsync(spec);
 
         var data = _mapper.Map<IReadOnlyCollection<SeccionalLocalidadVm>>(list);
+
+        foreach (var sl in data)
+        {
+            var refDelegacion = sl.RefDelegacionId != 0
+                ? await _unitOfWork.RefRepository.GetDelegacionById(sl.RefDelegacionId)
+                : null;
+            sl.RefDelegacionDescripcion = refDelegacion?.Nombre ?? string.Empty;
+        }
 
         return data;
     }

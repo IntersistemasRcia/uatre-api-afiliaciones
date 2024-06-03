@@ -12,6 +12,9 @@ public class SeccionalLocalidadVm
     public string? LitProvincia { get; set; }
     public int SeccionalId { get; set; }
     public string? SeccionalDescripcion { get; set; }
+    public string? SeccionalCodigo { get; set; }
+    public int RefDelegacionId { get; set; }
+    public string? RefDelegacionDescripcion { get; set; }
     public DateTime? CreatedDate { get; set; }
     public string? CreatedBy { get; set; }
     public DateTime? LastModifiedDate { get; set; }
