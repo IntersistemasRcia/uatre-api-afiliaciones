@@ -93,7 +93,11 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.Nombre, x => x.MapFrom(b => b.RefLocalidad!.Nombre))
                 .ForMember(a => a.LitProvincia, x => x.MapFrom(b => b.RefLocalidad!.LitProvincia))
                 .ForMember(a => a.CodPostal, x => x.MapFrom(b => b.RefLocalidad!.CodPostal))
-                .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion));
+                .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion))
+                .ForMember(a => a.SeccionalCodigo, x => x.MapFrom(b => b.Seccional!.Codigo))
+                .ForMember(a => a.RefDelegacionId, x => x.MapFrom(b => b.Seccional!.RefDelegacionId));
+                //.ForMember(a => a.RefDelegacionDescripcion, x => x.MapFrom(b => b.Seccional));
+
 
             CreateMap<SeccionalEstado, SeccionalEstadoResponse>();
 

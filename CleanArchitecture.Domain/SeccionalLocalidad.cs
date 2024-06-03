@@ -12,6 +12,6 @@ namespace CleanArchitecture.Domain
         public int RefLocalidadId { get; set; }
         public RefLocalidad RefLocalidad { get; set; }
         public int SeccionalId { get; set; }
-        public Seccional Seccional { get; set; }
+        public Seccional? Seccional { get; set; }
     }
 }

@@ -48,9 +48,9 @@ public class AfiliadoRepository : IAfiliadoRepository
         if (afiliado.EstadoSolicitudId == 2)
         {
             afiliado.NroAfiliado = await GetNroAfiliado(); //_context.Afiliados?.OrderByDescending(x => x.NroAfiliado).FirstOrDefault()?.NroAfiliado + 1 ?? 1;
-            afiliado.FechaIngreso = DateTime.Now.Date;
         }
-        await _context.Set<Afiliado>().AddAsync(afiliado);
+            afiliado.FechaIngreso = DateTime.Now.Date;
+            await _context.Set<Afiliado>().AddAsync(afiliado);
     }
 
     public async Task ModificarAfiliado(Afiliado afiliado, APIEmpresaCreate empresa)
