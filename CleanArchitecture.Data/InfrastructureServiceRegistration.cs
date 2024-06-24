@@ -5,11 +5,12 @@ using CleanArchitecture.Infrastructure.Email;
 using CleanArchitecture.Infrastructure.HealthCheck;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using StackExchange.Profiling.Storage;
+using Microsoft.Extensions.Hosting;
 
 namespace CleanArchitecture.Infrastructure
 {
@@ -17,9 +18,15 @@ namespace CleanArchitecture.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AfiliacionesDbContext>(opt =>
-                opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
-            );
+			var environment = services.BuildServiceProvider().GetRequiredService<IWebHostEnvironment>();
+			services.AddDbContext<AfiliacionesDbContext>(opt =>
+			{
+				opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+				if (environment.IsDevelopment()) opt
+					.LogTo(s => System.Diagnostics.Debug.WriteLine(s))
+					.EnableDetailedErrors()
+					.EnableSensitiveDataLogging();
+			});
             
             services.AddScoped<AfiliacionesDapperContext>();
 
