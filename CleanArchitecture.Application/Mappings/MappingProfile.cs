@@ -106,6 +106,7 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<Notificacion, NotificacionesResponse>();
             CreateMap<NotificacionDetalle, NotificacionesDetalleResponse>();
 
+            CreateMap<AfiliadoFormularioAfiliacion, AfiliadoFormulariosAfiliacionVm>();
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();
             CreateMap<UpdateAfiliadoCommand, Afiliado>();

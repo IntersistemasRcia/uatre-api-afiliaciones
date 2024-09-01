@@ -95,10 +95,11 @@ public class AfiliadoFormularioAfiliacion : EntidadAuditable
 
     public DateTime FechaNacimiento { get; set; }
 
-    public DateTime FechaIncorporacion { get; set; }
+    public DateTime? FechaIncorporacion { get; set; }
 
     public int AfiliadoIdAsignado { get; set; }
-
+    //public Afiliado? Afiliado { get; set; }
+ 
     [StringLength(1000)]
     public string? Observaciones { get; set; }
 }
