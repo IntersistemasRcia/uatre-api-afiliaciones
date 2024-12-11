@@ -11,6 +11,14 @@ using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.Reactiva
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries.GetSeccionalLocalidadByRefLocalidadId;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.CreateSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateRecordSeccionalLocalidad;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.CreateSeccionalAutoridad;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.AbsorbeSeccionalLocalidad;
+using CleanArchitecture.Application.Specification.Implements;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries.GetBySpecs;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Azure.Core;
+using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 
 namespace CleanArchitecture.API.Controllers;
 
@@ -38,7 +46,6 @@ public class SeccionalLocalidadController : BaseApiController
     public async Task<ActionResult<IReadOnlyCollection<SeccionalLocalidadVm>>> GetSeccionalLocalidadByRefLocalidadId([FromQuery] GetSeccionalLocalidadByRefLocalidadIdCommand query)
     {
         var data = await _mediator.Send(query);
-
         return Ok(data);
     }
 
@@ -50,6 +57,21 @@ public class SeccionalLocalidadController : BaseApiController
 
         return Ok(result);
     }
+
+    [HttpPost("AbsorbeSeccionalLocalidades")]
+    [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<int>> AbsorbeSeccionalLocalidades([FromBody] AbsorbeSeccionalLocalidadCommand query)
+    {
+            return await _mediator.Send(query);   
+    }
+
+
+
+
+  /*
+    [ProducesResponseType(typeof(List<SeccionalAutoridadResponse>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<List<SeccionalAutoridadResponse>>> GetSeccionalAutoridadBySpecs([FromQuery] GetSeccionalAutoridadBySpecsQuery query)
+  */
 
     [HttpPut]
     [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
