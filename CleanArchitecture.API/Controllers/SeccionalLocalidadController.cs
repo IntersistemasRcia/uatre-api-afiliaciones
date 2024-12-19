@@ -19,15 +19,19 @@ using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Azure.Core;
 using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
+using CleanArchitecture.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.API.Controllers;
 
 public class SeccionalLocalidadController : BaseApiController
 {
     private readonly IMediator _mediator;
-    public SeccionalLocalidadController(IMediator mediator)
+    private readonly AfiliacionesDbContext _context;
+    public SeccionalLocalidadController(IMediator mediator, AfiliacionesDbContext context)
     {
         _mediator = mediator;
+        _context = context;
     }
 
     [HttpGet("GetSeccionalLocalidadBySeccionalId", Name = "GetSeccionalLocalidadBySeccionalId")]
@@ -62,7 +66,14 @@ public class SeccionalLocalidadController : BaseApiController
     [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<int>> AbsorbeSeccionalLocalidades([FromBody] AbsorbeSeccionalLocalidadCommand query)
     {
-            return await _mediator.Send(query);   
+        
+        var afiliadosAbsorbidos = await _context.Database.ExecuteSqlInterpolatedAsync($@"EXEC 
+                    spSeccionalAbsorbe
+                    @SeccionalAbsorbidaId={query.SeccionalIdAbsorbida},
+	                @SeccionalAbsorbenteId={query.SeccionalIdAbsorbente},
+                    @UserId={query.UserId}");
+        
+        return await _mediator.Send(query);   
     }
 
 

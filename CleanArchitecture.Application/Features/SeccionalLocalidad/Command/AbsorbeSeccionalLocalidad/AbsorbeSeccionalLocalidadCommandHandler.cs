@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.UpdateSeccionalAutoridad;
+using CleanArchitecture.Application.Features.SeccionalEstado.Queries.GetSeccionalEstadoAll;
+using CleanArchitecture.Application.Features.SeccionalEstado.Responses;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using CleanArchitecture.Application.Specification;
 using CleanArchitecture.Application.Specification.Implements;
@@ -8,6 +10,7 @@ using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace CleanArchitecture.Application.Features.SeccionalLocalidad.Command.AbsorbeSeccionalLocalidad;
 
@@ -20,6 +23,7 @@ public class AbsorbeSeccionalLocalidadCommandHandler(ILogger<AbsorbeSeccionalLoc
     public async Task<int> Handle(AbsorbeSeccionalLocalidadCommand request, CancellationToken cancellationToken)
     {
         var absobente = await unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(request.SeccionalIdAbsorbente);
+        var absobida = await unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(request.SeccionalIdAbsorbida);
         var localidadesAbsorbidas = new List<Domain.SeccionalLocalidad>(
                 await unitOfWork.Repository<Domain.SeccionalLocalidad>()
                     .GetAllWithSpecsAsync(new SeccionalLocalidadPorSeccionalSpecification(request.SeccionalIdAbsorbida))
@@ -33,8 +37,6 @@ public class AbsorbeSeccionalLocalidadCommandHandler(ILogger<AbsorbeSeccionalLoc
 
         try
         {            
-            //mapper.Map(request, localidadesAbsorbidas, typeof(AbsorbeSeccionalLocalidadCommand), typeof(Domain.SeccionalLocalidad));
-
             var localidadesAbsorbentes = await unitOfWork.Repository<Domain.SeccionalLocalidad>().GetAllWithSpecsAsync(new SeccionalLocalidadPorSeccionalSpecification(request.SeccionalIdAbsorbente));
             if (localidadesAbsorbentes != null)
             {
@@ -62,7 +64,21 @@ public class AbsorbeSeccionalLocalidadCommandHandler(ILogger<AbsorbeSeccionalLoc
                 await unitOfWork.Repository<Domain.SeccionalLocalidad>().AddAsync(nueva);
             });
 
+            
+
+                var seccionalEstados = await unitOfWork.Repository<Domain.SeccionalEstado>().GetAllAsync();
+
+            var estado = seccionalEstados.Where(x => x.Descripcion == "ABSORBIDA").ToList();
+
+            if (estado.Count > 0) {
+                absobida.SeccionalEstadoId = estado[0].Id;
+                absobida.SeccionalAbsorbenteId = absobente.Id;
+            }
+            
+            await unitOfWork.Repository<Domain.Seccional>().UpdateAsync(absobida);
+
             var result = await unitOfWork.CommitAsync();
+
             return result;
 //            return mapper.Map<SeccionalLocalidadVm>(entidad);
         }
