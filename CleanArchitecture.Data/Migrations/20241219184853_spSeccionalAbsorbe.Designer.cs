@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    [Migration("20241219034311_spSeccionalAbsorbe")]
+    [Migration("20241219184853_spSeccionalAbsorbe")]
     partial class spSeccionalAbsorbe
     {
         /// <inheritdoc />
