@@ -6,5 +6,6 @@ namespace CleanArchitecture.Application.Features.SeccionalLocalidad.Command.Abso
 public class AbsorbeSeccionalLocalidadCommand : IRequest<int>
 {
     public int SeccionalIdAbsorbida { get; set; }
-    public int SeccionalIdAbsorbente { get; set; }   
+    public int SeccionalIdAbsorbente { get; set; }
+    public string? UserId { get; set; }
 }

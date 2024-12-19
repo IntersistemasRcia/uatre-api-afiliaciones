@@ -28,6 +28,7 @@ public class Seccional : EntidadAuditable
     public string? Email { get; set; }
 
     public int SeccionalEstadoId { get; set; }
+    public int SeccionalAbsorbenteId { get; set; }
 
     public SeccionalEstado? SeccionalEstado { get; set; }
 

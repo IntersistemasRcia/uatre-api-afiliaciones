@@ -30,6 +30,7 @@ public class SeccionalVm
     public DateTime? DeletedDate { get; set; }
     public string? DeletedBy { get; set; }
     public string? DeletedObs { get; set; }
+    public int SeccionalAbsorbenteId { get; set; }
     public ICollection<SeccionalLocalidadVm>? SeccionalLocalidad { get; set; }
 }
 
