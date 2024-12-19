@@ -41,6 +41,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 FROM Afiliados
                 WHERE SeccionalId = @SeccionalAbsorbidaId
 
+                --SECCIONALESLOCALIDADES
+                UPDATE SeccionalesLocalidades set
+				DeletedDate = @currDate,
+				DeletedBy = @UserId ,
+				DeletedObs = 'Absorción de Seccional',
+                LastModifiedDate = @currDate,
+                LastModifiedBy = @UserId 
+                where SeccionalId = @SeccionalAbsorbidaId
+
                 --AFILIADOS
                 declare @Count int 
                 select @Count=count(*) from Afiliados where SeccionalId = @SeccionalAbsorbidaId
