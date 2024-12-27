@@ -21,7 +21,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
             AS
             BEGIN
                 DECLARE @currDate DATETIME;
+				DECLARE @SeccionalAbsorbidaDesc nvarchar(100);
+				DECLARE @SeccionalAbsorbenteDesc nvarchar(100);
+
                 SET @currDate = GETDATE();
+				SELECT @SeccionalAbsorbidaDesc = CONCAT(codigo, descripcion) from Seccionales where id = @SeccionalAbsorbidaId;
+				SELECT @SeccionalAbsorbenteDesc = CONCAT(codigo, descripcion) from Seccionales where id = @SeccionalAbsorbenteId;
 
                 --AUDITORIA
                 INSERT INTO [UatreAuditoria].dbo.[AuditoriasDatos]
@@ -36,7 +41,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                        'Afiliados',
 	                   Guid,
                        'Absorbido',
-                       'SeccionalId: De '+CONVERT(VARCHAR(10),@SeccionalAbsorbidaId)+' a '+CONVERT(VARCHAR(10),@SeccionalAbsorbenteId)+'',
+                       'SeccionalId: De '+CONVERT(VARCHAR(10),@SeccionalAbsorbidaId)+': '+ @SeccionalAbsorbidaDesc+' a '+
+					   CONVERT(VARCHAR(10),@SeccionalAbsorbenteId)+': '+@SeccionalAbsorbenteDesc+'',
                        @currDate
                 FROM Afiliados
                 WHERE SeccionalId = @SeccionalAbsorbidaId
