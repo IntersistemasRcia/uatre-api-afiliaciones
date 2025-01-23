@@ -3,4 +3,6 @@
 public class DdjjUatre
 {
     public int Periodo { get; set; }
+    public string? CondicionRural { get; set; }
+    
 }
