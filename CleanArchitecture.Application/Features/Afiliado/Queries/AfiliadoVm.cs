@@ -54,6 +54,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public string? SeccionalDescripcionSolicitudAfiliacion { get; set; }
         public string? SeccionalCodigoSolicitudAfiliacion { get; set; }
         public int UltimaDDJJPeriodo { get; set; }
+        public string? CondicionRural { get; set; }
         public long? AFIPCUIL { get; set; }
         public DateTime? AFIPFechaNacimiento { get; set; }
         public string? AFIPNombre { get; set; }

@@ -30,7 +30,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             (!query.NroAfiliado.HasValue || (x.NroAfiliado >= query.NroAfiliado && x.NroAfiliado <= query.NroAfiliadoHasta)) &&
             (string.IsNullOrEmpty(query.Nombre) || x.Nombre!.Contains(query.Nombre)) &&
             (!query.Documento.HasValue || x.Documento == query.Documento) &&
-            (string.IsNullOrEmpty(query.Seccional) || x.Seccional!.Descripcion!.Contains(query.Seccional)) &&
+            (string.IsNullOrEmpty(query.Seccional) || x.Seccional!.Descripcion!.Contains(query.Seccional) || x.Seccional!.Codigo!.Contains(query.Seccional)) &&
             (!query.FechaIngreso.HasValue || (x.FechaIngreso.Value.Date >= query.FechaIngreso.Value.Date && x.FechaIngreso.Value.Date <= query.FechaIngresoHasta.Value.Date)) &&
             (!query.FechaEgreso.HasValue || x.FechaEgreso.Value.Date == query.FechaEgreso.Value.Date) &&
             (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&

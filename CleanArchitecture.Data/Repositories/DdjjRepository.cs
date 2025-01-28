@@ -21,6 +21,6 @@ public class DdjjRepository : IDdjjRepository
 
     public async Task<DdjjUatre?> GetUltimoPeriodoCuilAsync(double cuil)
     {
-        return await db.QueryFirstOrDefaultAsync<DdjjUatre>("SELECT TOP 1 Periodo FROM DDJJUatre WHERE CUIL = @Cuil ORDER BY Periodo DESC" , new { Cuil = cuil });
+        return await db.QueryFirstOrDefaultAsync<DdjjUatre>("SELECT TOP 1 Periodo, CondicionRural FROM DDJJUatre WHERE CUIL = @Cuil ORDER BY Periodo DESC, RemuneracionImponible DESC, EsRural DESC", new { Cuil = cuil });
     }
 }

@@ -68,6 +68,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
 
             var DdjjUatre = (await _unitOfWork.DdjjRepository.GetUltimoPeriodoCuilAsync(afiliado.CUIL)) ?? new Models.APIDdjj.DdjjUatre() { Periodo = 0 };
             afiliado.UltimaDDJJPeriodo = DdjjUatre.Periodo;
+            afiliado.CondicionRural = DdjjUatre.CondicionRural;
 
             var refDelegacion = afiliado.RefDelegacionId != 0
                 ? await _unitOfWork.RefRepository.GetDelegacionById(afiliado.RefDelegacionId)
