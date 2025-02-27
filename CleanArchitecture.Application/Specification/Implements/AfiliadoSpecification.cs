@@ -31,6 +31,8 @@ namespace CleanArchitecture.Application.Specification.Implements
             (string.IsNullOrEmpty(query.Nombre) || x.Nombre!.Contains(query.Nombre)) &&
             (!query.Documento.HasValue || x.Documento == query.Documento) &&
             (string.IsNullOrEmpty(query.Seccional) || x.Seccional!.Descripcion!.Contains(query.Seccional) || x.Seccional!.Codigo!.Contains(query.Seccional)) &&
+            (!query.SeccionalEstadoId.HasValue || x.Seccional!.SeccionalEstadoId == query.SeccionalEstadoId) && //se agrega a pedido de mauricio por el tema de los AMBITOS DELEGACIONES; Deben mostrar afiliados con seccionales Normaloizadas y Transitorias
+            (!query.SoloActivos || x.DeletedDate == null) &&
             (!query.FechaIngreso.HasValue || (x.FechaIngreso.Value.Date >= query.FechaIngreso.Value.Date && x.FechaIngreso.Value.Date <= query.FechaIngresoHasta.Value.Date)) &&
             (!query.FechaEgreso.HasValue || x.FechaEgreso.Value.Date == query.FechaEgreso.Value.Date) &&
             (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&

@@ -18,6 +18,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         public string? Nombre { get; set; }
         //public double? CUITEmpresa { get; set; }
         public string? Seccional { get; set; }
+        public int? SeccionalEstadoId { get; set; }
         public DateTime? FechaIngreso { get; set; }
         public DateTime? FechaIngresoHasta { get; set; }
         public DateTime? FechaEgreso { get; set; }

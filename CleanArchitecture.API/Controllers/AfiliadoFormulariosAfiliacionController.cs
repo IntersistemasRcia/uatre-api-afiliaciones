@@ -7,6 +7,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using CleanArchitecture.Application.Features.AfiliadoFormulariosAfiliacion.Queries.GetAfiliadoFormularioAfiliacionList;
+using CleanArchitecture.Application.Features.Seccional.Command.DarDeBaja;
+using CleanArchitecture.Application.Features.AfiliadoFormulariosAfiliacion.Command.ResuelveFormularioAfiliacion;
 
 namespace CleanArchitecture.API.Controllers;
 
@@ -41,5 +43,13 @@ public class AfiliadoFormulariosAfiliacionController : BaseApiController
         var padrones = await _mediator.Send(query);
 
         return Ok(padrones);
+    }
+
+    [HttpPatch("ResuelveFormularioAfiliacion")]
+    public async Task<ActionResult<int>> ResuelveFormularioAfiliacion([FromBody] ResuelveFormularioAfiliacionCommand request)
+    {
+        var response = await _mediator.Send(request);
+
+        return Ok(response);
     }
 }
