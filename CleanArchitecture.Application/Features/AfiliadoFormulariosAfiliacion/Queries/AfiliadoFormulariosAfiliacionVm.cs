@@ -19,7 +19,7 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public int? SexoId { get; set; }
         public int? TipoDocumentoId { get; set; }
         public Int64? Documento { get; set; }
-        public int? EstadoCicilId { get; set; }
+        public int? EstadoCivilId { get; set; }
         public string? EstadoCivil { get; set; }
         public int? SeccionalId { get; set; }
         public string? Seccional { get; set; }
