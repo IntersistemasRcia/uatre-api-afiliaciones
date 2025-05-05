@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using CleanArchitecture.Application.Features.AccesoOsprera.Queries;
 using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
 using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.AfiliadoEstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.AfiliadoFormulariosAfiliacion.Commands.AfiliadoFormulariosAfiliacionCreate;
+using CleanArchitecture.Application.Features.AccesoOsprera.Commands.AccesoOspreraCreate;
 using CleanArchitecture.Application.Features.EstadoCivil.Queries;
 using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.Notificaciones.Commands.NotificacionesCreate;
@@ -107,6 +109,7 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<NotificacionDetalle, NotificacionesDetalleResponse>();
 
             CreateMap<AfiliadoFormularioAfiliacion, AfiliadoFormulariosAfiliacionVm>();
+            CreateMap<AccesoOsprera, AccesoOspreraVm>();
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();
             CreateMap<UpdateAfiliadoCommand, Afiliado>();
@@ -130,6 +133,7 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<NotificacionesUpdateCommand, Notificacion>();
             CreateMap<NotificacionDetalleUpdateCommand, NotificacionDetalle>();
             CreateMap<AfiliadoFormulariosAfiliacionCreateCommand, AfiliadoFormularioAfiliacion>();
+            CreateMap<AccesoOspreraCreateCommand, AccesoOsprera>();
         }
     }
 }
