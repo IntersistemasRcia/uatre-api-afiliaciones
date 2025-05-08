@@ -37,6 +37,7 @@ using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
 using CleanArchitecture.Application.Features.TipoDocumento.Queries;
 using CleanArchitecture.Domain;
+using CleanArchitecture.Application.Features.AccesoOsprera.Commands.Update;
 
 namespace CleanArchitecture.Application.Mappings
 {
@@ -134,6 +135,7 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<NotificacionDetalleUpdateCommand, NotificacionDetalle>();
             CreateMap<AfiliadoFormulariosAfiliacionCreateCommand, AfiliadoFormularioAfiliacion>();
             CreateMap<AccesoOspreraCreateCommand, AccesoOsprera>();
+            CreateMap<UpdateAccesoOspreraCommand, AccesoOsprera>();
         }
     }
 }

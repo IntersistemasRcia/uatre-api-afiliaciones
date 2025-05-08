@@ -12,6 +12,8 @@ using CleanArchitecture.Application.Features.AfiliadoFormulariosAfiliacion.Comma
 using CleanArchitecture.Application.Features.AccesoOsprera.Commands.AccesoOspreraCreate;
 using CleanArchitecture.Application.Features.AccesoOsprera.Queries;
 using CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAccesoOspreraList;
+using CleanArchitecture.Application.Features.Seccional.Command.Update;
+using CleanArchitecture.Application.Features.AccesoOsprera.Commands.Update;
 
 namespace CleanArchitecture.API.Controllers;
 
@@ -46,6 +48,16 @@ public class AccesoOspreraController : BaseApiController
         var padrones = await _mediator.Send(query);
 
         return Ok(padrones);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<int>> Update([FromBody] UpdateAccesoOspreraCommand command)
+    {
+        var response = await _mediator.Send(command);
+        return Ok(response);
     }
     /*
     [HttpPatch("ResuelveFormularioAfiliacion")]

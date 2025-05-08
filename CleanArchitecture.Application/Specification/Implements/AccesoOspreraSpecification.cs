@@ -29,13 +29,15 @@ namespace CleanArchitecture.Application.Specification.Implements
             //if (!query.FechaIngresoHasta.HasValue) { query.FechaIngresoHasta = query.FechaIngreso; };
 
             SetCriteria(x => (!query.CUITTitular.HasValue || x.CUITTitular == query.CUITTitular) &&
+            (!query.DniPaciente.HasValue || x.DniPaciente == query.DniPaciente) &&
             (string.IsNullOrEmpty(query.NombreyApellido) || x.NombreyApellido!.Contains(query.NombreyApellido)) &&
-            // (string.IsNullOrEmpty(query.Seccional) || x.SeccionalAfiliado!.Descripcion!.Contains(query.Seccional)) &&
+            //(string.IsNullOrEmpty(query.Seccional) || x.SeccionalAfiliado!.Descripcion!.Contains(query.Seccional)) &&
             (!query.Fecha.HasValue || (x.Fecha.Value.Date >= query.Fecha.Value.Date)) &&
-           // (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
+            (string.IsNullOrEmpty(query.MedioGestion) || x.MedioGestion!.Contains(query.MedioGestion)) &&
+            // (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
             //(!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId) &&
             //(!query.RefMotivoBajaId.HasValue || x.RefMotivoBajaId == query.RefMotivoBajaId) &&
-          
+
             ((!query.CreatedDateDesde.HasValue || !query.CreatedDateHasta.HasValue) || (x.CreatedDate.Value.Date >= query.CreatedDateDesde && x.CreatedDate.Value.Date <= query.CreatedDateHasta)) &&
             ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.SeccionalId)) 
             //((query.AmbitoTodos != null || query.AmbitoDelegaciones == null) || query.AmbitoDelegaciones.Ids.Contains(x.SeccionalAfiliado.RefDelegacionId))

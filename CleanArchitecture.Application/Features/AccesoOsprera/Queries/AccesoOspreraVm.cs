@@ -13,13 +13,17 @@ namespace CleanArchitecture.Application.Features.AccesoOsprera.Queries
         public string? UsuarioId { get; set; }
         public int? SeccionalId { get; set; }
         public long? CUITTitular { get; set; }
+        public int? TipoDocumentoId { get; set; }
         public long? DniPaciente { get; set; }
         public string? NombreyApellido { get; set; }
         public DateTime? FechaNacimiento { get; set; }
         public int? SexoId { get; set; }
+        public string? MedioGestion { get; set; }
+        public string? Telefono { get; set; }
+        public string? ResultadoLlamada { get; set; }
+        public string? DireccionesEmailDestino { get; set; }
         public string? Texto { get; set; }
         public DateTime? FechaEnvioMail { get; set; }
-        public string? DireccionesEmailDestino { get; set; }
         public string? RespuestaEnvioEmail { get; set; }
         public Guid? Guid { get; set; }
         public DateTime? CreatedDate { get; set; }

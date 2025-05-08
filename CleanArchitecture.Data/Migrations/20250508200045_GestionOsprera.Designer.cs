@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    [Migration("20250505212958_GestionOsprera")]
+    [Migration("20250508200045_GestionOsprera")]
     partial class GestionOsprera
     {
         /// <inheritdoc />
@@ -79,11 +79,17 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("MedioGestion")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NombreyApellido")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("RespuestaEnvioEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResultadoLlamada")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("RowVersion")
@@ -98,9 +104,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int?>("SexoId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Texto")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int?>("TipoDocumentoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(max)");
