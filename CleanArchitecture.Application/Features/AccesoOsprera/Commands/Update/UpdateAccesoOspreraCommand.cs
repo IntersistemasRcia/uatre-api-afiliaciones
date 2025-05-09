@@ -22,4 +22,5 @@ public class UpdateAccesoOspreraCommand : IRequest<int>
     public string? Texto { get; set; }
     public DateTime? FechaEnvioMail { get; set; }
     public string? RespuestaEnvioEmail { get; set; }
+    public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CleanArchitecture.Application.Models.APIComunes;
+using MediatR;
 
 namespace CleanArchitecture.Application.Features.AccesoOsprera.Commands.AccesoOspreraCreate;
 
@@ -20,4 +21,5 @@ public class AccesoOspreraCreateCommand : IRequest<int>
     public string? Texto { get; set; }
     public DateTime? FechaEnvioMail { get; set; }
     public string? RespuestaEnvioEmail { get; set; }
+    public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
 }

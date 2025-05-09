@@ -21,25 +21,36 @@ namespace CleanArchitecture.Application.Features.AccesoOsprera.Commands.Update
         }
         public async Task<int> Handle(UpdateAccesoOspreraCommand request, CancellationToken cancellationToken)
         {
-            var entidad = await unitOfWork.Repository<Domain.AccesoOsprera>().GetByIdAsync(request.Id);
-            if (entidad == null)
-            {
-                logger.LogError("No existe Gestión");
-                throw new BadRequestException($"No existe la Gestión con Id {request.Id}");
-            }
+            var entityToUpdate = await unitOfWork.Repository<Domain.AccesoOsprera>().GetByIdAsync(request.Id);
 
+            entityToUpdate = (Domain.AccesoOsprera)mapper.Map(request, entityToUpdate, typeof(UpdateAccesoOspreraCommand), typeof(Domain.AccesoOsprera));
 
-            mapper.Map(request, entidad, typeof(UpdateAccesoOspreraCommand), typeof(Domain.AccesoOsprera));
+            using (var transaction = await unitOfWork.BeginTransactionAsync())
+            {
+                try
+                {
+                    if (request.Documentacion?.Count > 0)
+                    {
+                        await unitOfWork.RefRepository.BorrarDocumentacionEntidad("A", request.Id);
+                        await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", request.Id);
+                        //foreach (var item in request.Documentacion!)
+                        //{
+                        //    item.Id = 0;
+                        //    await unitOfWork.RefRepository.AddAsync(item);
+                        //}
+                    }
 
-            try
-            {
-                await unitOfWork.Repository<Domain.AccesoOsprera>().UpdateAsync(entidad);
-                return await unitOfWork.CommitAsync();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError("No se actualizó la Gestion Osprera");
-                throw new Exception("No se pudo insertar La Gestion " + ex.Message);
+                    await transaction.CommitAsync();
+
+                    return await unitOfWork.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+
+                    logger.LogError("No se actualizó el registro de Gestion Osprera");
+                    throw new Exception("No se pudo actualizar la Gestion Osprera. " + ex.Message);
+                }
             }
         }
     }

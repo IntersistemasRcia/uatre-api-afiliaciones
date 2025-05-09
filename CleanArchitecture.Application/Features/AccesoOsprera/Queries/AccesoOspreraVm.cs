@@ -33,5 +33,6 @@ namespace CleanArchitecture.Application.Features.AccesoOsprera.Queries
         public DateTime? DeletedDate { get; set; }
         public string? DeletedBy { get; set; }
         public string? DeletedObs { get; set; }
+        public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
 }

@@ -47,6 +47,14 @@ public class GetAccesoOspreraListQueryHandler : IRequestHandler<GetAccesoOsprera
         var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
         var data = _mapper.Map<List<AccesoOspreraVm>>(padronList);
 
+
+        foreach (var gestion in data)
+        {
+            var documentacion = await _unitOfWork.RefRepository.GetDocumentacionEntidadById("A", gestion.Id);
+
+            gestion.Documentacion = new List<DocumentacionEntidad>();
+            gestion.Documentacion = (List<DocumentacionEntidad>)documentacion;
+        }
         return new Pagination<AccesoOspreraVm>()
         {
             Index = request.GetPageIndex(),
