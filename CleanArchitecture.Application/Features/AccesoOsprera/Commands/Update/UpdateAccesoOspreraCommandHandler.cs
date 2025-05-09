@@ -31,8 +31,8 @@ namespace CleanArchitecture.Application.Features.AccesoOsprera.Commands.Update
                 {
                     if (request.Documentacion?.Count > 0)
                     {
-                        await unitOfWork.RefRepository.BorrarDocumentacionEntidad("A", request.Id);
-                        await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", request.Id);
+                        await unitOfWork.RefRepository.BorrarDocumentacionEntidad("O", request.Id);
+                        await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "O", request.Id);
                         //foreach (var item in request.Documentacion!)
                         //{
                         //    item.Id = 0;

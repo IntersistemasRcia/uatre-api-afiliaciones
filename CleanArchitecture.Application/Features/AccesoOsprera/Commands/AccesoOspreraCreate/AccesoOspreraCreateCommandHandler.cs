@@ -32,7 +32,7 @@ internal class AccesoOspreraCreateCommandHandler : IRequestHandler<AccesoOsprera
 
             if (request.Documentacion?.Count > 0)
             {
-                await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "A", entidad.Id);
+                await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "O", entidad.Id);
             }
 
             await transaction.CommitAsync();

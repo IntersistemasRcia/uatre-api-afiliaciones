@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    [Migration("20250508200045_GestionOsprera")]
+    [Migration("20250509021133_GestionOsprera")]
     partial class GestionOsprera
     {
         /// <inheritdoc />
