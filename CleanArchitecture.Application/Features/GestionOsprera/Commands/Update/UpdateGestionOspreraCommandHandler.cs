@@ -5,25 +5,25 @@ using CleanArchitecture.Common.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitecture.Application.Features.AccesoOsprera.Commands.Update
+namespace CleanArchitecture.Application.Features.GestionOsprera.Commands.Update
 {
-    public class UpdateAccesoOspreraCommandHandler : IRequestHandler<UpdateAccesoOspreraCommand, int>
+    public class UpdateGestionOspreraCommandHandler : IRequestHandler<UpdateGestionOspreraCommand, int>
     {
-        private readonly ILogger<UpdateAccesoOspreraCommandHandler> logger;
+        private readonly ILogger<UpdateGestionOspreraCommandHandler> logger;
         private readonly IMapper mapper;
         private readonly IUnitOfWork unitOfWork;
 
-        public UpdateAccesoOspreraCommandHandler(ILogger<UpdateAccesoOspreraCommandHandler> logger, IMapper mapper, IUnitOfWork unitOfWork)
+        public UpdateGestionOspreraCommandHandler(ILogger<UpdateGestionOspreraCommandHandler> logger, IMapper mapper, IUnitOfWork unitOfWork)
         {
             this.logger = logger;
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
         }
-        public async Task<int> Handle(UpdateAccesoOspreraCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(UpdateGestionOspreraCommand request, CancellationToken cancellationToken)
         {
-            var entityToUpdate = await unitOfWork.Repository<Domain.AccesoOsprera>().GetByIdAsync(request.Id);
+            var entityToUpdate = await unitOfWork.Repository<Domain.GestionOsprera>().GetByIdAsync(request.Id);
 
-            entityToUpdate = (Domain.AccesoOsprera)mapper.Map(request, entityToUpdate, typeof(UpdateAccesoOspreraCommand), typeof(Domain.AccesoOsprera));
+            entityToUpdate = (Domain.GestionOsprera)mapper.Map(request, entityToUpdate, typeof(UpdateGestionOspreraCommand), typeof(Domain.GestionOsprera));
 
             using (var transaction = await unitOfWork.BeginTransactionAsync())
             {

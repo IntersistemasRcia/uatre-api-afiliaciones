@@ -1,19 +1,20 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
 using CleanArchitecture.Domain;
-using CleanArchitecture.Application.Features.AccesoOsprera.Commands;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOsprera;
 
-namespace CleanArchitecture.Application.Features.AccesoOsprera.Commands.AccesoOspreraCreate;
+namespace CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOspreraCreate;
 
-internal class AccesoOspreraCreateCommandHandler : IRequestHandler<AccesoOspreraCreateCommand, int>
+internal class GestionOspreraCreateCommandHandler : IRequestHandler<GestionOspreraCreateCommand, int>
 {
-    private readonly ILogger<AccesoOspreraCreateCommandHandler> logger;
+    private readonly ILogger<GestionOspreraCreateCommandHandler> logger;
     private readonly IMapper mapper;
     private readonly IUnitOfWork unitOfWork;
 
-    public AccesoOspreraCreateCommandHandler(ILogger<AccesoOspreraCreateCommandHandler> logger,
+    public GestionOspreraCreateCommandHandler(ILogger<GestionOspreraCreateCommandHandler> logger,
         IMapper mapper,
         IUnitOfWork unitOfWork)
     {
@@ -21,13 +22,13 @@ internal class AccesoOspreraCreateCommandHandler : IRequestHandler<AccesoOsprera
         this.mapper = mapper;
         this.unitOfWork = unitOfWork;
     }
-    public async Task<int> Handle(AccesoOspreraCreateCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(GestionOspreraCreateCommand request, CancellationToken cancellationToken)
     {
-        var entidad = mapper.Map<Domain.AccesoOsprera>(request);
+        var entidad = mapper.Map<Domain.GestionOsprera>(request);
         using (var transaction = await unitOfWork.BeginTransactionAsync())
         try
         {
-            await unitOfWork.Repository<Domain.AccesoOsprera>().AddAsync(entidad);
+            await unitOfWork.Repository<Domain.GestionOsprera>().AddAsync(entidad);
             var result = await unitOfWork.CommitAsync();
 
             if (request.Documentacion?.Count > 0)

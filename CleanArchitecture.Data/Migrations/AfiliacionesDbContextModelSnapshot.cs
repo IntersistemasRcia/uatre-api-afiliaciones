@@ -22,103 +22,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CleanArchitecture.Domain.AccesoOsprera", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<long?>("CUITTitular")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("DireccionesEmailDestino")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("DniPaciente")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("Fecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaEnvioMail")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaNacimiento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MedioGestion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreyApellido")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("RespuestaEnvioEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResultadoLlamada")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("SeccionalId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SexoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Texto")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int?>("TipoDocumentoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsuarioId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccesoOsprera");
-                });
-
             modelBuilder.Entity("CleanArchitecture.Domain.Actividad", b =>
                 {
                     b.Property<int>("Id")
@@ -791,6 +694,127 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EstadosSolicitudes");
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.GestionOsprera", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApellidoPaciente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApellidoTitular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CUITTitular")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedObs")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("DireccionesEmailDestino")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("DniPaciente")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool?>("ElPacienteEsTitular")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("EmailContacto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailContacto2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaEnvioMail")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaNacimiento")
+                        .HasMaxLength(100)
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MedioGestion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombrePaciente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreTitular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RespuestaEnvioEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResultadoLlamada")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("SeccionalId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SexoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TelefonoContacto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TelefonoContacto2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Texto")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("TipoDocumentoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GestionOsprera");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.InformeSap", b =>

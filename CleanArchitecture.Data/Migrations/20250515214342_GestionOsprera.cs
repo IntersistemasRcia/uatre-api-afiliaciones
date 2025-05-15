@@ -12,7 +12,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AccesoOsprera",
+                name: "GestionOsprera",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -21,10 +21,18 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     UsuarioId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SeccionalId = table.Column<int>(type: "int", nullable: false),
                     CUITTitular = table.Column<long>(type: "bigint", nullable: true),
-                    TipoDocumentoId = table.Column<int>(type: "int", nullable: true),
+                    NombreTitular = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApellidoTitular = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TelefonoContacto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TelefonoContacto2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailContacto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailContacto2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ElPacienteEsTitular = table.Column<bool>(type: "bit", nullable: true),
+                    TipoDocumentoId = table.Column<int>(type: "int", nullable: false),
                     DniPaciente = table.Column<long>(type: "bigint", nullable: true),
-                    NombreyApellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    NombrePaciente = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApellidoPaciente = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaNacimiento = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: true),
                     SexoId = table.Column<int>(type: "int", nullable: true),
                     MedioGestion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -45,7 +53,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccesoOsprera", x => x.Id);
+                    table.PrimaryKey("PK_GestionOsprera", x => x.Id);
                 });
         }
 
@@ -53,7 +61,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccesoOsprera");
+                name: "GestionOsprera");
         }
     }
 }

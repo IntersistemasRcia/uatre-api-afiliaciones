@@ -1,12 +1,12 @@
-﻿using CleanArchitecture.Application.Features.AccesoOsprera.Queries;
+﻿using CleanArchitecture.Application.Features.GestionOsprera.Queries;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Application.Models;
 using MediatR;
 
-namespace CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAccesoOspreraList
+namespace CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGestionOspreraList
 {
-    public class GetAccesoOspreraListQuery : IRequest<Pagination<AccesoOspreraVm>>
+    public class GetGestionOspreraListQuery : IRequest<Pagination<GestionOspreraVm>>
     {
         private int _pageIndex { get; set; } = 1;
         private const int maxPageSize = 50;
@@ -16,9 +16,17 @@ namespace CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAcceso
         public string? UsuarioId { get; set; }
         public int? SeccionalId { get; set; }
         public long? CUITTitular { get; set; }
-        public int? TipoDocumentoId { get; set; }
+        public string? NombreTitular { get; set; }
+        public  string? ApellidoTitular { get; set; }
+        public string? TelefonoContacto { get; set; }
+        public string? TelefonoContacto2 { get; set; }
+        public string? EmailContacto { get; set; }
+        public string? EmailContacto2 { get; set; }
+        public bool? ElPacienteEsTitular { get; set; }
+        public  int TipoDocumentoId { get; set; }
         public long? DniPaciente { get; set; }
-        public string? NombreyApellido { get; set; }
+        public string? NombrePaciente { get; set; }
+        public string? ApellidoPaciente { get; set; }
         public DateTime? FechaNacimiento { get; set; }
         public int? SexoId { get; set; }
         public string? MedioGestion { get; set; }
@@ -55,7 +63,7 @@ namespace CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAcceso
             set => _pageSize = value >= maxPageSize ? maxPageSize : value;
         }
 
-        public GetAccesoOspreraListQuery()
+        public GetGestionOspreraListQuery()
         {
             //Id = pId ?? throw new ArgumentNullException(nameof(pId));
         }

@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAccesoOspreraList;
+﻿using CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGestionOspreraList;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using FluentValidation;
 
-namespace CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAccesoOspreraList;
+namespace CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGestionOspreraList;
 
 //public class AmbitoValidator : AbstractValidator<Ambito>
 //{
@@ -14,9 +14,9 @@ namespace CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAcceso
 
 //}
 
-public class GetAccesoOspreraListQueryValidator : AbstractValidator<GetAccesoOspreraListQuery>
+public class GetGestionOspreraListQueryValidator : AbstractValidator<GetGestionOspreraListQuery>
 {
-    public GetAccesoOspreraListQueryValidator()
+    public GetGestionOspreraListQueryValidator()
     {
         //RuleForEach(x => x.Ambitos).SetValidator(new AmbitoValidator());
     }

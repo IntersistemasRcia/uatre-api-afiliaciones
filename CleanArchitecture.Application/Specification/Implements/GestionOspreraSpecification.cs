@@ -1,12 +1,12 @@
-﻿using CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAccesoOspreraList;
+﻿using CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGestionOspreraList;
 using CleanArchitecture.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Specification.Implements
 {
-    public class AccesoOspreraSpecification : BaseSpecification<AccesoOsprera>
+    public class GestionOspreraSpecification : BaseSpecification<GestionOsprera>
     {
-        public AccesoOspreraSpecification(GetAccesoOspreraListQuery query) : base()
+        public GestionOspreraSpecification(GetGestionOspreraListQuery query) : base()
         {           
             //Agrego tablas relacionadas
            // AgregarIncludes(a => a.Include(e => e.EstadoSolicitud!)); // en que estado aparece el afiliado cuando pasa del formulario a afiliado?
@@ -30,7 +30,10 @@ namespace CleanArchitecture.Application.Specification.Implements
 
             SetCriteria(x => (!query.CUITTitular.HasValue || x.CUITTitular == query.CUITTitular) &&
             (!query.DniPaciente.HasValue || x.DniPaciente == query.DniPaciente) &&
-            (string.IsNullOrEmpty(query.NombreyApellido) || x.NombreyApellido!.Contains(query.NombreyApellido)) &&
+            (string.IsNullOrEmpty(query.NombreTitular) || x.NombreTitular!.Contains(query.NombreTitular)) &&
+            (string.IsNullOrEmpty(query.ApellidoTitular) || x.ApellidoTitular!.Contains(query.ApellidoTitular)) &&
+            (string.IsNullOrEmpty(query.NombrePaciente) || x.NombrePaciente!.Contains(query.NombrePaciente)) &&
+            (string.IsNullOrEmpty(query.ApellidoPaciente) || x.ApellidoPaciente!.Contains(query.ApellidoPaciente)) &&
             //(string.IsNullOrEmpty(query.Seccional) || x.SeccionalAfiliado!.Descripcion!.Contains(query.Seccional)) &&
             (!query.Fecha.HasValue || (x.Fecha.Value.Date >= query.Fecha.Value.Date)) &&
             (string.IsNullOrEmpty(query.MedioGestion) || x.MedioGestion!.Contains(query.MedioGestion)) &&
@@ -54,7 +57,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             }
         }
 
-        public AccesoOspreraSpecification(int pId) : base(x => x.Id == pId)
+        public GestionOspreraSpecification(int pId) : base(x => x.Id == pId)
         {
             //Agrego tablas relacionadas
             //AgregarIncludes(a => a.Include(e => e.EstadoSolicitud!));

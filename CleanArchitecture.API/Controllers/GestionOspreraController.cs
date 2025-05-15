@@ -9,20 +9,21 @@ using System.Net;
 using CleanArchitecture.Application.Features.AfiliadoFormulariosAfiliacion.Queries.GetAfiliadoFormularioAfiliacionList;
 using CleanArchitecture.Application.Features.Seccional.Command.DarDeBaja;
 using CleanArchitecture.Application.Features.AfiliadoFormulariosAfiliacion.Command.ResuelveFormularioAfiliacion;
-using CleanArchitecture.Application.Features.AccesoOsprera.Commands.AccesoOspreraCreate;
-using CleanArchitecture.Application.Features.AccesoOsprera.Queries;
-using CleanArchitecture.Application.Features.AccesoOsprera.Queries.GetAccesoOspreraList;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOspreraCreate;
+using CleanArchitecture.Application.Features.GestionOsprera.Queries;
+using CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGestionOspreraList;
 using CleanArchitecture.Application.Features.Seccional.Command.Update;
-using CleanArchitecture.Application.Features.AccesoOsprera.Commands.Update;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.Update;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOsprera;
 
 namespace CleanArchitecture.API.Controllers;
 
-public class AccesoOspreraController : BaseApiController
+public class GestionOspreraController : BaseApiController
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<AccesoOspreraController> _logger;
+    private readonly ILogger<GestionOspreraController> _logger;
 
-    public AccesoOspreraController(IMediator mediator, ILogger<AccesoOspreraController> logger)
+    public GestionOspreraController(IMediator mediator, ILogger<GestionOspreraController> logger)
     {
         _mediator = mediator;
         _logger = logger;
@@ -31,17 +32,17 @@ public class AccesoOspreraController : BaseApiController
     [HttpPost]
     [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(CodeErrorResponse), (int)HttpStatusCode.BadRequest)]
-    public async Task<ActionResult<int>> AccesoOspreraCreate([FromBody] AccesoOspreraCreateCommand body)
+    public async Task<ActionResult<int>> GestionOspreraCreate([FromBody] GestionOspreraCreateCommand body)
     {
         var list = await _mediator.Send(body);
 
         return Ok(list);
     }
 
-    [HttpPost("GetAccesoOSpreraSpec", Name = "GetAccesoOspreraAll")]
+    [HttpPost("GetGestionOSpreraSpec", Name = "GetGestionOspreraAll")]
     //[Authorize]
-    [ProducesResponseType(typeof(Pagination<AccesoOspreraVm>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<Pagination<AccesoOspreraVm>>> GetAccesoOspreraWithSpec([FromBody] GetAccesoOspreraListQuery query)
+    [ProducesResponseType(typeof(Pagination<GestionOspreraVm>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<Pagination<GestionOspreraVm>>> GetGestionOspreraWithSpec([FromBody] GetGestionOspreraListQuery query)
     {
         _logger.LogInformation("Query", query);
         //var query = new GetPadronListQuery(parameters);
@@ -54,7 +55,7 @@ public class AccesoOspreraController : BaseApiController
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<int>> Update([FromBody] UpdateAccesoOspreraCommand command)
+    public async Task<ActionResult<int>> Update([FromBody] UpdateGestionOspreraCommand command)
     {
         var response = await _mediator.Send(command);
         return Ok(response);
