@@ -15,6 +15,9 @@ using CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGestionOs
 using CleanArchitecture.Application.Features.Seccional.Command.Update;
 using CleanArchitecture.Application.Features.GestionOsprera.Commands.Update;
 using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOsprera;
+using CleanArchitecture.Application.Features.Seccional.Command.Reactivar;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOspreraDarDeBaja;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOspreraReactivar;
 
 namespace CleanArchitecture.API.Controllers;
 
@@ -60,12 +63,20 @@ public class GestionOspreraController : BaseApiController
         var response = await _mediator.Send(command);
         return Ok(response);
     }
-    /*
-    [HttpPatch("ResuelveFormularioAfiliacion")]
-    public async Task<ActionResult<int>> ResuelveFormularioAfiliacion([FromBody] ResuelveFormularioAfiliacionCommand request)
+
+    [HttpPatch("DarDeBaja")]
+    public async Task<ActionResult<int>> DarDeBaja([FromBody] GestionOspreraDarDeBajaCommand request)
     {
         var response = await _mediator.Send(request);
 
         return Ok(response);
-    }*/
+    }
+
+    [HttpPatch("Reactivar")]
+    public async Task<ActionResult<int>> Reactivar([FromBody] GestionOspreraReactivarCommand request)
+    {
+        var response = await _mediator.Send(request);
+
+        return Ok(response);
+    }
 }
