@@ -20,6 +20,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
 
         private IRefRepository _refRepository;
         private IAfiliadoRepository afiliadoRepository;
+        private ISolicitudAfiliacionEmpresasRepository solicitudAfiliacionEmpresasRepository;
         private ISeccionalAutoridadRepository seccionalAutoridadRepository;
         private ISeccionalRepository _seccionalRepository;
         private IDdjjRepository ddjjRepository;
@@ -40,6 +41,7 @@ namespace CleanArchitecture.Infrastructure.Repositories
         //Repositorios especiales no se inyectan, de definen x propiedades
         public IRefRepository RefRepository => _refRepository ??= new RefRepository(configuration, serviceProvider);
         public IAfiliadoRepository AfiliadoRepository => afiliadoRepository ??= new AfiliadoRepository(context, httpClientFactory, configuration, new RefRepository(configuration, serviceProvider));
+        public ISolicitudAfiliacionEmpresasRepository SolicitudAfiliacionEmpresasRepository => solicitudAfiliacionEmpresasRepository ??= new SolicitudAfiliacionEmpresasRepository(context, dapperContext);
         public ISeccionalAutoridadRepository SeccionalAutoridadRepository => seccionalAutoridadRepository ??= new SeccionalAutoridadRepository(configuration);
         public ISeccionalRepository SeccionalRepository => _seccionalRepository ??= new SeccionalRepository(context, dapperContext);
         public ISQLConnection UatreAfiliaciones => uatreAfiliaciones ??= new UatreAfiliacionesConnection(configuration);

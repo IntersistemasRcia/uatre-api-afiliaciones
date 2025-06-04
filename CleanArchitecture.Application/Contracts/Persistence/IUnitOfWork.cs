@@ -8,6 +8,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         //Repositorios especiales no se inyectan, de definen x propiedades
         IRefRepository RefRepository { get; }
         IAfiliadoRepository AfiliadoRepository { get; }
+        ISolicitudAfiliacionEmpresasRepository SolicitudAfiliacionEmpresasRepository { get; }
         ISeccionalAutoridadRepository SeccionalAutoridadRepository { get; }
         ISeccionalRepository SeccionalRepository { get; }
         IDdjjRepository DdjjRepository { get; }
