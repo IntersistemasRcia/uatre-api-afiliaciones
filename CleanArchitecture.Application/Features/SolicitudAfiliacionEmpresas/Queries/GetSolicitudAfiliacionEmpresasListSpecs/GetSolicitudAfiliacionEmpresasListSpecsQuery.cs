@@ -24,7 +24,6 @@ public class GetSolicitudAfiliacionEmpresasListSpecsQuery : IRequest<Pagination<
     public string? EmpresaRazonSocial { get; set; }
     public int? EstadoSolicitudId { get; set; }
     public DateTime? EstadoFecha { get; set; }
-    public string? Estado { get; set; }
     public string? EstadoSolicitudObservaciones { get; set; }
     public string? EstadoSolicitudUsuario { get; set; }
     public string? Sort { get; set; }

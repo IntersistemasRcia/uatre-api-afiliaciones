@@ -13,7 +13,6 @@ namespace CleanArchitecture.Domain
         public int EstadoSolicitudId { get; set; }
         public EstadoSolicitud? EstadoSolicitud { get; set; }
         public DateTime? EstadoFecha { get; set; }
-        public string? Estado { get; set; }
         public string? EstadoSolicitudObservaciones { get; set; }
         public string? EstadoSolicitudUsuario { get; set; }
         public ICollection<SolicitudAfiliacionEmpresasDetalle>? SolicitudAfiliacionEmpresasDetalle { get; set; }
