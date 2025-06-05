@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Que
     {
        public int Id { get; set; }
         public DateTime? Fecha { get; set; }
-        public int SeccionalId { get; set; }
+        public int? SeccionalId { get; set; }
         public string? Seccional { get; set; }
         public string? SeccionalCodigo { get; set; }
         public int EmpresaId { get; set; }

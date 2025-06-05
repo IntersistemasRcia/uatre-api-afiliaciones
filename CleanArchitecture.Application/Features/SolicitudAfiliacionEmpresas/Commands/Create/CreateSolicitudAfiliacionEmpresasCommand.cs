@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Com
     public class CreateSolicitudAfiliacionEmpresasCommand : IRequest<CreateSolicitudAfiliacionEmpresasVm>
     {
         public DateTime? Fecha { get; set; }
-        public int SeccionalId { get; set; }
+        public int? SeccionalId { get; set; }
         public int EmpresaId { get; set; }
         public int EstadoSolicitudId { get; set; }
         public DateTime? EstadoFecha { get; set; }

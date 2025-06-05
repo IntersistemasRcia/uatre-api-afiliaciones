@@ -7,7 +7,7 @@ namespace CleanArchitecture.Domain
     public class SolicitudAfiliacionEmpresas : EntidadAuditable
     {
         public DateTime? Fecha { get; set; }
-        public int SeccionalId { get; set; }
+        public int? SeccionalId { get; set; }
         public Seccional? Seccional { get; set; }
         public int EmpresaId { get; set; }
         public int EstadoSolicitudId { get; set; }

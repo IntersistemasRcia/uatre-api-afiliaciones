@@ -1769,7 +1769,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("SeccionalId")
+                    b.Property<int?>("SeccionalId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1817,7 +1817,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Periodo")
+                    b.Property<int?>("Periodo")
                         .HasColumnType("int");
 
                     b.Property<byte[]>("RowVersion")
@@ -1829,25 +1829,25 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int>("SolicitudAfiliacionEmpresasId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_Trab_NoRurales")
+                    b.Property<int?>("Total_Trab_NoRurales")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_Trab_NoRurales_Afiliados")
+                    b.Property<int?>("Total_Trab_NoRurales_Afiliados")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_Trab_NoRurales_NoAfiliados")
+                    b.Property<int?>("Total_Trab_NoRurales_NoAfiliados")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_Trab_Rurales")
+                    b.Property<int?>("Total_Trab_Rurales")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_Trab_Rurales_Afiliados")
+                    b.Property<int?>("Total_Trab_Rurales_Afiliados")
                         .HasColumnType("int");
 
-                    b.Property<int>("Total_Trab_Rurales_NoAfiliados")
+                    b.Property<int?>("Total_Trab_Rurales_NoAfiliados")
                         .HasColumnType("int");
 
-                    b.Property<long>("Total_Trabajadores")
+                    b.Property<long?>("Total_Trabajadores")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -2112,8 +2112,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasOne("CleanArchitecture.Domain.Seccional", "Seccional")
                         .WithMany()
                         .HasForeignKey("SeccionalId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("EstadoSolicitud");
 

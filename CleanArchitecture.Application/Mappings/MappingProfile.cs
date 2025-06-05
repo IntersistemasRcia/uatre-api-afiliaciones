@@ -71,10 +71,13 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.TipoDocumento, x => x.MapFrom(b => b.TipoDocumento!.Descripcion));
 
             CreateMap<SolicitudAfiliacionEmpresas, SolicitudAfiliacionEmpresasVm>()
-                .ForMember(a => a.Seccional, x => x.MapFrom(s => s.Seccional.Descripcion))
-                .ForMember(a => a.SeccionalCodigo, x => x.MapFrom(s => s.Seccional.Codigo))
-                .ForMember(a => a.Estado, x => x.MapFrom(s => s.EstadoSolicitud.Descripcion))
-                ;
+             .AfterMap((src, dest) =>
+             {
+                 dest.Seccional = src.Seccional?.Descripcion;
+                 dest.SeccionalCodigo = src.Seccional?.Codigo;
+                 dest.Estado = src.EstadoSolicitud?.Descripcion;
+             });
+           // .ForMember(a => a.Estado, x => x.MapFrom(s => s.EstadoSolicitud.Descripcion));
 
             CreateMap<SolicitudAfiliacionEmpresasDetalle, SolicitudAfiliacionEmpresasDetalleVm>().ReverseMap();
 
