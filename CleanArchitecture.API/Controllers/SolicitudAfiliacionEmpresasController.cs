@@ -1,4 +1,6 @@
 ﻿
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries.GetSeccionalLocalidadBySeccionalId;
+using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Commands.Create;
 using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Queries;
 using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Queries.GetSolicitudAfiliacionEmpresasListSpecs;
@@ -7,6 +9,12 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresasDetalle.Queries;
+using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresasDetalle.Queries.GetByEmpresaId;
+using CleanArchitecture.Application.Features.RefLocalidad.Queries.GetRefLocalidadPaginationSpecs;
+using CleanArchitecture.Application.Features.RefLocalidad.Queries;
+using CleanArchitecture.Application.Models;
+using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresasDetalle.Queries.GetByEmpresaIdPaginationSpecs;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,6 +45,27 @@ namespace CleanArchitecture.API.Controllers
         {
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HttpGet("GetaDetallesBySolicitudId", Name = "GetaDetallesBySolicitudId")]
+        //[Authorize]
+        [ProducesResponseType(typeof(IReadOnlyCollection<SolicitudAfiliacionEmpresasDetalleVm>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IReadOnlyCollection<SolicitudAfiliacionEmpresasDetalleVm>>> GetaDetallesBySolicitudId([FromQuery] GetByEmpresaIdCommand query)
+        {
+            var data = await _mediator.Send(query);
+
+            return Ok(data);
+        }
+
+        [HttpGet("GetaDetallesBySolicitudIdPaginationSpecs")]
+        //[Authorize]
+        [ProducesResponseType(typeof(Pagination<SolicitudAfiliacionEmpresasDetalleVm>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<Pagination<SolicitudAfiliacionEmpresasDetalleVm>>> GetaDetallesBySolicitudIdPaginationSpecs([FromQuery] GetByEmpresaIdPaginationSpecsQuery query)
+        {
+            var list = await _mediator.Send(query);
+
+            return Ok(list);
         }
 
     }
