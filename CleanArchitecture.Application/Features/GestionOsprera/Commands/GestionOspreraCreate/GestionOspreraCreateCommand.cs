@@ -29,5 +29,10 @@ public class GestionOspreraCreateCommand : IRequest<int>
     public string? Texto { get; set; }
     public DateTime? FechaEnvioMail { get; set; }
     public string? RespuestaEnvioEmail { get; set; }
+    public int GestionRubroId { get; set; }
+    public int GestionSubRubroId { get; set; }
+    public int GestionEstadoId { get; set; }
+    public int GestionSituacionId { get; set; }
+    public int GestionAreaOspreraId { get; set; }
     public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
 }
