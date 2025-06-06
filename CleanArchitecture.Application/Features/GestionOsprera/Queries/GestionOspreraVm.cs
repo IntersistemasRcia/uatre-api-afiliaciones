@@ -33,14 +33,17 @@ namespace CleanArchitecture.Application.Features.GestionOsprera.Queries
         public string? Texto { get; set; }
         public DateTime? FechaEnvioMail { get; set; }
         public string? RespuestaEnvioEmail { get; set; }
-        public Guid? Guid { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime? LastModifiedDate { get; set; }
-        public string? LastModifiedBy { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public string? DeletedBy { get; set; }
-        public string? DeletedObs { get; set; }
+
+        public int GestionRubroId { get; set; }
+        public string? GestionRubroDescripcion { get; set; }
+        public int GestionSubRubroId { get; set; }
+        public string? GestionSubRubroDescripcion { get; set; }
+        public int GestionEstadoId { get; set; }
+        public string? GestionEstadoDescripcion { get; set; }
+        public int GestionSituacionId { get; set; }
+        public string? GestionSituacionDescripcion { get; set; }
+        public int GestionAreaOspreraId { get; set; }
+        public string? GestionAreaOspreraDescripcion { get; set; }
         public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
 }

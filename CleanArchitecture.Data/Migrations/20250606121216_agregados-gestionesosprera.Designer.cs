@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    partial class AfiliacionesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250606121216_agregados-gestionesosprera")]
+    partial class agregadosgestionesosprera
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -870,13 +873,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int>("GestionEstadoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GestionRubroId")
-                        .HasColumnType("int");
-
                     b.Property<int>("GestionSituacionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GestionSubRubroId")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("Guid")
@@ -945,11 +942,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("GestionEstadoId");
 
-                    b.HasIndex("GestionRubroId");
-
                     b.HasIndex("GestionSituacionId");
-
-                    b.HasIndex("GestionSubRubroId");
 
                     b.ToTable("GestionOsprera");
                 });
@@ -2006,154 +1999,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.ToTable("Sexos");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.SolicitudAfiliacionEmpresas", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int>("EmpresaId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("EstadoFecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EstadoSolicitudId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EstadoSolicitudObservaciones")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EstadoSolicitudUsuario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Fecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int?>("SeccionalId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EstadoSolicitudId");
-
-                    b.HasIndex("SeccionalId");
-
-                    b.ToTable("SolicitudAfiliacionEmpresas");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.SolicitudAfiliacionEmpresasDetalle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<Guid?>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("Periodo")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("SolicitudAfiliacionEmpresasId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_NoRurales")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_NoRurales_Afiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_NoRurales_NoAfiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales_Afiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales_NoAfiliados")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("Total_Trabajadores")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SolicitudAfiliacionEmpresasId");
-
-                    b.ToTable("SolicitudAfiliacionEmpresasDetalle");
-                });
-
             modelBuilder.Entity("CleanArchitecture.Domain.TipoDocumento", b =>
                 {
                     b.Property<int>("Id")
@@ -2312,21 +2157,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CleanArchitecture.Domain.GestionRubro", "GestionRubro")
-                        .WithMany()
-                        .HasForeignKey("GestionRubroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CleanArchitecture.Domain.GestionSituacion", "GestionSituacion")
                         .WithMany()
                         .HasForeignKey("GestionSituacionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitecture.Domain.GestionSubRubro", "GestionSubRubro")
-                        .WithMany()
-                        .HasForeignKey("GestionSubRubroId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2334,11 +2167,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Navigation("GestionEstado");
 
-                    b.Navigation("GestionRubro");
-
                     b.Navigation("GestionSituacion");
-
-                    b.Navigation("GestionSubRubro");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.GestionSituacion", b =>
@@ -2463,35 +2292,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("Seccional");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.SolicitudAfiliacionEmpresas", b =>
-                {
-                    b.HasOne("CleanArchitecture.Domain.EstadoSolicitud", "EstadoSolicitud")
-                        .WithMany()
-                        .HasForeignKey("EstadoSolicitudId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitecture.Domain.Seccional", "Seccional")
-                        .WithMany()
-                        .HasForeignKey("SeccionalId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("EstadoSolicitud");
-
-                    b.Navigation("Seccional");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.SolicitudAfiliacionEmpresasDetalle", b =>
-                {
-                    b.HasOne("CleanArchitecture.Domain.SolicitudAfiliacionEmpresas", "SolicitudAfiliacionEmpresas")
-                        .WithMany("SolicitudAfiliacionEmpresasDetalle")
-                        .HasForeignKey("SolicitudAfiliacionEmpresasId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("SolicitudAfiliacionEmpresas");
-                });
-
             modelBuilder.Entity("CleanArchitecture.Domain.InformeSap", b =>
                 {
                     b.Navigation("InformeSapDetalles");
@@ -2514,11 +2314,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("SeccionalContacto");
 
                     b.Navigation("SeccionalLocalidad");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.SolicitudAfiliacionEmpresas", b =>
-                {
-                    b.Navigation("SolicitudAfiliacionEmpresasDetalle");
                 });
 #pragma warning restore 612, 618
         }

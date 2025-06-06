@@ -8,21 +8,12 @@ namespace CleanArchitecture.Application.Specification.Implements
     {
         public GestionOspreraSpecification(GetGestionOspreraListQuery query) : base()
         {           
-            //Agrego tablas relacionadas
-           // AgregarIncludes(a => a.Include(e => e.EstadoSolicitud!)); // en que estado aparece el afiliado cuando pasa del formulario a afiliado?
-           // AgregarIncludes(a => a.Include(e => e.Seccional!));
-            //AgregarIncludes(a => a.Include(e => e.SeccionalAfiliado!).ThenInclude(r => r.SeccionalLocalidad).ThenInclude(s => s.RefLocalidad));
-            //AgregarIncludes(a => a.Include(e => e.Sexo!));
-            //AgregarIncludes(a => a.Include(e => e.Actividad!));
-            //AgregarIncludes(a => a.Include(e => e.Puesto!));
-            //AgregarIncludes(a => a.Include(e => e.RefLocalidad!));
-            //AgregarIncludes(a => a.Include(e => e.RefLocalidad!.Provincia!));
-            //AgregarIncludes(a => a.Empresa!);
-            //AgregarIncludes(a => a.Include(e => e.Nacionalidad!));
-            //AgregarIncludes(a => a.Include(e => e.EstadoCivil!));
-            //AgregarIncludes(a => a.Include(e => e.TipoDocumento!));
-
-            //AgregarIncludes(a => a.Include(e => e.Afiliado!));           
+            //Agrego tablas relacionadas           
+            //AgregarIncludes(a => a.Include(e => e.GestionAreaOsprera!));
+            //AgregarIncludes(a => a.Include(e => e.GestionEstado!));
+            //AgregarIncludes(a => a.Include(e => e.GestionSituacion!));
+            //AgregarIncludes(a => a.Include(e => e.GestionAreaOsprera!));
+            //AgregarIncludes(a => a.Include(e => e.GestionAreaOsprera!));
 
             // Filtros
            // if (!query.NroAfiliadoHasta.HasValue) { query.NroAfiliadoHasta = query.NroAfiliado; };
