@@ -31,4 +31,23 @@ public class GestionOsprera : EntidadAuditable
     public string? Texto { get; set; }
     public DateTime? FechaEnvioMail { get; set; }
     public string? RespuestaEnvioEmail { get; set; }
+    public int GestionRubroId { get; set; }
+    public GestionRubro? GestionRubro { get; set; }
+    public int GestionSubRubroId { get; set; }
+    public GestionSubRubro? GestionSubRubro { get; set; }
+    public int GestionEstadoId { get; set; }
+    public GestionEstado? GestionEstado { get; set; }
+    public int GestionSituacionId { get; set; }
+    public GestionSituacion? GestionSituacion { get; set; }
+    public int GestionAreaOspreraId { get; set; }
+    public GestionAreaOsprera? GestionAreaOsprera { get; set; }
+
+    [StringLength(1)]
+    public string? AtencionesPrevias { get; set; }
+
+    [StringLength(1)]
+    public string? ConCoberturaOsprera  { get; set; }
+
+    [StringLength(10)]
+    public string? TipoPrestador { get; set; }
 }

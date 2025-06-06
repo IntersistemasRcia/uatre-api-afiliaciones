@@ -56,6 +56,8 @@ public class GetGestionOspreraListQueryHandler : IRequestHandler<GetGestionOspre
 
             gestion.Documentacion = new List<DocumentacionEntidad>();
             gestion.Documentacion = (List<DocumentacionEntidad>)documentacion;
+
+            gestion.GestionAreaOspreraDescripcion = (await _unitOfWork.Repository<GestionAreaOsprera>().GetByIdAsync(gestion.GestionAreaOspreraId))?.Descripcion ?? string.Empty;
         }
         return new Pagination<GestionOspreraVm>()
         {

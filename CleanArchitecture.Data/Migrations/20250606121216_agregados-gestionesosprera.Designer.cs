@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    partial class AfiliacionesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250606121216_agregados-gestionesosprera")]
+    partial class agregadosgestionesosprera
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -870,13 +873,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int>("GestionEstadoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GestionRubroId")
-                        .HasColumnType("int");
-
                     b.Property<int>("GestionSituacionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GestionSubRubroId")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("Guid")
@@ -945,11 +942,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("GestionEstadoId");
 
-                    b.HasIndex("GestionRubroId");
-
                     b.HasIndex("GestionSituacionId");
-
-                    b.HasIndex("GestionSubRubroId");
 
                     b.ToTable("GestionOsprera");
                 });
@@ -2164,21 +2157,9 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CleanArchitecture.Domain.GestionRubro", "GestionRubro")
-                        .WithMany()
-                        .HasForeignKey("GestionRubroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CleanArchitecture.Domain.GestionSituacion", "GestionSituacion")
                         .WithMany()
                         .HasForeignKey("GestionSituacionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitecture.Domain.GestionSubRubro", "GestionSubRubro")
-                        .WithMany()
-                        .HasForeignKey("GestionSubRubroId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2186,11 +2167,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Navigation("GestionEstado");
 
-                    b.Navigation("GestionRubro");
-
                     b.Navigation("GestionSituacion");
-
-                    b.Navigation("GestionSubRubro");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.GestionSituacion", b =>

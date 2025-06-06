@@ -39,6 +39,9 @@ using CleanArchitecture.Application.Features.TipoDocumento.Queries;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Application.Features.GestionOsprera.Commands.Update;
 using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOsprera;
+using CleanArchitecture.Application.Features.GestionesRubro.Queries;
+using CleanArchitecture.Application.Features.GestionesSubRubro;
+using CleanArchitecture.Application.Models;
 
 namespace CleanArchitecture.Application.Mappings
 {
@@ -112,6 +115,13 @@ namespace CleanArchitecture.Application.Mappings
 
             CreateMap<AfiliadoFormularioAfiliacion, AfiliadoFormulariosAfiliacionVm>();
             CreateMap<GestionOsprera, GestionOspreraVm>();
+            CreateMap<GestionRubro, GestionRubroVm>();
+            CreateMap<GestionSubRubro, GestionSubRubroVm>();
+            CreateMap<GestionEstado, IdDescripcionVm>();
+            CreateMap<GestionSituacion, IdDescripcionVm>();
+            CreateMap<GestionAreaOsprera, IdDescripcionVm>();
+
+
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();
             CreateMap<UpdateAfiliadoCommand, Afiliado>();
