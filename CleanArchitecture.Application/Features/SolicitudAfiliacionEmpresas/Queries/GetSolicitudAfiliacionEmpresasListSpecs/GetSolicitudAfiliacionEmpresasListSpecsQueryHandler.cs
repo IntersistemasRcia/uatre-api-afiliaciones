@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresasDetalle.Queries.GetByEmpresaIdPaginationSpecs;
 using CleanArchitecture.Application.Models;
 using CleanArchitecture.Application.Specification;
 using CleanArchitecture.Application.Specification.Implements;
@@ -32,28 +33,62 @@ public class GetSolicitudAfiliacionEmpresasListSpecsQueryHandler : IRequestHandl
             }
         }
 
-        var spec = new SolicitudAfiliacionEmpresasSpecification(request);
-        var list = await _unitOfWork.Repository<Domain.SolicitudAfiliacionEmpresas>().GetAllWithSpecsAsync(spec);
 
-        var totalRecords = await _unitOfWork.Repository<Domain.SolicitudAfiliacionEmpresas>().CountAsync(new BaseSpecification<Domain.SolicitudAfiliacionEmpresas>(spec.Criteria));
-        var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
-        var data = _mapper.Map<List<SolicitudAfiliacionEmpresasVm>>(list);
-
-        foreach (var item in data)
+        if (request.VerDetalles == true)
         {
-            var empresa = await _unitOfWork.RefRepository.GetEmpresaById(item.EmpresaId);
+            var spec = new SolicitudAfiliacionEmpresasSpecification(request);
+            var list = await _unitOfWork.Repository<Domain.SolicitudAfiliacionEmpresas>().GetAllWithSpecsAsync(spec);
 
-            item.EmpresaDescripcion = empresa?.RazonSocial ?? string.Empty;
-            item.EmpresaCUIT = empresa?.CUIT ?? 0;
+            var totalRecords = await _unitOfWork.Repository<Domain.SolicitudAfiliacionEmpresas>().CountAsync(new BaseSpecification<Domain.SolicitudAfiliacionEmpresas>(spec.Criteria));
+            var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
+            var data = _mapper.Map<List<SolicitudAfiliacionEmpresasVm>>(list);
+
+            foreach (var item in data)
+            {
+                var empresa = await _unitOfWork.RefRepository.GetEmpresaById(item.EmpresaId);
+
+                item.EmpresaDescripcion = empresa?.RazonSocial ?? string.Empty;
+                item.EmpresaCUIT = empresa?.CUIT ?? 0;
+            }
+
+            return new Pagination<SolicitudAfiliacionEmpresasVm>()
+            {
+                Index = request.GetPageIndex(),
+                Size = request.GetPageSize(),
+                Pages = totalPages,
+                Count = totalRecords,
+                Data = data
+            };
         }
-
-        return new Pagination<SolicitudAfiliacionEmpresasVm>()
+        else
         {
-            Index = request.GetPageIndex(),
-            Size = request.GetPageSize(),
-            Pages = totalPages,
-            Count = totalRecords,
-            Data = data
-        };
+            var  spec = new GetSolicitudAfiliacionEmpresasListSpecs(request);
+            var list = await _unitOfWork.Repository<Domain.SolicitudAfiliacionEmpresas>().GetAllWithSpecsAsync(spec);
+
+            var totalRecords = await _unitOfWork.Repository<Domain.SolicitudAfiliacionEmpresas>().CountAsync(new BaseSpecification<Domain.SolicitudAfiliacionEmpresas>(spec.Criteria));
+            var totalPages = Convert.ToInt32(Math.Ceiling(totalRecords / Convert.ToDecimal(request.GetPageSize())));
+            var data = _mapper.Map<List<SolicitudAfiliacionEmpresasVm>>(list);
+
+            foreach (var item in data)
+            {
+                var empresa = await _unitOfWork.RefRepository.GetEmpresaById(item.EmpresaId);
+
+                item.EmpresaDescripcion = empresa?.RazonSocial ?? string.Empty;
+                item.EmpresaCUIT = empresa?.CUIT ?? 0;
+            }
+
+            return new Pagination<SolicitudAfiliacionEmpresasVm>()
+            {
+                Index = request.GetPageIndex(),
+                Size = request.GetPageSize(),
+                Pages = totalPages,
+                Count = totalRecords,
+                Data = data
+            };
+        }
+        
+    
+
+       
     }
 }
