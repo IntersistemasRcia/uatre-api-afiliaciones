@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    partial class AfiliacionesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250515214342_GestionOsprera")]
+    partial class GestionOsprera
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -696,106 +699,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.ToTable("EstadosSolicitudes");
                 });
 
-            modelBuilder.Entity("CleanArchitecture.Domain.GestionAreaOsprera", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GestionesAreaOsprera");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.GestionEstado", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GestionesEstado");
-                });
-
             modelBuilder.Entity("CleanArchitecture.Domain.GestionOsprera", b =>
                 {
                     b.Property<int>("Id")
@@ -810,16 +713,8 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<string>("ApellidoTitular")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AtencionesPrevias")
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
-
                     b.Property<long?>("CUITTitular")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("ConCoberturaOsprera")
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(50)
@@ -863,21 +758,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("FechaNacimiento")
                         .HasMaxLength(100)
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("GestionAreaOspreraId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GestionEstadoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GestionRubroId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GestionSituacionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GestionSubRubroId")
-                        .HasColumnType("int");
 
                     b.Property<Guid?>("Guid")
                         .HasColumnType("uniqueidentifier");
@@ -932,186 +812,12 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int>("TipoDocumentoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TipoPrestador")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GestionAreaOspreraId");
-
-                    b.HasIndex("GestionEstadoId");
-
-                    b.HasIndex("GestionRubroId");
-
-                    b.HasIndex("GestionSituacionId");
-
-                    b.HasIndex("GestionSubRubroId");
-
                     b.ToTable("GestionOsprera");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.GestionRubro", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GestionesRubro");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.GestionSituacion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GestionEstadoId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GestionEstadoId");
-
-                    b.ToTable("GestionesSituacion");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.GestionSubRubro", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedObs")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GestionRubroId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GestionRubroId");
-
-                    b.ToTable("GestionesSubRubro");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.InformeSap", b =>
@@ -2148,71 +1854,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("Afiliado");
 
                     b.Navigation("EstadoSolicitud");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.GestionOsprera", b =>
-                {
-                    b.HasOne("CleanArchitecture.Domain.GestionAreaOsprera", "GestionAreaOsprera")
-                        .WithMany()
-                        .HasForeignKey("GestionAreaOspreraId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitecture.Domain.GestionEstado", "GestionEstado")
-                        .WithMany()
-                        .HasForeignKey("GestionEstadoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitecture.Domain.GestionRubro", "GestionRubro")
-                        .WithMany()
-                        .HasForeignKey("GestionRubroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitecture.Domain.GestionSituacion", "GestionSituacion")
-                        .WithMany()
-                        .HasForeignKey("GestionSituacionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitecture.Domain.GestionSubRubro", "GestionSubRubro")
-                        .WithMany()
-                        .HasForeignKey("GestionSubRubroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("GestionAreaOsprera");
-
-                    b.Navigation("GestionEstado");
-
-                    b.Navigation("GestionRubro");
-
-                    b.Navigation("GestionSituacion");
-
-                    b.Navigation("GestionSubRubro");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.GestionSituacion", b =>
-                {
-                    b.HasOne("CleanArchitecture.Domain.GestionEstado", "GestionEstado")
-                        .WithMany()
-                        .HasForeignKey("GestionEstadoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("GestionEstado");
-                });
-
-            modelBuilder.Entity("CleanArchitecture.Domain.GestionSubRubro", b =>
-                {
-                    b.HasOne("CleanArchitecture.Domain.GestionRubro", "GestionRubro")
-                        .WithMany()
-                        .HasForeignKey("GestionRubroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("GestionRubro");
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.InformeSapDetalle", b =>

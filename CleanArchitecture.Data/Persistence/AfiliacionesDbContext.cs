@@ -115,7 +115,13 @@ public class AfiliacionesDbContext : DbContext
     public DbSet<Notificacion> Notificaciones { get; set; }
     public DbSet<AfiliadoFormularioAfiliacion> AfiliadosFormularioAfiliacion { get; set; }
     public DbSet<NotificacionDetalle> NotificacionesDetalle { get; set; }
-    public DbSet<AccesoOsprera> AccesoOsprera { get; set; }
+    public DbSet<GestionOsprera> GestionOsprera { get; set; }
+    public DbSet<GestionRubro> GestionesRubro { get; set; }
+    public DbSet<GestionSubRubro> GestionesSubRubro { get; set; }
+    public DbSet<GestionEstado> GestionesEstado { get; set; }
+    public DbSet<GestionSituacion> GestionesSituacion { get; set; }
+    public DbSet<GestionAreaOsprera> GestionesAreaOsprera { get; set; }
+
     private void RegistrarAuditoriaDatos(EntityEntry entity, string userId, EntityState entityState)
     {
         cambioDatos.Clear();

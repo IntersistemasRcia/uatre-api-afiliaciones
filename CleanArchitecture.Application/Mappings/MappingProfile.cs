@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using CleanArchitecture.Application.Features.AccesoOsprera.Queries;
+using CleanArchitecture.Application.Features.GestionOsprera.Queries;
 using CleanArchitecture.Application.Features.Actividad.Queries.GetActividadList;
 using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.AfiliadoEstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.AfiliadoFormulariosAfiliacion.Commands.AfiliadoFormulariosAfiliacionCreate;
-using CleanArchitecture.Application.Features.AccesoOsprera.Commands.AccesoOspreraCreate;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOspreraCreate;
 using CleanArchitecture.Application.Features.EstadoCivil.Queries;
 using CleanArchitecture.Application.Features.EstadoSolicitud.Queries;
 using CleanArchitecture.Application.Features.Notificaciones.Commands.NotificacionesCreate;
@@ -37,7 +37,11 @@ using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using CleanArchitecture.Application.Features.Sexo.Queries;
 using CleanArchitecture.Application.Features.TipoDocumento.Queries;
 using CleanArchitecture.Domain;
-using CleanArchitecture.Application.Features.AccesoOsprera.Commands.Update;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.Update;
+using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOsprera;
+using CleanArchitecture.Application.Features.GestionesRubro.Queries;
+using CleanArchitecture.Application.Features.GestionesSubRubro;
+using CleanArchitecture.Application.Models;
 
 namespace CleanArchitecture.Application.Mappings
 {
@@ -110,7 +114,14 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<NotificacionDetalle, NotificacionesDetalleResponse>();
 
             CreateMap<AfiliadoFormularioAfiliacion, AfiliadoFormulariosAfiliacionVm>();
-            CreateMap<AccesoOsprera, AccesoOspreraVm>();
+            CreateMap<GestionOsprera, GestionOspreraVm>();
+            CreateMap<GestionRubro, GestionRubroVm>();
+            CreateMap<GestionSubRubro, GestionSubRubroVm>();
+            CreateMap<GestionEstado, IdDescripcionVm>();
+            CreateMap<GestionSituacion, IdDescripcionVm>();
+            CreateMap<GestionAreaOsprera, IdDescripcionVm>();
+
+
             // Requests
             CreateMap<CreateAfiliadoCommand, Afiliado>();
             CreateMap<UpdateAfiliadoCommand, Afiliado>();
@@ -134,8 +145,8 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<NotificacionesUpdateCommand, Notificacion>();
             CreateMap<NotificacionDetalleUpdateCommand, NotificacionDetalle>();
             CreateMap<AfiliadoFormulariosAfiliacionCreateCommand, AfiliadoFormularioAfiliacion>();
-            CreateMap<AccesoOspreraCreateCommand, AccesoOsprera>();
-            CreateMap<UpdateAccesoOspreraCommand, AccesoOsprera>();
+            CreateMap<GestionOspreraCreateCommand, GestionOsprera>();
+            CreateMap<UpdateGestionOspreraCommand, GestionOsprera>();
         }
     }
 }
