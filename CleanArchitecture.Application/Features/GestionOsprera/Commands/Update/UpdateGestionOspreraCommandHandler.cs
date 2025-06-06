@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Models.APIComunes;
-using CleanArchitecture.Common.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -29,20 +27,22 @@ namespace CleanArchitecture.Application.Features.GestionOsprera.Commands.Update
             {
                 try
                 {
-                    if (request.Documentacion?.Count > 0)
-                    {
-                        await unitOfWork.RefRepository.BorrarDocumentacionEntidad("O", request.Id);
-                        await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "O", request.Id);
-                        //foreach (var item in request.Documentacion!)
-                        //{
-                        //    item.Id = 0;
-                        //    await unitOfWork.RefRepository.AddAsync(item);
-                        //}
-                    }
+                    //if (request.Documentacion?.Count > 0)
+                    //{
+                    //    await unitOfWork.RefRepository.BorrarDocumentacionEntidad("O", request.Id);
+                    //    await unitOfWork.RefRepository.AgregarDocumentacionEntidad(request.Documentacion, "O", request.Id);
+                    //    //foreach (var item in request.Documentacion!)
+                    //    //{
+                    //    //    item.Id = 0;
+                    //    //    await unitOfWork.RefRepository.AddAsync(item);
+                    //    //}
+                    //}                    
+
+                    var ret = await unitOfWork.CommitAsync();
 
                     await transaction.CommitAsync();
 
-                    return await unitOfWork.CommitAsync();
+                    return ret;
                 }
                 catch (Exception ex)
                 {

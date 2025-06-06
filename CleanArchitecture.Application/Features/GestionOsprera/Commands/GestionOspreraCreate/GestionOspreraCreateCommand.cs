@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Models.APIComunes;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOsprera;
 
@@ -34,5 +35,8 @@ public class GestionOspreraCreateCommand : IRequest<int>
     public int GestionEstadoId { get; set; }
     public int GestionSituacionId { get; set; }
     public int GestionAreaOspreraId { get; set; }
+    public string? AtencionesPrevias { get; set; }
+    public string? ConCoberturaOsprera { get; set; }
+    public string? TipoPrestador { get; set; }
     public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
 }
