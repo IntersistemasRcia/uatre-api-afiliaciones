@@ -49,6 +49,16 @@ namespace CleanArchitecture.Application.Specification.Implements
                             AddOrderBy(x => x.Fecha);
                         }
                         break;
+                    case "id":
+                        if (startsWith == "-")
+                        {
+                            AddOrderByDescending(x => x.Id);
+                        }
+                        else
+                        {
+                            AddOrderBy(x => x.Id);
+                        }
+                        break;
 
                     case "estadosolicitud":
                         if (startsWith == "-")
