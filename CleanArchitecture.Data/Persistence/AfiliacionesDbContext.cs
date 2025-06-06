@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
-using CleanArchitecture.Application.Models.APIAudit;
+﻿using CleanArchitecture.Application.Models.APIAudit;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Domain.Commom;
 using Dapper;
@@ -83,6 +82,7 @@ public class AfiliacionesDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+
         //excluidas de migrations
         //modelBuilder.Entity<DDJJUatre>().ToTable(nameof(DDJJUatre), t => t.ExcludeFromMigrations());
 
@@ -101,6 +101,8 @@ public class AfiliacionesDbContext : DbContext
     public DbSet<Seccional>? Seccionales { get; set; }
     public DbSet<Sexo>? Sexos { get; set; }
     public DbSet<EstadoSolicitud>? EstadosSolicitudes { get; set; }
+    public DbSet<SolicitudAfiliacionEmpresas>? SolicitudAfiliacionEmpresas { get; set; }
+    public DbSet<SolicitudAfiliacionEmpresasDetalle>? SolicitudAfiliacionEmpresasDetalle { get; set; }
     public DbSet<Nacionalidad>? Nacionalidades { get; set; }
     public DbSet<SeccionalLocalidad>? SeccionalesLocalidades { get; set; }
     public DbSet<EstadoCivil>? EstadosCiviles { get; set; }

@@ -39,9 +39,13 @@ using CleanArchitecture.Application.Features.TipoDocumento.Queries;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Application.Features.GestionOsprera.Commands.Update;
 using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOsprera;
+using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresasDetalle.Queries;
+using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Queries;
+using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Commands.Create;
 using CleanArchitecture.Application.Features.GestionesRubro.Queries;
 using CleanArchitecture.Application.Features.GestionesSubRubro;
 using CleanArchitecture.Application.Models;
+
 
 namespace CleanArchitecture.Application.Mappings
 {
@@ -70,6 +74,19 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.EstadoCivil, x => x.MapFrom(b => b.EstadoCivil!.Descripcion))
                 .ForMember(a => a.TipoDocumento, x => x.MapFrom(b => b.TipoDocumento!.Descripcion));
 
+            CreateMap<SolicitudAfiliacionEmpresas, SolicitudAfiliacionEmpresasVm>()
+             .AfterMap((src, dest) =>
+             {
+                 dest.Seccional = src.Seccional?.Descripcion;
+                 dest.SeccionalCodigo = src.Seccional?.Codigo;
+                 dest.Estado = src.EstadoSolicitud?.Descripcion;
+             });
+           // .ForMember(a => a.Estado, x => x.MapFrom(s => s.EstadoSolicitud.Descripcion));
+
+            CreateMap<SolicitudAfiliacionEmpresasDetalle, SolicitudAfiliacionEmpresasDetalleVm>().ReverseMap();
+
+            CreateMap<SolicitudAfiliacionEmpresas, CreateSolicitudAfiliacionEmpresasVm>().ReverseMap();
+
             CreateMap<Puesto, PuestoVm>();
             CreateMap<RefLocalidad, SeccionalLocalidadVm>();
             CreateMap<Seccional, SeccionalVm>()
@@ -79,7 +96,7 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.ProvinciaId, x => x.MapFrom(s => s.RefLocalidades!.ProvinciaId))
                 .ForMember(a => a.ProvinciaDescripcion, x => x.MapFrom(s => s.RefLocalidades!.Provincia!.Nombre))
                 .ForMember(a => a.SeccionalEstadoDescripcion, x => x.MapFrom(s => s.SeccionalEstado!.Descripcion));
-                //.ForMember(s => s.SeccionalLocalidad, opt => opt.MapFrom(x => x.SeccionalLocalidad.Select(y => y.RefLocalidad).ToList()));
+            //.ForMember(s => s.SeccionalLocalidad, opt => opt.MapFrom(x => x.SeccionalLocalidad.Select(y => y.RefLocalidad).ToList()));
             CreateMap<Seccional, CreateSeccionalVm>();
             CreateMap<Provincia, ProvinciaVm>()
                 .ForMember(a => a.SeccionalDescripcionPorDefecto, x => x.MapFrom(s => s.Seccional.Descripcion));
@@ -103,7 +120,7 @@ namespace CleanArchitecture.Application.Mappings
                 .ForMember(a => a.SeccionalDescripcion, x => x.MapFrom(b => b.Seccional!.Descripcion))
                 .ForMember(a => a.SeccionalCodigo, x => x.MapFrom(b => b.Seccional!.Codigo))
                 .ForMember(a => a.RefDelegacionId, x => x.MapFrom(b => b.Seccional!.RefDelegacionId));
-                //.ForMember(a => a.RefDelegacionDescripcion, x => x.MapFrom(b => b.Seccional));
+            //.ForMember(a => a.RefDelegacionDescripcion, x => x.MapFrom(b => b.Seccional));
 
 
             CreateMap<SeccionalEstado, SeccionalEstadoResponse>();
@@ -121,8 +138,10 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<GestionSituacion, IdDescripcionVm>();
             CreateMap<GestionAreaOsprera, IdDescripcionVm>();
 
-
             // Requests
+            CreateMap<CreateSolicitudAfiliacionEmpresasCommand, SolicitudAfiliacionEmpresas>();
+            CreateMap<CreateSolicitudAfiliacionEmpresasDetalle, SolicitudAfiliacionEmpresasDetalle>();
+
             CreateMap<CreateAfiliadoCommand, Afiliado>();
             CreateMap<UpdateAfiliadoCommand, Afiliado>();
             CreateMap<CreateSeccionalCommand, Seccional>();
