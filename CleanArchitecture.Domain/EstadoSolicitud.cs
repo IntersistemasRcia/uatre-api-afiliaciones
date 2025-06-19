@@ -7,5 +7,6 @@ namespace CleanArchitecture.Domain
     {
         [StringLength(50)]
         public string Descripcion { get; set; }
+        public string Tipo { get; set; }
     }
 }

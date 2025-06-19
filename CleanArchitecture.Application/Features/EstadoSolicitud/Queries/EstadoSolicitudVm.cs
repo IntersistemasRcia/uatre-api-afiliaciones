@@ -5,5 +5,6 @@ namespace CleanArchitecture.Application.Features.EstadoSolicitud.Queries
     public class EstadoSolicitudVm : EntidadAuditable
     {
         public string? Descripcion { get; set; }
+        public string? Tipo { get; set; }
     }
 }
