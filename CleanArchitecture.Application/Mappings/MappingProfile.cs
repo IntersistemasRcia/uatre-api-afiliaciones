@@ -144,7 +144,8 @@ namespace CleanArchitecture.Application.Mappings
 
             CreateMap<CreateAfiliadoCommand, Afiliado>()
                 .ForMember(s => s.Telefono, x => x.MapFrom(b => $"{b.TelefonoPais}{b.TelefonoArea}{b.TelefonoNumero}"));
-            CreateMap<UpdateAfiliadoCommand, Afiliado>();
+            CreateMap<UpdateAfiliadoCommand, Afiliado>()
+                .ForMember(s => s.Telefono, x => x.MapFrom(b => $"{b.TelefonoPais}{b.TelefonoArea}{b.TelefonoNumero}"));
             CreateMap<CreateSeccionalCommand, Seccional>();
             CreateMap<UpdateSeccionalCommand, Seccional>();
             CreateMap<CreateSeccionalAutoridad, SeccionalAutoridad>();
