@@ -142,7 +142,8 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<CreateSolicitudAfiliacionEmpresasCommand, SolicitudAfiliacionEmpresas>();
             CreateMap<CreateSolicitudAfiliacionEmpresasDetalle, SolicitudAfiliacionEmpresasDetalle>();
 
-            CreateMap<CreateAfiliadoCommand, Afiliado>();
+            CreateMap<CreateAfiliadoCommand, Afiliado>()
+                .ForMember(s => s.Telefono, x => x.MapFrom(b => $"{b.TelefonoPais}{b.TelefonoArea}{b.TelefonoNumero}"));
             CreateMap<UpdateAfiliadoCommand, Afiliado>();
             CreateMap<CreateSeccionalCommand, Seccional>();
             CreateMap<UpdateSeccionalCommand, Seccional>();

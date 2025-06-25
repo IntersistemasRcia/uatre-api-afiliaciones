@@ -6,7 +6,6 @@ using CleanArchitecture.Application.Specification;
 using CleanArchitecture.Application.Specification.Implements;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Common.Helpers;
-using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 

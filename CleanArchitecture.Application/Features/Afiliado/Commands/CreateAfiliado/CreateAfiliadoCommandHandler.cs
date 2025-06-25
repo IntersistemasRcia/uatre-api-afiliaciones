@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
-using CleanArchitecture.Application.Models.APIComunes;
-using CleanArchitecture.Domain;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

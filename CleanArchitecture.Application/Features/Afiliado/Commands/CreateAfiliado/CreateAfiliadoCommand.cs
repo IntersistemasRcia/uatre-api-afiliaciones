@@ -25,7 +25,10 @@ namespace CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliad
         public int EstadoCivilId { get; set; }
         public int RefLocalidadId { get; set; }
         public string? Domicilio { get; set; }
-        public string? Telefono { get; set; }
+        //public string? Telefono { get; set; }
+        public string? TelefonoPais { get; set; }
+        public string? TelefonoArea { get; set; }
+        public string? TelefonoNumero { get; set; }
         public string? Correo { get; set; }
         public string? Celular { get; set; }
         public DateTime? FechaNacimiento { get; set; }

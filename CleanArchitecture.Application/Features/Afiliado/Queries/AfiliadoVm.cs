@@ -43,7 +43,10 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries
         public int EstadoCivilId { get; set; }
         public string? EstadoCivil { get; set; }
         public string? Domicilio { get; set; }
-        public string? Telefono { get; set; }
+        //public string? Telefono { get; set; }
+        public string? TelefonoPais { get; set; }
+        public string? TelefonoArea { get; set; }
+        public string? TelefonoNumero { get; set; }
         public string? Correo { get; set; }
         public DateTime? FechaNacimiento { get; set; }
         public int RefMotivoBajaId { get; set; }
