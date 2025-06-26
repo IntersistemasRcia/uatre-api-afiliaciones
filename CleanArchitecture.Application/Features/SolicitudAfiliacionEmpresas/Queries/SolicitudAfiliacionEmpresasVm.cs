@@ -21,6 +21,14 @@ namespace CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Que
         public string? Estado { get; set; }
         public string? EstadoSolicitudObservaciones { get; set; }
         public string? EstadoSolicitudUsuario { get; set; }
+        public int? Periodo { get; set; }
+        public Int64? Total_Trabajadores { get; set; }
+        public int? Total_Trab_Rurales { get; set; }
+        public int? Total_Trab_NoRurales { get; set; }
+        public int? Total_Trab_Rurales_Afiliados { get; set; }
+        public int? Total_Trab_Rurales_NoAfiliados { get; set; }
+        public int? Total_Trab_NoRurales_Afiliados { get; set; }
+        public int? Total_Trab_NoRurales_NoAfiliados { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }

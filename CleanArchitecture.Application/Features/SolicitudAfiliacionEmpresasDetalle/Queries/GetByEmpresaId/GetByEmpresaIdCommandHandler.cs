@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Queries;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresasDetalle.Queries.GetByEmpresaId;
@@ -20,7 +21,7 @@ public class GetByEmpresaIdCommandHandler : IRequestHandler<GetByEmpresaIdComman
         var spec = new GetByEmpresaIdSpec(request);
         var list = await _unitOfWork.Repository<Domain.SolicitudAfiliacionEmpresasDetalle>().GetAllWithSpecsAsync(spec);
 
-        var data = _mapper.Map<IReadOnlyCollection<SolicitudAfiliacionEmpresasDetalleVm>>(list);
+        var data = _mapper.Map<IReadOnlyCollection<SolicitudAfiliacionEmpresasDetalleVm>>(list.OrderByDescending(x => x.Periodo));
 
         return data;
     }
