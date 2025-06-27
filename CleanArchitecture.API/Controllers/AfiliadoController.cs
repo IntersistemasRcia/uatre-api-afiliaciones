@@ -11,6 +11,7 @@ using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateAfiliado;
 using CleanArchitecture.Application.Features.Afiliado.Commands.UpdateDatosAfip;
 using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoById;
+using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoByCUILValidado;
 
 namespace CleanArchitecture.API.Controllers;
 
@@ -54,6 +55,18 @@ public class AfiliadoController : BaseApiController
     [ProducesResponseType(typeof(AfiliadoVm), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(AfiliadoVm), (int)HttpStatusCode.NotFound)]
     public async Task<ActionResult<AfiliadoVm>> GetAfiliado([FromQuery] GetAfiliadoByCUILQuery query)
+    {
+        //var query = new GetPadronListQuery(parameters);
+        var padrones = await _mediator.Send(query);
+
+        return Ok(padrones);
+    }
+
+    [HttpGet("GetAfiliadoByCUILValidado", Name = "GetAfiliadoByCUILValidado")]
+    //[Authorize]
+    [ProducesResponseType(typeof(AfiliadoVm), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(AfiliadoVm), (int)HttpStatusCode.NotFound)]
+    public async Task<ActionResult<AfiliadoVm>> GetAfiliadoByCUILValidado([FromQuery] GetAfiliadoByCUILValidadoQuery query)
     {
         //var query = new GetPadronListQuery(parameters);
         var padrones = await _mediator.Send(query);
