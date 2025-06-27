@@ -38,5 +38,6 @@ public class GestionOspreraCreateCommand : IRequest<int>
     public string? AtencionesPrevias { get; set; }
     public string? ConCoberturaOsprera { get; set; }
     public string? TipoPrestador { get; set; }
+    public string? ObservacionesEstado { get; set; }
     public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
 }

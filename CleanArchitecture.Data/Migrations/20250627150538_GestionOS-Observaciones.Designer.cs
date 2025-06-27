@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    partial class AfiliacionesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250627150538_GestionOS-Observaciones")]
+    partial class GestionOSObservaciones
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -317,18 +320,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<string>("Telefono")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("TelefonoArea")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TelefonoNumero")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TelefonoPais")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("TipoDocumentoId")
                         .HasColumnType("int");
@@ -2079,9 +2070,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Periodo")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -2090,27 +2078,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.Property<int?>("SeccionalId")
                         .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_NoRurales")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_NoRurales_Afiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_NoRurales_NoAfiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales_Afiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales_NoAfiliados")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("Total_Trabajadores")
-                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
