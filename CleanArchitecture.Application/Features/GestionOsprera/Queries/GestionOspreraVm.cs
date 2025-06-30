@@ -44,6 +44,9 @@ namespace CleanArchitecture.Application.Features.GestionOsprera.Queries
         public string? GestionSituacionDescripcion { get; set; }
         public int GestionAreaOspreraId { get; set; }
         public string? GestionAreaOspreraDescripcion { get; set; }
+        public string? AtencionesPrevias { get; set; }
+        public string? ConCoberturaOsprera { get; set; }
+        public string? TipoPrestador { get; set; }
         public string? ObservacionesEstado { get; set; }
         public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
