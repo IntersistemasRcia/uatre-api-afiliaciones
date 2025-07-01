@@ -45,5 +45,5 @@ public class GetSeccionalesListSpecsQuery : IRequest<Pagination<SeccionalVm>>
 
 public class Ambito
 {
-    public List<int> Ids { get; set; }
+    public List<int> Ids { get; set; } = [];
 }

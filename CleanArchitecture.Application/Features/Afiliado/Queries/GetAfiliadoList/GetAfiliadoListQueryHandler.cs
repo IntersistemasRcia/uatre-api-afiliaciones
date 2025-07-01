@@ -25,6 +25,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
     }
     public async Task<Pagination<AfiliadoVm>> Handle(GetAfiliadoListQuery request, CancellationToken cancellationToken)
     {
+
         var todos = request.AmbitoTodos?.Ids.Count != 0 ? true : false;
         if (todos == false)
         {
@@ -33,6 +34,25 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
             if (!result.IsValid)
             {
                 throw new BadRequestException(result.Errors.Select(x => x.ErrorMessage).ToList().ToJsonString());
+            }
+
+            //Filtro las seccionales "inactivas"
+            if (request.AmbitoSeccionales != null && request.AmbitoSeccionales.Ids.Count > 0)
+            {
+                var seccionalesActivas = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(
+                    new BaseSpecification<Domain.Seccional>(x => request.AmbitoSeccionales.Ids.Contains(x.Id) && x.SeccionalEstado.Descripcion == "NORMALIZADA"));
+
+                if (seccionalesActivas.Count > 0)
+                    request.AmbitoSeccionalesActivas.Ids.AddRange(seccionalesActivas.Select(x => x.Id).ToList());
+            }
+
+            if (request.AmbitoDelegaciones != null && request.AmbitoDelegaciones.Ids.Count > 0)
+            {
+                var seccionalesActivas = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(
+                    new BaseSpecification<Domain.Seccional>(x => request.AmbitoDelegaciones.Ids.Contains(x.Id) && x.SeccionalEstado.Descripcion == "NORMALIZADA"));
+
+                if (seccionalesActivas.Count > 0)
+                    request.AmbitoSeccionalesDelegacionActivas.Ids.AddRange(seccionalesActivas.Select(x => x.Id).ToList());
             }
         }
 
@@ -82,6 +102,6 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
             Pages = totalPages,
             Count = totalRecords,
             Data = data
-        };        
+        };
     }
 }
