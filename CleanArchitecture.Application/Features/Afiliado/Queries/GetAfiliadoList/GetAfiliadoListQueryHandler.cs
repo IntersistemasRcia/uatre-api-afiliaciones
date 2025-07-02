@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Contracts.Persistence;
+using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Application.Models;
 using CleanArchitecture.Application.Models.APIComunes;
 using CleanArchitecture.Application.Specification;
@@ -26,7 +27,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
     public async Task<Pagination<AfiliadoVm>> Handle(GetAfiliadoListQuery request, CancellationToken cancellationToken)
     {
 
-        var todos = request.AmbitoTodos?.Ids.Count != 0 ? true : false;
+        var todos = request.AmbitoTodos?.Ids.Count == 0 || request.AmbitoTodos == null ? false : true;
         if (todos == false)
         {
             var validator = new GetAfiliadoListQueryValidator();
@@ -36,14 +37,16 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
                 throw new BadRequestException(result.Errors.Select(x => x.ErrorMessage).ToList().ToJsonString());
             }
 
+            List<string> estadosActiva = new List<string> { "NORMALIZADA", "TRANSITORIA", "SIN COMISION" };
+            request.AmbitoSeccionalesActivas ??= new Ambito();
             //Filtro las seccionales "inactivas"
             if (request.AmbitoSeccionales != null && request.AmbitoSeccionales.Ids.Count > 0)
             {
-                var seccionalesActivas = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(
-                    new BaseSpecification<Domain.Seccional>(x => request.AmbitoSeccionales.Ids.Contains(x.Id) && x.SeccionalEstado.Descripcion == "NORMALIZADA"));
+                var seccionalesActivas = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(new SeccionalConEstadoSpec(request.AmbitoSeccionales, estadosActiva));
 
-                if (seccionalesActivas.Count > 0)
+                if (seccionalesActivas.Count > 0) {                    
                     request.AmbitoSeccionalesActivas.Ids.AddRange(seccionalesActivas.Select(x => x.Id).ToList());
+                }                    
             }
 
             if (request.AmbitoDelegaciones != null && request.AmbitoDelegaciones.Ids.Count > 0)
@@ -52,7 +55,9 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
                     new BaseSpecification<Domain.Seccional>(x => request.AmbitoDelegaciones.Ids.Contains(x.Id) && x.SeccionalEstado.Descripcion == "NORMALIZADA"));
 
                 if (seccionalesActivas.Count > 0)
-                    request.AmbitoSeccionalesDelegacionActivas.Ids.AddRange(seccionalesActivas.Select(x => x.Id).ToList());
+                {
+                    request.AmbitoSeccionalesActivas.Ids.AddRange(seccionalesActivas.Select(x => x.Id).ToList());
+                }                    
             }
         }
 
