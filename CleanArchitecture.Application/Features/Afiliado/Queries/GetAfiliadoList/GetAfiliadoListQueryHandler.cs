@@ -51,8 +51,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
 
             if (request.AmbitoDelegaciones != null && request.AmbitoDelegaciones.Ids.Count > 0)
             {
-                var seccionalesActivas = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(
-                    new BaseSpecification<Domain.Seccional>(x => request.AmbitoDelegaciones.Ids.Contains(x.Id) && x.SeccionalEstado.Descripcion == "NORMALIZADA"));
+                var seccionalesActivas = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(new SeccionalesDelegacionSpec(request.AmbitoDelegaciones, estadosActiva));
 
                 if (seccionalesActivas.Count > 0)
                 {

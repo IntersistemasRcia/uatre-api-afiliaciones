@@ -9,5 +9,5 @@ public class SeccionalConEstadoSpec : BaseSpecification<Domain.Seccional>
     && estadosActiva.Contains(x.SeccionalEstado.Descripcion))
     {
         AgregarIncludes(x => x.Include(e => e.SeccionalEstado!));        
-    }
+    }    
 }
