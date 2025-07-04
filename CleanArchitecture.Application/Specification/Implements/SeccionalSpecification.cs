@@ -19,7 +19,6 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (string.IsNullOrEmpty(query.Descripcion) || x.Descripcion.Contains(query.Descripcion)) &&
                 (!query.SeccionalEstadoId.HasValue || x.SeccionalEstadoId == query.SeccionalEstadoId) &&
 				(!query.SoloActivos || x.DeletedDate == null ) &&
-                (!query.SoloActivos || x.SeccionalAbsorbenteId == 0) &&
                 ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.Id)) &&
                 ((query.AmbitoTodos != null || query.AmbitoDelegaciones == null) || query.AmbitoDelegaciones.Ids.Contains(x.RefDelegacionId)) &&
                 ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.RefLocalidades.ProvinciaId))
@@ -109,7 +108,6 @@ namespace CleanArchitecture.Application.Specification.Implements
 
         public SeccionalSpecification(GetSeccionalesListQuery query) : base(x =>
         ((!query.SoloActivos.HasValue || query.SoloActivos == false) || x.DeletedDate == null) &&
-        ((!query.SoloActivos.HasValue || query.SoloActivos == false) || x.SeccionalAbsorbenteId == 0) &&
         (!query.LocalidadId.HasValue || x.RefLocalidadesId == query.LocalidadId) &&
         (!query.ProvinciaId.HasValue || x.RefLocalidades.ProvinciaId == query.ProvinciaId))
         {
