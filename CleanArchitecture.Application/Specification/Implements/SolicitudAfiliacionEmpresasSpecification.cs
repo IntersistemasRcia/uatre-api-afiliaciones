@@ -15,11 +15,10 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (!query.SeccionalId.HasValue || x.SeccionalId == query.SeccionalId) &&
                 (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
                 (!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId) &&
-                (x.DeletedDate == null) 
-                /* &&
-                ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.Id)) &&
+                (x.DeletedDate == null) &&
+                ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.SeccionalId)) &&
                 ((query.AmbitoTodos != null || query.AmbitoDelegaciones == null) || query.AmbitoDelegaciones.Ids.Contains(x.Seccional.RefDelegacionId)) &&
-                ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.Seccional.RefLocalidades.ProvinciaId))*/
+                ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.Seccional.RefLocalidades.ProvinciaId))
             )
         {
             if (query.VerDetalles == true)
