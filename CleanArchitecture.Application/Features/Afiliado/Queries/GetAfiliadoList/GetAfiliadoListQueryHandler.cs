@@ -48,8 +48,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
                     request.AmbitoSeccionalesActivas.Ids.AddRange(seccionalesActivas.Select(x => x.Id).ToList());
                 }                    
             }
-
-            if (request.AmbitoDelegaciones != null && request.AmbitoDelegaciones.Ids.Count > 0)
+            else if (request.AmbitoDelegaciones != null && request.AmbitoDelegaciones.Ids.Count > 0)
             {
                 var seccionalesActivas = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(new SeccionalesDelegacionSpec(request.AmbitoDelegaciones, estadosActiva));
 
