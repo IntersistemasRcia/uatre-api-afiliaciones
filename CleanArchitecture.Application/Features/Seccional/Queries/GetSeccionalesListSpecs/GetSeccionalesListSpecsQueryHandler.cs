@@ -5,6 +5,7 @@ using CleanArchitecture.Application.Specification;
 using CleanArchitecture.Application.Specification.Implements;
 using CleanArchitecture.Common.Exceptions;
 using CleanArchitecture.Common.Helpers;
+using CleanArchitecture.Domain;
 using MediatR;
 
 namespace CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
@@ -42,8 +43,12 @@ public class GetSeccionalesListSpecsQueryHandler : IRequestHandler<GetSeccionale
         foreach (var item in data)
         {            
             var refDelegacion = await _unitOfWork.RefRepository.GetDelegacionById(item.RefDelegacionId);
-
             item.RefDelegacionDescripcion = refDelegacion?.Nombre ?? string.Empty;
+
+            var seccionalAbsorbente = await _unitOfWork.Repository<Domain.Seccional>().GetByIdAsync(item.SeccionalAbsorbenteId);
+            item.SeccionalAbsorbenteCodigo = seccionalAbsorbente?.Codigo ?? string.Empty;
+            item.SeccionalAbsorbenteDescripcion = seccionalAbsorbente?.Descripcion ?? string.Empty;
+
         }
 
         return new Pagination<SeccionalVm>()

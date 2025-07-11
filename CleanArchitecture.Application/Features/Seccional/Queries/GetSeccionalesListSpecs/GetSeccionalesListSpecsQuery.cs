@@ -19,6 +19,8 @@ public class GetSeccionalesListSpecsQuery : IRequest<Pagination<SeccionalVm>>
 	public string? Descripcion { get; set; }
 	public int? SeccionalEstadoId { get; set; }
     public int? SeccionalAbsorbenteId { get; set; }
+    public string? SeccionalAbsorbenteCodigo { get; set; }
+    public string? SeccionalAbsorbenteDescripcion { get; set; }
     public bool SoloActivos { get; set; } = true;
 	public string? Sort { get; set; }
     public Ambito? AmbitoTodos { get; set; }

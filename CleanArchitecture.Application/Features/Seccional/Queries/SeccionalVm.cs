@@ -31,6 +31,9 @@ public class SeccionalVm
     public string? DeletedBy { get; set; }
     public string? DeletedObs { get; set; }
     public int SeccionalAbsorbenteId { get; set; }
+    public string? SeccionalAbsorbenteCodigo { get; set; }
+    public string? SeccionalAbsorbenteDescripcion { get; set; }
+    
     public ICollection<SeccionalLocalidadVm>? SeccionalLocalidad { get; set; }
 }
 
