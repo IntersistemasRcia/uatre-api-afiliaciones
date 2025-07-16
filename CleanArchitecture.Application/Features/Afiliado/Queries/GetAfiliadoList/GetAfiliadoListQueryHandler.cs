@@ -26,6 +26,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
     }
     public async Task<Pagination<AfiliadoVm>> Handle(GetAfiliadoListQuery request, CancellationToken cancellationToken)
     {
+        request.AmbitoSeccionalesActivas ??= new Ambito();
 
         var todos = request.AmbitoTodos?.Ids.Count == 0 || request.AmbitoTodos == null ? false : true;
         if (todos == false)
@@ -37,8 +38,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
                 throw new BadRequestException(result.Errors.Select(x => x.ErrorMessage).ToList().ToJsonString());
             }
 
-            List<string> estadosActiva = new List<string> { "NORMALIZADA", "TRANSITORIA", "SIN COMISION" };
-            request.AmbitoSeccionalesActivas ??= new Ambito();
+            List<string> estadosActiva = new List<string> { "NORMALIZADA", "TRANSITORIA", "SIN COMISION" };            
             //Filtro las seccionales "inactivas"
             if (request.AmbitoSeccionales != null && request.AmbitoSeccionales.Ids.Count > 0)
             {
@@ -58,8 +58,24 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
                 }                    
             }
         }
+        else
+        {
+            if (request.AmbitoSeccionales != null && request.AmbitoSeccionales.Ids.Count > 0)
+            {  
+                request.AmbitoSeccionalesActivas.Ids.AddRange(request.AmbitoSeccionales.Ids);
+            }
+            else if (request.AmbitoDelegaciones != null && request.AmbitoDelegaciones.Ids.Count > 0)
+            {
+                var seccionales = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(new SeccionalesDelegacionSpec(request.AmbitoDelegaciones));
 
-        var spec = new AfiliadoSpecification(request);
+                if (seccionales.Count > 0)
+                {
+                    request.AmbitoSeccionalesActivas.Ids.AddRange(seccionales.Select(x => x.Id).ToList());
+                }
+            }
+        }
+
+            var spec = new AfiliadoSpecification(request);
         var padronList = await _unitOfWork.Repository<Domain.Afiliado>().GetAllWithSpecsAsync(spec);
         //var padronListConMarcaAutoridad = await _unitOfWork.AfiliadoRepository.VerificarAutoridadSeccional(padronList);
 
