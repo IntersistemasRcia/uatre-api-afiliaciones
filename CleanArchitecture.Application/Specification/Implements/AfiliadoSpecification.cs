@@ -43,7 +43,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             (!query.RefMotivoBajaId.HasValue || x.RefMotivoBajaId == query.RefMotivoBajaId) &&
             (!query.SoloActivos || x.DeletedDate == null) &&
             ((!query.CreatedDateDesde.HasValue || !query.CreatedDateHasta.HasValue) || (x.CreatedDate.Value.Date >= query.CreatedDateDesde && x.CreatedDate.Value.Date <= query.CreatedDateHasta)) &&
-            (query.AmbitoSeccionalesActivas == null || query.AmbitoSeccionalesActivas.Ids.Contains(x.SeccionalId)) &&
+            (query.AmbitoSeccionalesActivas.Ids.Count == 0 || query.AmbitoSeccionalesActivas.Ids.Contains(x.SeccionalId)) &&
             ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.RefLocalidad.ProvinciaId))
             );
 

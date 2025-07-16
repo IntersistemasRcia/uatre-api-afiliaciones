@@ -10,4 +10,9 @@ public class SeccionalesDelegacionSpec : BaseSpecification<Domain.Seccional>
     {
         AgregarIncludes(x => x.Include(e => e.SeccionalEstado!));
     }
+
+    public SeccionalesDelegacionSpec(Ambito ambito) : base(x => ambito.Ids.Contains(x.RefDelegacionId))
+    {
+        AgregarIncludes(x => x.Include(e => e.SeccionalEstado!));
+    }
 }
