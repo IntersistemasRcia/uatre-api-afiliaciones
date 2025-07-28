@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
+﻿using Azure.Core;
+using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -27,14 +28,15 @@ namespace CleanArchitecture.Application.Specification.Implements
             if (!query.NroAfiliadoHasta.HasValue) { query.NroAfiliadoHasta = query.NroAfiliado; };
             if (!query.FechaIngresoHasta.HasValue) { query.FechaIngresoHasta = query.FechaIngreso; };
 
+            var todos = query.AmbitoTodos?.Ids.Count == 0 || query.AmbitoTodos == null ? false : true;
             SetCriteria(x => (!query.CUIL.HasValue || x.CUIL == query.CUIL) &&
             (!query.NroAfiliado.HasValue || (x.NroAfiliado >= query.NroAfiliado && x.NroAfiliado <= query.NroAfiliadoHasta)) &&
             (string.IsNullOrEmpty(query.Nombre) || x.Nombre!.Contains(query.Nombre)) &&
             (!query.Documento.HasValue || x.Documento == query.Documento) &&
             (string.IsNullOrEmpty(query.Seccional) || x.Seccional!.Descripcion!.Contains(query.Seccional) || x.Seccional!.Codigo!.Contains(query.Seccional)) &&
             //(!query.SeccionalEstadoId.HasValue || x.Seccional!.SeccionalEstadoId == query.SeccionalEstadoId) && //se agrega a pedido de mauricio por el tema de los AMBITOS DELEGACIONES; Deben mostrar afiliados con seccionales Normalizadas. Hoy 09/06/25 se quita este filtro que era exclusivo de ambito Delegaciones
-            ((query.AmbitoTodos == null || query.AmbitoTodos.Ids.FirstOrDefault() == 0) 
-            || (x.Seccional!.SeccionalEstado!.Descripcion.Contains("NORMALIZADA") || x.Seccional!.SeccionalEstado!.Descripcion.Contains("TRANSITORIA") || x.Seccional!.SeccionalEstado!.Descripcion.Contains("SIN COMISION"))) &&
+            //((query.AmbitoTodos == null || query.AmbitoTodos.Ids.FirstOrDefault() == 0) 
+            //|| (x.Seccional!.SeccionalEstado!.Descripcion.Contains("NORMALIZADA") || x.Seccional!.SeccionalEstado!.Descripcion.Contains("TRANSITORIA") || x.Seccional!.SeccionalEstado!.Descripcion.Contains("SIN COMISION"))) &&
             (!query.SoloActivos || x.DeletedDate == null) &&
             (!query.FechaIngreso.HasValue || (x.FechaIngreso.Value.Date >= query.FechaIngreso.Value.Date && x.FechaIngreso.Value.Date <= query.FechaIngresoHasta.Value.Date)) &&
             (!query.FechaEgreso.HasValue || x.FechaEgreso.Value.Date == query.FechaEgreso.Value.Date) &&
@@ -43,7 +45,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             (!query.RefMotivoBajaId.HasValue || x.RefMotivoBajaId == query.RefMotivoBajaId) &&
             (!query.SoloActivos || x.DeletedDate == null) &&
             ((!query.CreatedDateDesde.HasValue || !query.CreatedDateHasta.HasValue) || (x.CreatedDate.Value.Date >= query.CreatedDateDesde && x.CreatedDate.Value.Date <= query.CreatedDateHasta)) &&
-            (query.AmbitoSeccionalesActivas.Ids.Count == 0 || query.AmbitoSeccionalesActivas.Ids.Contains(x.SeccionalId)) &&
+            (todos || query.AmbitoSeccionalesActivas.Ids.Contains(x.SeccionalId)) &&
             ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.RefLocalidad.ProvinciaId))
             );
 
