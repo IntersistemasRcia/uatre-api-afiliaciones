@@ -35,9 +35,9 @@ public class GestionOsprera : EntidadAuditable
     public GestionRubro? GestionRubro { get; set; }
     public int GestionSubRubroId { get; set; }
     public GestionSubRubro? GestionSubRubro { get; set; }
-    public int GestionEstadoId { get; set; }
+    public int? GestionEstadoId { get; set; }
     public GestionEstado? GestionEstado { get; set; }
-    public int GestionSituacionId { get; set; }
+    public int? GestionSituacionId { get; set; }
     public GestionSituacion? GestionSituacion { get; set; }
     public int GestionAreaOspreraId { get; set; }
     public GestionAreaOsprera? GestionAreaOsprera { get; set; }

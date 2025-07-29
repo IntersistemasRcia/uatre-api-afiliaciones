@@ -15,6 +15,8 @@ namespace CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGesti
         public DateTime? Fecha { get; set; }
         public string? UsuarioId { get; set; }
         public int? SeccionalId { get; set; }
+        public int? GestionEstadoId { get; set; }
+        public int? GestionSituacionId { get; set; }
         public long? CUITTitular { get; set; }
         public string? NombreTitular { get; set; }
         public  string? ApellidoTitular { get; set; }
