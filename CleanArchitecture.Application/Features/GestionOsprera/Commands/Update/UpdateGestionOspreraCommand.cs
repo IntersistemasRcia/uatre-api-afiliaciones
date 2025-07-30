@@ -32,4 +32,5 @@ public class UpdateGestionOspreraCommand : IRequest<int>
     //public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     public int GestionEstadoId { get; set; }
     public int GestionSituacionId { get; set; }
+    public string? observacionesEstado { get; set; }
 }
