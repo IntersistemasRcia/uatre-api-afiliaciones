@@ -70,7 +70,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actividades");
+                    b.ToTable("Actividades", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Afiliado", b =>
@@ -318,18 +318,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("TelefonoArea")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TelefonoNumero")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TelefonoPais")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<int>("TipoDocumentoId")
                         .HasColumnType("int");
 
@@ -361,7 +349,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("NroAfiliado", "Id")
                         .IsDescending(true, false);
 
-                    b.ToTable("Afiliados");
+                    b.ToTable("Afiliados", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.AfiliadoEstadoSolicitud", b =>
@@ -418,7 +406,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("EstadoSolicitudId");
 
-                    b.ToTable("AfiliadoEstadosSolicitud");
+                    b.ToTable("AfiliadoEstadosSolicitud", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.AfiliadoFormularioAfiliacion", b =>
@@ -602,7 +590,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AfiliadosFormularioAfiliacion");
+                    b.ToTable("AfiliadosFormularioAfiliacion", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.EstadoCivil", b =>
@@ -653,7 +641,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EstadosCiviles");
+                    b.ToTable("EstadosCiviles", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.EstadoSolicitud", b =>
@@ -709,7 +697,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EstadosSolicitudes");
+                    b.ToTable("EstadosSolicitudes", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.GestionAreaOsprera", b =>
@@ -759,7 +747,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GestionesAreaOsprera");
+                    b.ToTable("GestionesAreaOsprera", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.GestionEstado", b =>
@@ -809,7 +797,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GestionesEstado");
+                    b.ToTable("GestionesEstado", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.GestionOsprera", b =>
@@ -970,7 +958,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("GestionSubRubroId");
 
-                    b.ToTable("GestionOsprera");
+                    b.ToTable("GestionOsprera", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.GestionRubro", b =>
@@ -1020,7 +1008,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GestionesRubro");
+                    b.ToTable("GestionesRubro", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.GestionSituacion", b =>
@@ -1075,7 +1063,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("GestionEstadoId");
 
-                    b.ToTable("GestionesSituacion");
+                    b.ToTable("GestionesSituacion", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.GestionSubRubro", b =>
@@ -1130,7 +1118,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("GestionRubroId");
 
-                    b.ToTable("GestionesSubRubro");
+                    b.ToTable("GestionesSubRubro", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.InformeSap", b =>
@@ -1195,7 +1183,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InformesSap");
+                    b.ToTable("InformesSap", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.InformeSapDetalle", b =>
@@ -1255,7 +1243,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("InformeSapId");
 
-                    b.ToTable("InformesSapDetalles");
+                    b.ToTable("InformesSapDetalles", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Nacionalidad", b =>
@@ -1306,7 +1294,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nacionalidades");
+                    b.ToTable("Nacionalidades", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Notificacion", b =>
@@ -1395,7 +1383,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notificaciones");
+                    b.ToTable("Notificaciones", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.NotificacionDetalle", b =>
@@ -1456,7 +1444,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("NotificacionesId");
 
-                    b.ToTable("NotificacionesDetalle");
+                    b.ToTable("NotificacionesDetalle", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Provincia", b =>
@@ -1519,7 +1507,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("SeccionalIdPorDefecto");
 
-                    b.ToTable("Provincias");
+                    b.ToTable("Provincias", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Puesto", b =>
@@ -1570,7 +1558,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Puestos");
+                    b.ToTable("Puestos", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.RefLocalidad", b =>
@@ -1640,7 +1628,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("ProvinciaId");
 
-                    b.ToTable("RefLocalidades");
+                    b.ToTable("RefLocalidades", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Seccional", b =>
@@ -1729,7 +1717,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("SeccionalEstadoId");
 
-                    b.ToTable("Seccionales");
+                    b.ToTable("Seccionales", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SeccionalAutoridad", b =>
@@ -1796,7 +1784,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("SeccionalId");
 
-                    b.ToTable("SeccionalAutoridades");
+                    b.ToTable("SeccionalAutoridades", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SeccionalContacto", b =>
@@ -1856,7 +1844,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("SeccionalId");
 
-                    b.ToTable("SeccionalContactos");
+                    b.ToTable("SeccionalContactos", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SeccionalEstado", b =>
@@ -1908,7 +1896,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SeccionalEstados");
+                    b.ToTable("SeccionalEstados", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SeccionalLocalidad", b =>
@@ -1965,7 +1953,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("SeccionalId");
 
-                    b.ToTable("SeccionalesLocalidades");
+                    b.ToTable("SeccionalesLocalidades", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Sexo", b =>
@@ -2022,7 +2010,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sexos");
+                    b.ToTable("Sexos", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SolicitudAfiliacionEmpresas", b =>
@@ -2079,9 +2067,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Periodo")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -2091,34 +2076,13 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Property<int?>("SeccionalId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Total_Trab_NoRurales")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_NoRurales_Afiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_NoRurales_NoAfiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales_Afiliados")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Total_Trab_Rurales_NoAfiliados")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("Total_Trabajadores")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EstadoSolicitudId");
 
                     b.HasIndex("SeccionalId");
 
-                    b.ToTable("SolicitudAfiliacionEmpresas");
+                    b.ToTable("SolicitudAfiliacionEmpresas", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.SolicitudAfiliacionEmpresasDetalle", b =>
@@ -2194,7 +2158,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasIndex("SolicitudAfiliacionEmpresasId");
 
-                    b.ToTable("SolicitudAfiliacionEmpresasDetalle");
+                    b.ToTable("SolicitudAfiliacionEmpresasDetalle", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.TipoDocumento", b =>
@@ -2244,7 +2208,7 @@ namespace CleanArchitecture.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TiposDocumentos");
+                    b.ToTable("TiposDocumentos", (string)null);
                 });
 
             modelBuilder.Entity("CleanArchitecture.Domain.Afiliado", b =>
