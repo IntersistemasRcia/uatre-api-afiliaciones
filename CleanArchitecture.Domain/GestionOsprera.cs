@@ -51,4 +51,6 @@ public class GestionOsprera : EntidadAuditable
     [StringLength(10)]
     public string? TipoPrestador { get; set; }
     public string? ObservacionesEstado { get; set; }
+    [StringLength(100)]
+    public string? ObraSocial { get; set; }
 }
