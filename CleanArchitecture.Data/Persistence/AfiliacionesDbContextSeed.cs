@@ -37,6 +37,12 @@ namespace CleanArchitecture.Infrastructure.Persistence
                 context.SeccionalEstados!.AddRange(GetPreconfiguredSeccionalEstados());
                 await context.SaveChangesAsync();
             }
+
+            if (!context.GestionesObraSocial.Any())
+            {
+                context.GestionesObraSocial!.AddRange(GetPreconfiguredGestionesObraSocial());
+                await context.SaveChangesAsync();
+            }
         }
 
         private static IEnumerable<EstadoSolicitud> GetPreconfiguredEstadosSolicitud()
@@ -96,6 +102,18 @@ namespace CleanArchitecture.Infrastructure.Persistence
                 new SeccionalEstado { Descripcion = "BAJA" },
                 new SeccionalEstado { Descripcion = "ABSORBIDA" },
 
+            };
+        }
+
+        private static IEnumerable<GestionObraSocial> GetPreconfiguredGestionesObraSocial()
+        {
+            return new List<GestionObraSocial>
+            {
+                new GestionObraSocial { Nombre = "OSPRERA" },
+                //new GestionObraSocial { Descripcion = "Activo" },
+                //new GestionObraSocial { Descripcion = "No Activo" },
+                //new GestionObraSocial { Descripcion = "Observado" },
+                //new GestionObraSocial { Descripcion = "Rechazado" },
             };
         }
     }

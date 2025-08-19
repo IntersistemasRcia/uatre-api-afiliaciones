@@ -48,7 +48,8 @@ namespace CleanArchitecture.Application.Features.GestionOsprera.Queries
         public string? ConCoberturaOsprera { get; set; }
         public string? TipoPrestador { get; set; }
         public string? ObservacionesEstado { get; set; }
-        public string? ObraSocial { get; set; }
+        public string? GestionObraSocialDescripcion { get; set; }
+        public int GestionObraSocialId { get; set; }
         public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
     }
 }
