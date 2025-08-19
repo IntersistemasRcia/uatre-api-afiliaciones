@@ -123,6 +123,7 @@ public class AfiliacionesDbContext : DbContext
     public DbSet<GestionEstado> GestionesEstado { get; set; }
     public DbSet<GestionSituacion> GestionesSituacion { get; set; }
     public DbSet<GestionAreaOsprera> GestionesAreaOsprera { get; set; }
+    public DbSet<GestionObraSocial> GestionesObraSocial { get; set; }
 
     private void RegistrarAuditoriaDatos(EntityEntry entity, string userId, EntityState entityState)
     {

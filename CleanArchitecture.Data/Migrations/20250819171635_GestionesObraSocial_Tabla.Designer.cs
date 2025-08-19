@@ -4,6 +4,7 @@ using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArchitecture.Infrastructure.Migrations
 {
     [DbContext(typeof(AfiliacionesDbContext))]
-    partial class AfiliacionesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250819171635_GestionesObraSocial_Tabla")]
+    partial class GestionesObraSocial_Tabla
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -940,9 +943,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("GestionObraSocialId")
-                        .HasColumnType("int");
-
                     b.Property<int>("GestionRubroId")
                         .HasColumnType("int");
 
@@ -1020,8 +1020,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.HasIndex("GestionAreaOspreraId");
 
                     b.HasIndex("GestionEstadoId");
-
-                    b.HasIndex("GestionObraSocialId");
 
                     b.HasIndex("GestionRubroId");
 
@@ -2413,12 +2411,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasForeignKey("GestionEstadoId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CleanArchitecture.Domain.GestionObraSocial", "GestionObraSocial")
-                        .WithMany()
-                        .HasForeignKey("GestionObraSocialId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CleanArchitecture.Domain.GestionRubro", "GestionRubro")
                         .WithMany()
                         .HasForeignKey("GestionRubroId")
@@ -2439,8 +2431,6 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.Navigation("GestionAreaOsprera");
 
                     b.Navigation("GestionEstado");
-
-                    b.Navigation("GestionObraSocial");
 
                     b.Navigation("GestionRubro");
 

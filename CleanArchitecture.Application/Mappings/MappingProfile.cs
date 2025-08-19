@@ -45,6 +45,7 @@ using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Command
 using CleanArchitecture.Application.Features.GestionesRubro.Queries;
 using CleanArchitecture.Application.Features.GestionesSubRubro;
 using CleanArchitecture.Application.Models;
+using CleanArchitecture.Application.Features.GestionesObraSocial;
 
 
 namespace CleanArchitecture.Application.Mappings
@@ -137,6 +138,7 @@ namespace CleanArchitecture.Application.Mappings
             CreateMap<GestionEstado, IdDescripcionVm>();
             CreateMap<GestionSituacion, IdDescripcionVm>();
             CreateMap<GestionAreaOsprera, IdDescripcionVm>();
+            CreateMap<GestionObraSocial, GestionObraSocialVm>();
 
             // Requests
             CreateMap<CreateSolicitudAfiliacionEmpresasCommand, SolicitudAfiliacionEmpresas>();
