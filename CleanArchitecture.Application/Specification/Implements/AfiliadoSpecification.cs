@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -28,7 +29,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             if (!query.NroAfiliadoHasta.HasValue) { query.NroAfiliadoHasta = query.NroAfiliado; };
             if (!query.FechaIngresoHasta.HasValue) { query.FechaIngresoHasta = query.FechaIngreso; };
 
-            var todos = query.AmbitoTodos?.Ids.Count == 0 || query.AmbitoTodos == null ? false : true;
+            var todos = query.AmbitoTodos?.Ids.Count == 0 || query.AmbitoTodos == null || query.AmbitoSeccionales?.Ids.Count > 0 || query.AmbitoDelegaciones?.Ids.Count > 0 ? false : true;
             SetCriteria(x => (!query.CUIL.HasValue || x.CUIL == query.CUIL) &&
             (!query.NroAfiliado.HasValue || (x.NroAfiliado >= query.NroAfiliado && x.NroAfiliado <= query.NroAfiliadoHasta)) &&
             (string.IsNullOrEmpty(query.Nombre) || x.Nombre!.Contains(query.Nombre)) &&

@@ -51,6 +51,11 @@ namespace CleanArchitecture.Application.Specification.Implements
             }
         }
 
+        public GestionOspreraSpecification(long cuit) : base(x => x.CUITTitular == cuit)
+        {
+            AddOrderBy(x => x.Id);
+        }
+
         public GestionOspreraSpecification(int pId) : base(x => x.Id == pId)
         {
             //Agrego tablas relacionadas

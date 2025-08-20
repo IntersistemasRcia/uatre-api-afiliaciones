@@ -35,6 +35,10 @@ namespace CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoLis
         public Ambito? AmbitoSeccionalesActivas { get; set; }
         public Ambito? AmbitoSeccionalesDelegacionActivas { get; set; }
 
+        public int? SeccionalId { get; set; }
+        public int? DelegacionId { get; set; }
+
+
         //public string? FilterBy { get; set; }
         //public string? FilterValue { get; set; }
 
