@@ -28,7 +28,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
     {
         request.AmbitoSeccionalesActivas ??= new Ambito();
 
-        var todos = request.AmbitoTodos?.Ids.Count == 0 || request.AmbitoTodos == null ? false : true;
+        var todos = request.AmbitoTodos?.Ids.Count == 0 || request.AmbitoTodos == null || request.AmbitoSeccionales?.Ids.Count > 0 || request.AmbitoDelegaciones?.Ids.Count > 0 ? false : true;
         if (todos == false)
         {
             var validator = new GetAfiliadoListQueryValidator();
@@ -38,15 +38,24 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
                 throw new BadRequestException(result.Errors.Select(x => x.ErrorMessage).ToList().ToJsonString());
             }
 
-            List<string> estadosActiva = new List<string> { "NORMALIZADA", "TRANSITORIA", "SIN COMISION" };            
+            List<string> estadosActiva = new List<string>();
+            if (request.AmbitoTodos?.Ids.Count > 0 || request.AmbitoTodos != null)
+            {
+                estadosActiva.Add("TODOS");
+            }
+            else
+            {
+                estadosActiva.AddRange(new List<string> { "NORMALIZADA", "TRANSITORIA", "SIN COMISION" });
+            }
             //Filtro las seccionales "inactivas"
             if (request.AmbitoSeccionales != null && request.AmbitoSeccionales.Ids.Count > 0)
             {
                 var seccionalesActivas = await _unitOfWork.Repository<Domain.Seccional>().GetAllWithSpecsAsync(new SeccionalConEstadoSpec(request.AmbitoSeccionales, estadosActiva));
 
-                if (seccionalesActivas.Count > 0) {                    
+                if (seccionalesActivas.Count > 0)
+                {
                     request.AmbitoSeccionalesActivas.Ids.AddRange(seccionalesActivas.Select(x => x.Id).ToList());
-                }                    
+                }
             }
             else if (request.AmbitoDelegaciones != null && request.AmbitoDelegaciones.Ids.Count > 0)
             {
@@ -55,7 +64,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
                 if (seccionalesActivas.Count > 0)
                 {
                     request.AmbitoSeccionalesActivas.Ids.AddRange(seccionalesActivas.Select(x => x.Id).ToList());
-                }                    
+                }
             }
         }
         else

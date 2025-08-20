@@ -18,6 +18,7 @@ using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOspr
 using CleanArchitecture.Application.Features.Seccional.Command.Reactivar;
 using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOspreraDarDeBaja;
 using CleanArchitecture.Application.Features.GestionOsprera.Commands.GestionOspreraReactivar;
+using CleanArchitecture.Application.Features.GestionOsprera.Queries.GetByPersona;
 
 namespace CleanArchitecture.API.Controllers;
 
@@ -78,5 +79,14 @@ public class GestionOspreraController : BaseApiController
         var response = await _mediator.Send(request);
 
         return Ok(response);
+    }
+
+    [HttpGet("CUIT")]
+    [ProducesResponseType(typeof(GestionOspreraVm), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(CodeErrorResponse), (int)HttpStatusCode.NotFound)]
+    public async Task<ActionResult<GestionOspreraVm>> GetByCUITAsync([FromQuery] GestionOspreraGetByCUITQuery query)
+    {
+        var gestion = await _mediator.Send(query);
+        return Ok(gestion);
     }
 }
