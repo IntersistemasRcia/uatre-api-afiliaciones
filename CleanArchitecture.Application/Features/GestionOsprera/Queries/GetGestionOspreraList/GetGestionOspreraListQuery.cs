@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Features.Afiliado.Queries;
 using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Application.Models;
 using MediatR;
+using Microsoft.Identity.Client;
 
 namespace CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGestionOspreraList
 {
@@ -17,6 +18,8 @@ namespace CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGesti
         public int? SeccionalId { get; set; }
         public int? GestionEstadoId { get; set; }
         public int? GestionSituacionId { get; set; }
+        public int? GestionRubroId { get; set; }
+        public int? GestionSubRubroId { get; set; }
         public long? CUITTitular { get; set; }
         public string? NombreTitular { get; set; }
         public  string? ApellidoTitular { get; set; }

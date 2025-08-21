@@ -7,7 +7,7 @@ namespace CleanArchitecture.Application.Specification.Implements
     public class GestionOspreraSpecification : BaseSpecification<GestionOsprera>
     {
         public GestionOspreraSpecification(GetGestionOspreraListQuery query) : base()
-        {           
+        {
             //Agrego tablas relacionadas           
             //AgregarIncludes(a => a.Include(e => e.GestionAreaOsprera!));
             //AgregarIncludes(a => a.Include(e => e.GestionEstado!));
@@ -16,7 +16,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             //AgregarIncludes(a => a.Include(e => e.GestionAreaOsprera!));
 
             // Filtros
-           // if (!query.NroAfiliadoHasta.HasValue) { query.NroAfiliadoHasta = query.NroAfiliado; };
+            // if (!query.NroAfiliadoHasta.HasValue) { query.NroAfiliadoHasta = query.NroAfiliado; };
             //if (!query.FechaIngresoHasta.HasValue) { query.FechaIngresoHasta = query.FechaIngreso; };
 
             SetCriteria(x => (!query.CUITTitular.HasValue || x.CUITTitular == query.CUITTitular) &&
@@ -28,15 +28,17 @@ namespace CleanArchitecture.Application.Specification.Implements
             //(string.IsNullOrEmpty(query.Seccional) || x.SeccionalAfiliado!.Descripcion!.Contains(query.Seccional)) &&
             (!query.Fecha.HasValue || (x.Fecha.Value.Date >= query.Fecha.Value.Date)) &&
             (string.IsNullOrEmpty(query.MedioGestion) || x.MedioGestion!.Contains(query.MedioGestion)) &&
-             (!query.GestionEstadoId.HasValue || (x.GestionEstadoId == query.GestionEstadoId)) &&
-             (!query.GestionSituacionId.HasValue || (x.GestionSituacionId == query.GestionSituacionId)) &&
+            (!query.GestionEstadoId.HasValue || (x.GestionEstadoId == query.GestionEstadoId)) &&
+            (!query.GestionSituacionId.HasValue || (x.GestionSituacionId == query.GestionSituacionId)) &&
+            (!query.GestionRubroId.HasValue || (x.GestionRubroId == query.GestionRubroId)) &&
+            (!query.GestionSubRubroId.HasValue || (x.GestionSubRubroId == query.GestionSubRubroId)) &&
 
             // (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
             //(!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId) &&
             //(!query.RefMotivoBajaId.HasValue || x.RefMotivoBajaId == query.RefMotivoBajaId) &&
 
             ((!query.CreatedDateDesde.HasValue || !query.CreatedDateHasta.HasValue) || (x.CreatedDate.Value.Date >= query.CreatedDateDesde && x.CreatedDate.Value.Date <= query.CreatedDateHasta)) &&
-            ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.SeccionalId)) 
+            ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.SeccionalId))
             //((query.AmbitoTodos != null || query.AmbitoDelegaciones == null) || query.AmbitoDelegaciones.Ids.Contains(x.SeccionalAfiliado.RefDelegacionId))
             //((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.RefLocalidad.ProvinciaId))
             );
@@ -47,7 +49,7 @@ namespace CleanArchitecture.Application.Specification.Implements
             //Ordenamiento            
             if (!string.IsNullOrEmpty(query.Sort))
             {
-                AddOrder(query.Sort);                
+                AddOrder(query.Sort);
             }
         }
 
@@ -63,14 +65,14 @@ namespace CleanArchitecture.Application.Specification.Implements
             //AgregarIncludes(a => a.Include(e => e.SeccionalAfiliado!));
             //AgregarIncludes(a => a.Include(e => e.Sexo!));
             //AgregarIncludes(a => a.Include(e => e.Actividad!));
-           // AgregarIncludes(a => a.Include(e => e.Puesto!));
+            // AgregarIncludes(a => a.Include(e => e.Puesto!));
             //AgregarIncludes(a => a.Include(e => e.RefLocalidad!));
-           // AgregarIncludes(a => a.Include(e => e.RefLocalidad!.Provincia!));
-           // AgregarIncludes(a => a.Include(e => e.Nacionalidad!));
-           // AgregarIncludes(a => a.Include(e => e.EstadoCivil!));
-           // AgregarIncludes(a => a.Include(e => e.TipoDocumento!));
+            // AgregarIncludes(a => a.Include(e => e.RefLocalidad!.Provincia!));
+            // AgregarIncludes(a => a.Include(e => e.Nacionalidad!));
+            // AgregarIncludes(a => a.Include(e => e.EstadoCivil!));
+            // AgregarIncludes(a => a.Include(e => e.TipoDocumento!));
         }
 
-        
+
     }
 }
