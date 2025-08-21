@@ -4,5 +4,9 @@ namespace CleanArchitecture.Application.Features.GestionesSubRubro.Queries.Gesti
 
 public class GestionesSubRubroByRubroQuery : IRequest<List<GestionSubRubroVm>>
 {
+    public GestionesSubRubroByRubroQuery(int gestionRubroId)
+    {
+        GestionRubroId = gestionRubroId;
+    }
     public int GestionRubroId { get; set; }
 }
