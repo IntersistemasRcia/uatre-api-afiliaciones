@@ -36,6 +36,9 @@ public class ResuelveFormularioAfiliacionCommandHandler : IRequestHandler<Resuel
             if (request.DeletedObs == "" || request.DeletedObs == null)
             {
                 patchModel.Replace(nameof(Domain.AfiliadoFormularioAfiliacion.AfiliadoIdAsignado), request.AfiliadoIdAsignado);
+                       if (request.AfiliadoIdAsignado > 0)
+                    patchModel.Replace(nameof(Domain.AfiliadoFormularioAfiliacion.FechaIncorporacion), DateTime.Today);
+                    
                 unitOfWork.Repository<Domain.AfiliadoFormularioAfiliacion>().PatchAsync(entidad, patchModel);
             }
             else
@@ -43,8 +46,8 @@ public class ResuelveFormularioAfiliacionCommandHandler : IRequestHandler<Resuel
                 patchModel.Replace(nameof(Domain.AfiliadoFormularioAfiliacion.DeletedObs), request.DeletedObs);
                 unitOfWork.Repository<Domain.AfiliadoFormularioAfiliacion>().DarDeBajaAsync(entidad, patchModel);
             }
-          
-            
+
+
             return await unitOfWork.CommitAsync();
         }
         catch (Exception)
