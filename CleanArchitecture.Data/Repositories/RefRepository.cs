@@ -51,7 +51,7 @@ public class RefRepository : IRefRepository
                 .FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value ?? "Sin Datos";
             item.GUID = Guid.NewGuid();
         }
-        await db.ExecuteAsync("INSERT INTO DocumentacionEntidades (EntidadTipo, EntidadId, RefTipoDocumentacionId, Archivo, Observaciones, CreatedDate, CreatedBy, NombreArchivo, GUID)" + 
+        await db.ExecuteAsync("INSERT INTO DocumentacionEntidades (EntidadTipo, EntidadId, RefTipoDocumentacionId, Archivo, Observaciones, CreatedDate, CreatedBy, NombreArchivo, GUID)" +
             " VALUES (@EntidadTipo, @EntidadId, @RefTipoDocumentacionId, @Archivo, @Observaciones, @CreatedDate, @CreatedBy, @NombreArchivo, @GUID)", documentacionEntidad);
     }
 
@@ -80,7 +80,7 @@ public class RefRepository : IRefRepository
         try
         {
             await db
-                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE EntidadTipo = @TipoEntidad AND EntidadId = @EntidadId", new { TipoEntidad = tipoEntidad, EntidadId = idEntidad });            
+                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE EntidadTipo = @TipoEntidad AND EntidadId = @EntidadId", new { TipoEntidad = tipoEntidad, EntidadId = idEntidad });
         }
         catch (Exception ex)
         {
@@ -93,11 +93,25 @@ public class RefRepository : IRefRepository
         try
         {
             await db
-                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE Id = @Id", new { Id = id });            
+                .ExecuteAsync("DELETE FROM DocumentacionEntidades WHERE Id = @Id", new { Id = id });
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message, ex.InnerException);
         }
+    }
+
+    public async Task<Empresa?> GetEmpresaByCUIT(string cuit)
+    {
+
+        var onlyDigits = new string((cuit ?? string.Empty).Where(char.IsDigit).ToArray());
+        if (!long.TryParse(onlyDigits, out var cuitNum)) return null;
+
+        const string sql = @"
+        SELECT Id, CUIT, RazonSocial
+        FROM Empresas
+        WHERE CONVERT(BIGINT, CUIT) = @CUIT";
+
+        return await db.QueryFirstOrDefaultAsync<Empresa>(sql, new { CUIT = cuitNum });
     }
 }

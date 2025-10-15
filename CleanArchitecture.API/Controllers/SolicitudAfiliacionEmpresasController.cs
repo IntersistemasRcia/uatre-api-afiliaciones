@@ -17,6 +17,8 @@ using CleanArchitecture.Application.Models;
 using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresasDetalle.Queries.GetByEmpresaIdPaginationSpecs;
 using CleanArchitecture.Application.Features.Afiliado.Commands.ResolverSolicitudAfiliado;
 using CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Commands.ResolverSolicitud;
+using CleanArchitecture.API.Contracts.Requests.SolicitudAfiliacionEmpresas;
+using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -82,6 +84,28 @@ namespace CleanArchitecture.API.Controllers
         {
             var list = await _mediator.Send(query);
 
+            return Ok(list);
+        }
+
+        [HttpGet("GetSolicitudAfiliacionEmpresasSpecs")]
+        [ProducesResponseType(typeof(Pagination<SolicitudAfiliacionEmpresasVm>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Pagination<SolicitudAfiliacionEmpresasVm>>> GetSolicitudAfiliacionEmpresasSpecsGet(
+            [FromQuery] GetSolicitudAfiliacionEmpresasFilterDto filter)
+        {
+            var query = new GetSolicitudAfiliacionEmpresasListSpecsQuery
+            {
+                EstadoSolicitudId = filter.EstadoSolicitudId,
+                SeccionalId = filter.SeccionalId,
+                EmpresaCUIT = filter.EmpresaCUIT,
+                FechaDesde = filter.FechaDesde,
+                FechaHasta = filter.FechaHasta,
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize,
+                Sort = filter.Sort,
+                AmbitoTodos = new Ambito()
+            };
+
+            var list = await _mediator.Send(query);
             return Ok(list);
         }
 

@@ -10,8 +10,8 @@ namespace CleanArchitecture.Application.Features.SolicitudAfiliacionEmpresas.Que
 public class GetSolicitudAfiliacionEmpresasListSpecsQuery : IRequest<Pagination<SolicitudAfiliacionEmpresasVm>>
 {
     private int _pageIndex { get; set; } = 1;
-    private const int maxPageSize = 50;
-    private int _pageSize = 50;
+    private const int maxPageSize = 500;
+    private int _pageSize = 500;
 
     public DateTime? Fecha { get; set; }
     public string? Seccional { get; set; }
@@ -40,6 +40,8 @@ public class GetSolicitudAfiliacionEmpresasListSpecsQuery : IRequest<Pagination<
     public Ambito? AmbitoDelegaciones { get; set; }
     public Ambito? AmbitoProvincias { get; set; }
     public bool? VerDetalles { get; set; } = true;
+    public DateTime? FechaDesde { get; set; }
+    public DateTime? FechaHasta { get; set; }
 
     public int PageIndex
     {
