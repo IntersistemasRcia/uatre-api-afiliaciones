@@ -6,6 +6,8 @@ public interface IRefRepository
 {
     Task<Empresa?> GetEmpresaById(int id);
 
+    Task<Empresa?> GetEmpresaByCUIT(string cuit);
+
     Task<RefDelegacion?> GetDelegacionById(int id);
 
     Task<RefMotivosBaja?> GetRefMotivoBajaById(int id);

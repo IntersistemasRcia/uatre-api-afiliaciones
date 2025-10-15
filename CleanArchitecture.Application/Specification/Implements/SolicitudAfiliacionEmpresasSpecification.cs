@@ -16,6 +16,8 @@ namespace CleanArchitecture.Application.Specification.Implements
                 (!query.EstadoSolicitudId.HasValue || x.EstadoSolicitudId == query.EstadoSolicitudId) &&
                 (!query.EmpresaId.HasValue || x.EmpresaId == query.EmpresaId) &&
                 (x.DeletedDate == null) &&
+                (!query.FechaDesde.HasValue || x.Fecha >= query.FechaDesde.Value) &&
+                (!query.FechaHasta.HasValue || x.Fecha <= query.FechaHasta.Value) &&
                 ((query.AmbitoTodos != null || query.AmbitoSeccionales == null) || query.AmbitoSeccionales.Ids.Contains(x.SeccionalId)) &&
                 ((query.AmbitoTodos != null || query.AmbitoDelegaciones == null) || query.AmbitoDelegaciones.Ids.Contains(x.Seccional.RefDelegacionId)) &&
                 ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.Seccional.RefLocalidades.ProvinciaId))
@@ -26,7 +28,7 @@ namespace CleanArchitecture.Application.Specification.Implements
                 AgregarIncludes(x => x.Include(e => e.SolicitudAfiliacionEmpresasDetalle!));
             }
 
-            
+
             AgregarIncludes(x => x.Include(e => e.Seccional!));
             AgregarIncludes(x => x.Include(e => e.EstadoSolicitud!));
 
@@ -72,6 +74,10 @@ namespace CleanArchitecture.Application.Specification.Implements
                     default:
                         break;
                 }
+            }
+            else
+            {
+                AddOrderByDescending(x => x.Id);
             }
 
             //Paginacion

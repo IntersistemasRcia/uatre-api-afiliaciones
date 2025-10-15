@@ -32,6 +32,15 @@ public class GetSolicitudAfiliacionEmpresasListSpecsQueryHandler : IRequestHandl
                 throw new BadRequestException(result.Errors.Select(x => x.ErrorMessage).ToList().ToJsonString());
             }
         }
+        if (!string.IsNullOrWhiteSpace(request.EmpresaCUIT))
+        {
+            var cuit = new string(request.EmpresaCUIT.Where(char.IsDigit).ToArray());
+                   if (!string.IsNullOrWhiteSpace(cuit))
+                       {
+                var empresaByCuit = await _unitOfWork.RefRepository.GetEmpresaByCUIT(cuit);
+                request.EmpresaId = empresaByCuit?.Id;
+                       }
+        }
 
         var spec = new SolicitudAfiliacionEmpresasSpecification(request);
         var list = await _unitOfWork.Repository<Domain.SolicitudAfiliacionEmpresas>().GetAllWithSpecsAsync(spec);
