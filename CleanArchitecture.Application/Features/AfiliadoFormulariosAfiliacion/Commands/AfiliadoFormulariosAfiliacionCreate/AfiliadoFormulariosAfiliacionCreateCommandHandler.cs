@@ -28,7 +28,8 @@ internal class AfiliadoFormulariosAfiliacionCreateCommandHandler : IRequestHandl
         {
             await unitOfWork.Repository<AfiliadoFormularioAfiliacion>().AddAsync(entidad);
 
-            return await unitOfWork.CommitAsync();
+            await unitOfWork.CommitAsync();
+             return entidad.Id;
         }
         catch (Exception)
         {
