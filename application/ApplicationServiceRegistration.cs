@@ -1,7 +1,6 @@
 ﻿using CleanArchitecture.Application.Features.RefLocalidad.Command.Create;
-using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
+using CleanArchitecture.Application.Mappings;
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
@@ -15,7 +14,7 @@ namespace CleanArchitecture.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             //Servicios
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
             services.AddValidatorsFromAssemblyContaining<CreateRefLocalidadCommandValidator>(includeInternalTypes: true);
             services.AddMediatR(r => r.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
