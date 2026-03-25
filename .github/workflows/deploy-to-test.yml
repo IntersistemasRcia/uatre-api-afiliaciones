@@ -1,0 +1,68 @@
+name: Deploy to Test
+
+on:
+  push:
+    branches:
+      - release/**
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: [self-hosted, windows, uatre-api-test]
+    env:
+      DOTNET_VERSION: '10.0.x'
+      BUILD_CONFIGURATION: 'Release'
+      DOTNET_PROJECT: 'API/api.csproj'
+      BACKUP_SUBFOLDER: 'releases'
+      KEEP_BACKUPS: '5'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          install-dir: ${{ runner.temp }}/dotnet
+      
+      - name: Restore
+        run: dotnet restore ${{ env.DOTNET_PROJECT }}
+
+      - name: Build
+        run: dotnet build ${{ env.DOTNET_PROJECT }} --no-restore --configuration ${{ env.BUILD_CONFIGURATION }}
+
+      - name: Publish
+        run: dotnet publish ${{ env.DOTNET_PROJECT }} --no-restore --configuration ${{ env.BUILD_CONFIGURATION }} -o ${{ github.workspace }}/publish /p:DebugType=portable /p:DebugSymbols=true
+
+      - name: Debug publish contents
+        run: |
+          echo "## Environment"
+          echo "GITHUB_WORKSPACE=${GITHUB_WORKSPACE}"
+          echo "PWD=$(pwd)"
+          echo "Publish folder: ${{ github.workspace }}/publish"
+          powershell -Command "Get-ChildItem -Path '${{ github.workspace }}\publish' -Recurse -Force | Select-Object FullName, Length | Format-Table -AutoSize"
+
+      - name: Deploy to IIS (self-hosted runner)
+        shell: pwsh
+        env:
+          SITE_NAME: ${{ secrets.SITE_NAME }}
+          SITE_PATH: ${{ secrets.SITE_PATH }}
+          APP_POOL: ${{ secrets.APP_POOL }}
+          BACKUP_DIR: ${{ secrets.BACKUP_DIR }}
+        run: |
+          # Use explicit workspace publish path (expanded at workflow runtime)
+          $publishDir = '${{ github.workspace }}\publish'
+          try {
+            $publishDir = (Resolve-Path -Path $publishDir -ErrorAction Stop).ProviderPath
+          } catch {
+            Write-Host "ERROR: publish folder not found at $publishDir"
+            exit 1
+          }
+
+          $sitePath = $env:SITE_PATH
+          $siteName = $env:SITE_NAME
+          $appPool = $env:APP_POOL
+          $backupDir = if ($env:BACKUP_DIR) { $env:BACKUP_DIR } else { Join-Path $sitePath $env:BACKUP_SUBFOLDER }
+          ./scripts/deploy-iis.ps1 -PublishDir $publishDir -SitePath $sitePath -SiteName $siteName -AppPool $appPool -BackupDir $backupDir -KeepBackups $env:KEEP_BACKUPS
