@@ -36,6 +36,13 @@ public class Seccional : EntidadAuditable
 
     public float Longitud { get; set; }
 
+    public TimeOnly? HorarioAtencion1Desde { get; set; }
+    public TimeOnly? HorarioAtencion1Hasta { get; set; }
+    public TimeOnly? HorarioAtencion2Desde { get; set; }
+    public TimeOnly? HorarioAtencion2Hasta { get; set; }
+    public string? Telefono { get; set; }
+    public string? TelefonoSecretarioGeneral { get; set; }
+
     public ICollection<SeccionalLocalidad>? SeccionalLocalidad { get; set; }
 
     public ICollection<SeccionalContacto>? SeccionalContacto { get; set; }
