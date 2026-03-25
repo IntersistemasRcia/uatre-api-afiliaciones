@@ -5,7 +5,6 @@ using MediatR;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries.GetSeccionalLocalidadBySeccionalId;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateSeccionalLocalidad;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.DarDeBajaSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.ReactivarSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Queries.GetSeccionalLocalidadByRefLocalidadId;
@@ -13,12 +12,6 @@ using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.CreateSe
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.UpdateRecordSeccionalLocalidad;
 using CleanArchitecture.Application.Features.SeccionalAutoridad.Command.CreateSeccionalAutoridad;
 using CleanArchitecture.Application.Features.SeccionalLocalidad.Command.AbsorbeSeccionalLocalidad;
-using CleanArchitecture.Application.Specification.Implements;
-using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries.GetBySpecs;
-using CleanArchitecture.Application.Features.SeccionalAutoridad.Queries;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using Azure.Core;
-using CleanArchitecture.Application.Features.Afiliado.Commands.CreateAfiliado;
 using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
