@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
+﻿using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

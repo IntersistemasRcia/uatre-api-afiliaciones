@@ -1,9 +1,6 @@
-﻿using CleanArchitecture.Application.Features.GestionOsprera.Queries;
-using CleanArchitecture.Application.Features.Afiliado.Queries;
-using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
+﻿using CleanArchitecture.Application.Features.Seccional.Queries.GetSeccionalesListSpecs;
 using CleanArchitecture.Application.Models;
 using MediatR;
-using Microsoft.Identity.Client;
 
 namespace CleanArchitecture.Application.Features.GestionOsprera.Queries.GetGestionOspreraList
 {
