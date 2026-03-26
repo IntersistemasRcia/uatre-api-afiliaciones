@@ -16,6 +16,13 @@ namespace CleanArchitecture.Application.Features.Seccional.Command.Create
         public float Latitud { get; set; }
         public float Longitud { get; set; }
 
+        public TimeOnly? HorarioAtencion1Desde { get; set; }
+        public TimeOnly? HorarioAtencion1Hasta { get; set; }
+        public TimeOnly? HorarioAtencion2Desde { get; set; }
+        public TimeOnly? HorarioAtencion2Hasta { get; set; }
+        public string? Telefono { get; set; }
+        public string? TelefonoSecretarioGeneral { get; set; }
+
         //public IReadOnlyCollection<CreateSeccionalContactoCommand>? Contactos { get; set; }
         public ICollection<CreateSeccionalAutoridad>? SeccionalAutoridades { get; set; }
         public ICollection<CreateSeccionalLocalidad>? SeccionalLocalidad { get; set; }
