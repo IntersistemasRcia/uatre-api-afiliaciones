@@ -18,6 +18,14 @@ public class UpdateSeccionalCommand : IRequest<int>
     public string? Email { get; set; }
     public float Latitud { get; set; }
     public float Longitud { get; set; }
+
+    public TimeOnly? HorarioAtencion1Desde { get; set; }
+    public TimeOnly? HorarioAtencion1Hasta { get; set; }
+    public TimeOnly? HorarioAtencion2Desde { get; set; }
+    public TimeOnly? HorarioAtencion2Hasta { get; set; }
+    public string? Telefono { get; set; }
+    public string? TelefonoSecretarioGeneral { get; set; }
+
     public ICollection<CreateSeccionalAutoridad>? SeccionalAutoridades { get; set; }
     public ICollection<CreateSeccionalLocalidad>? SeccionalLocalidad { get; set; }
     public ICollection<DocumentacionEntidad>? Documentacion { get; set; }
