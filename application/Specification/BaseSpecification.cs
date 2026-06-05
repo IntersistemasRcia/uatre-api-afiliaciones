@@ -29,7 +29,7 @@ public class BaseSpecification<T> : ISpecification<T>
         Includes.Add(includeExpression);
     }
 
-    public List<ISpecification<T>.OrderDetails> Order { get; set; }
+    public List<ISpecification<T>.OrderDetails> Order { get; set; } = new();
 
     public ISet<ISpecification<T>.OrderDetails> OrderSet { get; set; }
 
