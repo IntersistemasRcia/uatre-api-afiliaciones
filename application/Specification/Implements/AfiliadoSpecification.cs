@@ -1,8 +1,11 @@
-﻿using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
+﻿using CleanArchitecture.Application.Contracts.Specification;
+using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Net.Http.Headers;
 
 namespace CleanArchitecture.Application.Specification.Implements
 {
@@ -49,14 +52,14 @@ namespace CleanArchitecture.Application.Specification.Implements
             ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.RefLocalidad.ProvinciaId))
             );
 
-            //Paginacion
-            ApplyPaging(query.PageSize * (query.PageIndex - 1), query.PageSize);
-
             //Ordenamiento            
             if (!string.IsNullOrEmpty(query.Sort))
             {
                 AddOrder(query.Sort);                
             }
+
+            //Paginacion
+            ApplyPaging(query.PageSize * (query.PageIndex - 1), query.PageSize);
         }
 
         public AfiliadoSpecification(int pId) : base(x => x.Id == pId)

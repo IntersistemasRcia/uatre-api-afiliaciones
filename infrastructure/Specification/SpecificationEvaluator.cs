@@ -25,16 +25,34 @@ namespace CleanArchitecture.Infrastructure.Specification
                 {
                     if (i == 0)
                     {
-                        orderedQuery = spec.Order[i].descending ? inputQuery.OrderByDescending(spec.Order[i].Order) : inputQuery.OrderBy(spec.Order[i].Order);
+                        orderedQuery = spec.Order[i].Descending ? inputQuery.OrderByDescending(spec.Order[i].Order) : inputQuery.OrderBy(spec.Order[i].Order);
                     }
                     else
                     {
-                        orderedQuery = spec.Order[i].descending ? orderedQuery!.ThenByDescending(spec.Order[i].Order) : orderedQuery!.ThenBy(spec.Order[i].Order);
+                        orderedQuery = spec.Order[i].Descending ? orderedQuery!.ThenByDescending(spec.Order[i].Order) : orderedQuery!.ThenBy(spec.Order[i].Order);
                     }
                     Console.WriteLine(spec.Order[i]);
                 }
                 inputQuery = orderedQuery ?? inputQuery;
-            }            
+            }
+
+            if (spec.OrderSet != null)
+            {
+                bool isOrdered = false;
+                foreach (ISpecification<T>.OrderDetails order in spec.OrderSet)
+                {
+                    if (isOrdered)
+                    {
+                        IOrderedQueryable<T> ordered = inputQuery as IOrderedQueryable<T>;
+                        inputQuery = (order.Descending) ? ordered.ThenByDescending(order.Order) : ordered.ThenBy(order.Order);
+                    }
+                    else
+                    {
+                        inputQuery = (order.Descending) ? inputQuery.OrderByDescending(order.Order) : inputQuery.OrderBy(order.Order);
+                        isOrdered = true;
+                    }
+                }
+            }
 
             //Paginacion opcional
             if (spec.IsPagingEnabled)
