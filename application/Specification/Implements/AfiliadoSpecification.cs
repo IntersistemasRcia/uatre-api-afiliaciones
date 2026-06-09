@@ -1,8 +1,11 @@
-﻿using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
+﻿using CleanArchitecture.Application.Contracts.Specification;
+using CleanArchitecture.Application.Features.Afiliado.Queries.GetAfiliadoList;
 using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Net.Http.Headers;
 
 namespace CleanArchitecture.Application.Specification.Implements
 {
@@ -49,14 +52,44 @@ namespace CleanArchitecture.Application.Specification.Implements
             ((query.AmbitoTodos != null || query.AmbitoProvincias == null) || query.AmbitoProvincias.Ids.Contains(x.RefLocalidad.ProvinciaId))
             );
 
-            //Paginacion
-            ApplyPaging(query.PageSize * (query.PageIndex - 1), query.PageSize);
-
             //Ordenamiento            
             if (!string.IsNullOrEmpty(query.Sort))
             {
-                AddOrder(query.Sort);                
+                var orderSet = new HashSet<ISpecification<Afiliado>.OrderDetails>();
+                var fields = query.Sort.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                foreach (var field in fields)
+                {
+                    var trimmed = field.Trim();
+                    bool descending = trimmed.EndsWith("Desc", StringComparison.Ordinal);
+                    var property = descending ? trimmed.Substring(0, trimmed.Length - "Desc".Length) : trimmed;
+
+                    Expression<Func<Afiliado, object>> expr = property switch
+                    {
+                        "seccional" => x => x.Seccional!.Descripcion,
+                        "CUIL" => x => x.CUIL,
+                        "documento" => x => x.Documento,
+                        "nombre" => x => x.Nombre,
+                        "fechaIngreso" => x => x.FechaIngreso,
+                        "nroAfiliado" => x => x.NroAfiliado,
+                        _ => x => x.Id // Ordenamiento por defecto si el campo no coincide
+                    };
+
+                    if (expr != null)
+                    {
+                        orderSet.Add(new ISpecification<Afiliado>.OrderDetails
+                        {
+                            Order = expr,
+                            Descending = descending
+                        });
+                    }
+                }
+
+                if (orderSet.Count > 0)
+                    OrderSet = orderSet;
             }
+
+            //Paginacion
+            ApplyPaging(query.PageSize * (query.PageIndex - 1), query.PageSize);
         }
 
         public AfiliadoSpecification(int pId) : base(x => x.Id == pId)

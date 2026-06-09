@@ -39,7 +39,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
             }
 
             List<string> estadosActiva = new List<string>();
-            if (request.AmbitoTodos?.Ids.Count > 0 || request.AmbitoTodos != null)
+            if (request.AmbitoTodos?.Ids.Count > 0 || request.AmbitoTodos != null || (request.IgnorarEstadoSeccional.HasValue && request.IgnorarEstadoSeccional.Value == true))
             {
                 estadosActiva.Add("TODOS");
             }
@@ -84,7 +84,7 @@ public class GetAfiliadoListQueryHandler : IRequestHandler<GetAfiliadoListQuery,
             }
         }
 
-            var spec = new AfiliadoSpecification(request);
+        var spec = new AfiliadoSpecification(request);
         var padronList = await _unitOfWork.Repository<Domain.Afiliado>().GetAllWithSpecsAsync(spec);
         //var padronListConMarcaAutoridad = await _unitOfWork.AfiliadoRepository.VerificarAutoridadSeccional(padronList);
 
