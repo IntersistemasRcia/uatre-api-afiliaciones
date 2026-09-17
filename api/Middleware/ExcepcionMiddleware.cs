@@ -24,7 +24,7 @@ public class ExcepcionMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         try
-        {            
+        {
             await next(context);
         }
         catch (Exception ex)
@@ -39,18 +39,22 @@ public class ExcepcionMiddleware
             {
                 case NotFoundException notFoundException:
                     statusCode = (int)HttpStatusCode.NotFound;
-
                     break;
 
                 case RequestValidationException validationException:
                     statusCode = (int)HttpStatusCode.BadRequest;
                     var validationJson = JsonConvert.SerializeObject(validationException.Errors);
                     result = JsonConvert.SerializeObject(new CodeErrorException(statusCode, ex.Message, validationJson));
-
                     break;
 
                 case BadRequestException badRequestException:
                     statusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+
+                case ConflictException conflictException:
+                    statusCode = (int)HttpStatusCode.Conflict;
+                    var details = JsonConvert.SerializeObject(new { conflictException.Code, conflictException.Field });
+                    result = JsonConvert.SerializeObject(new CodeErrorException(statusCode, conflictException.Message, details));
                     break;
 
                 default:
@@ -66,5 +70,5 @@ public class ExcepcionMiddleware
 
             await context.Response.WriteAsync(result);
         }
-    }    
+    }
 }
