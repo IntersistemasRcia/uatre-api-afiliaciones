@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Domain.Commom;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Data;
 
 namespace CleanArchitecture.Application.Contracts.Persistence
 {
@@ -16,6 +17,7 @@ namespace CleanArchitecture.Application.Contracts.Persistence
         Task<int> CommitAsync();
 
         ISQLConnection UatreAfiliaciones { get; }
-        Task<IDbContextTransaction> BeginTransactionAsync();
+        // Permite solicitar un nivel de aislamiento; la implementación adapta a la API del DbContext
+        Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
     }
 }
