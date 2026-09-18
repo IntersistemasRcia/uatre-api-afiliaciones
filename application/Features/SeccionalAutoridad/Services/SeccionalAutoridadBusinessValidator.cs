@@ -21,7 +21,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
             if (entidad.FechaVigenciaDesde.HasValue && entidad.FechaVigenciaHasta.HasValue &&
                 entidad.FechaVigenciaDesde.Value.Date > entidad.FechaVigenciaHasta.Value.Date)
             {
-                throw new BadRequestException("La FechaVigenciaDesde debe ser anterior o igual a FechaVigenciaHasta.");
+                throw new BadRequestException("La Fecha de Vigencia Desde debe ser menor o igual que la Fecha de Vigencia Hasta.");
             }
 
             // Validar existencia de Seccional y Afiliado usando el repositorio genérico
@@ -41,8 +41,8 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
             var start = entidad.FechaVigenciaDesde?.Date ?? DateTime.MinValue.Date;
             var end = entidad.FechaVigenciaHasta?.Date ?? DateTime.MaxValue.Date;
 
-            // Obtener autoridades existentes para la seccional (solo activos)
-            var existingAuthorities = await unitOfWork.SeccionalAutoridadRepository.GetSeccionalAutoridadesBySeccional(entidad.SeccionalId, soloVigentes: false, soloActivos: true);
+            // Obtener autoridades existentes para la seccional (incluye históricas y dadas de baja)
+            var existingAuthorities = await unitOfWork.SeccionalAutoridadRepository.GetSeccionalAutoridadesBySeccional(entidad.SeccionalId, soloVigentes: false, soloActivos: false);
 
             // Excluir el id si corresponde (Update)
             var authorities = existingAuthorities.AsEnumerable();
@@ -51,33 +51,62 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
                 authorities = authorities.Where(x => x.Id != excludeId.Value);
             }
 
-            // 2. Conflicto por mismo cargo (SeccionalId + RefCargosId) con solapamiento
-            var cargoConflict = authorities.Any(x =>
-                x.RefCargosId == entidad.RefCargosId &&
-                start <= (x.FechaVigenciaHasta ?? DateTime.MaxValue) &&
-                end >= (x.FechaVigenciaDesde ?? DateTime.MinValue));
+            // ===== Nueva condición solicitada (INCLUSIVA) para autoridades anteriores dadas de baja =====
+            // Aplicar sólo cuando:
+            // - autoridad.DeletedDate.HasValue == true
+            // - misma SeccionalId y mismo RefCargosId (la consulta ya filtra por seccional)
+            // - no es el mismo Id (ya excluido)
+            if (entidad.FechaVigenciaDesde.HasValue)
+            {
+                var deletedConflicts = authorities
+                    .Where(x => x.RefCargosId == entidad.RefCargosId && x.DeletedDate.HasValue);
 
-            // 6. Regla de reemplazo: no permitir igualdad de fechas (touching) para mismo cargo
+                foreach (var autoridad in deletedConflicts)
+                {
+                    // La regla ahora es inclusiva: nueva.FechaVigenciaDesde.Date >= autoridad.DeletedDate.Value.Date
+                    if (entidad.FechaVigenciaDesde.Value.Date < autoridad.DeletedDate.Value.Date)
+                    {
+                        throw new ConflictException(
+                            "SECCIONAL_AUTORIDAD_CARGO_DELETED_DATE_CONFLICT",
+                            "La Fecha de Vigencia Desde debe ser igual o posterior a la Fecha de Baja de la autoridad anterior.",
+                            "FechaVigenciaDesde"
+                        );
+                    }
+                }
+            }
+            // =========================================================================================
+
+            // 2. Conflicto por mismo cargo (SeccionalId + RefCargosId) con solapamiento (considera autoridades activas e históricas con fechas)
+            var cargoConflict = authorities
+                .Where(x => x.RefCargosId == entidad.RefCargosId && x.DeletedDate == null) // aquí consideramos solo los activos para solapamiento normal
+                .Any(x =>
+                    start <= (x.FechaVigenciaHasta ?? DateTime.MaxValue.Date) &&
+                    end >= (x.FechaVigenciaDesde ?? DateTime.MinValue.Date)
+                );
+
+            // 6. Regla de reemplazo: no permitir igualdad de fechas (touching) para mismo cargo (autoridades activas)
             var touchingExisting = false;
             if (entidad.FechaVigenciaDesde.HasValue)
             {
-                touchingExisting = authorities.Any(x =>
-                    x.RefCargosId == entidad.RefCargosId &&
-                    x.FechaVigenciaHasta.HasValue &&
-                    x.FechaVigenciaHasta.Value.Date == entidad.FechaVigenciaDesde.Value.Date);
+                touchingExisting = authorities
+                    .Where(x => x.RefCargosId == entidad.RefCargosId && x.DeletedDate == null && x.FechaVigenciaHasta.HasValue)
+                    .Any(x => x.FechaVigenciaHasta.Value.Date == entidad.FechaVigenciaDesde.Value.Date);
             }
 
-            // 3. Conflicto por mismo afiliado (SeccionalId + AfiliadoId) con solapamiento
-            var afiliadoConflict = authorities.Any(x =>
-                x.AfiliadoId == entidad.AfiliadoId &&
-                start <= (x.FechaVigenciaHasta ?? DateTime.MaxValue) &&
-                end >= (x.FechaVigenciaDesde ?? DateTime.MinValue));
+            // 3. Conflicto por mismo afiliado (SeccionalId + AfiliadoId) con solapamiento (solo autoridades activas)
+            var afiliadoConflict = authorities
+                .Where(x => x.DeletedDate == null)
+                .Any(x =>
+                    x.AfiliadoId == entidad.AfiliadoId &&
+                    start <= (x.FechaVigenciaHasta ?? DateTime.MaxValue.Date) &&
+                    end >= (x.FechaVigenciaDesde ?? DateTime.MinValue.Date)
+                );
 
             if (isReactivation)
             {
                 if (cargoConflict || afiliadoConflict)
                 {
-                    throw new ConflictException("SECCIONAL_AUTORIDAD_CONFLICT",
+                    throw new ConflictException("SECCIONAL_AUTORIDAD_REACTIVATION_CONFLICT",
                         "No se puede reactivar la autoridad porque su período se solapa con otra autoridad activa.");
                 }
             }
@@ -85,21 +114,21 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
             {
                 if (cargoConflict)
                 {
-                    throw new ConflictException("SECCIONAL_AUTORIDAD_CONFLICT",
-                        "No se puede ingresar un cargo que ya se encuentra registrado con vigencia y activo.",
+                    throw new ConflictException("SECCIONAL_AUTORIDAD_CARGO_DATE_CONFLICT",
+                        "El cargo ya está ocupado durante el período de vigencia indicado.",
                         "RefCargosId");
                 }
 
                 if (touchingExisting)
                 {
-                    throw new ConflictException("SECCIONAL_AUTORIDAD_CONFLICT",
+                    throw new ConflictException("SECCIONAL_AUTORIDAD_CARGO_DATE_CONFLICT",
                         "La nueva FechaVigenciaDesde debe ser posterior a la FechaVigenciaHasta de la autoridad anterior.",
                         "FechaVigenciaDesde");
                 }
 
                 if (afiliadoConflict)
                 {
-                    throw new ConflictException("SECCIONAL_AUTORIDAD_CONFLICT",
+                    throw new ConflictException("SECCIONAL_AUTORIDAD_AFILIADO_DATE_CONFLICT",
                         "El afiliado ya posee otra autoridad durante el período de vigencia indicado.",
                         "AfiliadoId");
                 }
