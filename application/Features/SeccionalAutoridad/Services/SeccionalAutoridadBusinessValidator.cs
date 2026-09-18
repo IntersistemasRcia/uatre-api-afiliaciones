@@ -86,7 +86,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
                 if (cargoConflict)
                 {
                     throw new ConflictException("SECCIONAL_AUTORIDAD_CONFLICT",
-                        "El cargo ya está ocupado durante el período de vigencia indicado.",
+                        "No se puede ingresar un cargo que ya se encuentra registrado con vigencia y activo.",
                         "RefCargosId");
                 }
 
