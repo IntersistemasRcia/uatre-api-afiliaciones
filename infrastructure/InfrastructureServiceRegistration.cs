@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Dapper;
+using CleanArchitecture.Infrastructure.TypeHandlers; // <-- añadido
+using System;
 
 namespace CleanArchitecture.Infrastructure
 {
@@ -48,17 +51,9 @@ namespace CleanArchitecture.Infrastructure
                 //options.Storage = new SqlServerStorage(configuration.GetConnectionString("MiniProfilerConnection"));
             }).AddEntityFramework();
 
-            ////Seed
-            //var contextOptions = new DbContextOptionsBuilder<AfiliacionesDbContext>()
-            //    .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
-            //    .Options;
-
-            //using var context = new AfiliacionesDbContext(contextOptions, services.servicpro);
-            //{
-            //    context.Database.Migrate();
-
-            //    AfiliacionesDbContextSeed.SeedAsync(context).Wait();
-            //}
+            // Registrar handlers de Dapper para TimeOnly
+            SqlMapper.AddTypeHandler(typeof(TimeOnly), new TimeOnlyTypeHandler());
+            SqlMapper.AddTypeHandler(typeof(TimeOnly?), new TimeOnlyTypeHandler());
 
             return services;
         }
