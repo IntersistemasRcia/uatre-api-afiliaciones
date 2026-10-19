@@ -24,7 +24,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
                 throw new BadRequestException("La Fecha de Vigencia Desde debe ser menor o igual que la Fecha de Vigencia Hasta.");
             }
 
-            // Validar existencia de Seccional y Afiliado usando el repositorio genÈrico
+            // Validar existencia de Seccional y Afiliado usando el repositorio gen√©rico
             var seccional = await unitOfWork.Repository<CleanArchitecture.Domain.Seccional>().GetByIdAsync(entidad.SeccionalId);
             if (seccional == null)
                 throw new BadRequestException($"SeccionalId {entidad.SeccionalId} no existe.");
@@ -37,11 +37,11 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
             if (refCargo == null)
                 throw new BadRequestException($"RefCargosId {entidad.RefCargosId} no existe.");
 
-            // Normalizar fechas para comparaciÛn (null => extremos)
+            // Normalizar fechas para comparaci√≥n (null => extremos)
             var start = entidad.FechaVigenciaDesde?.Date ?? DateTime.MinValue.Date;
             var end = entidad.FechaVigenciaHasta?.Date ?? DateTime.MaxValue.Date;
 
-            // Obtener autoridades existentes para la seccional (incluye histÛricas y dadas de baja)
+            // Obtener autoridades existentes para la seccional (incluye hist√≥ricas y dadas de baja)
             var existingAuthorities = await unitOfWork.SeccionalAutoridadRepository.GetSeccionalAutoridadesBySeccional(entidad.SeccionalId, soloVigentes: false, soloActivos: false);
 
             // Excluir el id si corresponde (Update)
@@ -51,8 +51,8 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
                 authorities = authorities.Where(x => x.Id != excludeId.Value);
             }
 
-            // ===== Nueva condiciÛn solicitada (INCLUSIVA) para autoridades anteriores dadas de baja =====
-            // Aplicar sÛlo cuando:
+            // ===== Nueva condici√≥n solicitada (INCLUSIVA) para autoridades anteriores dadas de baja =====
+            // Aplicar s√≥lo cuando:
             // - autoridad.DeletedDate.HasValue == true
             // - misma SeccionalId y mismo RefCargosId (la consulta ya filtra por seccional)
             // - no es el mismo Id (ya excluido)
@@ -76,9 +76,9 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
             }
             // =========================================================================================
 
-            // 2. Conflicto por mismo cargo (SeccionalId + RefCargosId) con solapamiento (considera autoridades activas e histÛricas con fechas)
+            // 2. Conflicto por mismo cargo (SeccionalId + RefCargosId) con solapamiento (considera autoridades activas e hist√≥ricas con fechas)
             var cargoConflict = authorities
-                .Where(x => x.RefCargosId == entidad.RefCargosId && x.DeletedDate == null) // aquÌ consideramos solo los activos para solapamiento normal
+                .Where(x => x.RefCargosId == entidad.RefCargosId && x.DeletedDate == null) // aqu√≠ consideramos solo los activos para solapamiento normal
                 .Any(x =>
                     start <= (x.FechaVigenciaHasta ?? DateTime.MaxValue.Date) &&
                     end >= (x.FechaVigenciaDesde ?? DateTime.MinValue.Date)
@@ -107,7 +107,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
                 if (cargoConflict || afiliadoConflict)
                 {
                     throw new ConflictException("SECCIONAL_AUTORIDAD_REACTIVATION_CONFLICT",
-                        "No se puede reactivar la autoridad porque su perÌodo se solapa con otra autoridad activa.");
+                        "No se puede reactivar la autoridad porque su per√≠odo se solapa con otra autoridad activa.");
                 }
             }
             else
@@ -115,7 +115,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
                 if (cargoConflict)
                 {
                     throw new ConflictException("SECCIONAL_AUTORIDAD_CARGO_DATE_CONFLICT",
-                        "El cargo ya est· ocupado durante el perÌodo de vigencia indicado.",
+                        "El cargo ya est√° ocupado durante el per√≠odo de vigencia indicado.",
                         "RefCargosId");
                 }
 
@@ -129,7 +129,7 @@ namespace CleanArchitecture.Application.Features.SeccionalAutoridad.Services
                 if (afiliadoConflict)
                 {
                     throw new ConflictException("SECCIONAL_AUTORIDAD_AFILIADO_DATE_CONFLICT",
-                        "El afiliado ya posee otra autoridad durante el perÌodo de vigencia indicado.",
+                        "El afiliado ya posee otra autoridad durante el per√≠odo de vigencia indicado.",
                         "AfiliadoId");
                 }
             }
