@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
 using System.Reflection;
+using CleanArchitecture.Application.Features.SeccionalAutoridad.Services;
 
 namespace CleanArchitecture.Application
 {
@@ -18,9 +19,8 @@ namespace CleanArchitecture.Application
             services.AddValidatorsFromAssemblyContaining<CreateRefLocalidadCommandValidator>(includeInternalTypes: true);
             services.AddMediatR(r => r.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-            ////Behaviours
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            // Registrar el validador de negocio para SeccionalAutoridad
+            services.AddScoped<ISeccionalAutoridadBusinessValidator, SeccionalAutoridadBusinessValidator>();
 
             // HttpClient Factory
             services.AddHttpClient("APIComunes", client =>
