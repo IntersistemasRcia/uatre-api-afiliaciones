@@ -35,7 +35,6 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     seccionalAutoridadDic.Add(currentSeccionalAutoridad.Id, currentSeccionalAutoridad);
                 }
 
-                //currentSeccionalAutoridad.RefCargosDescripcion;
                 currentSeccionalAutoridad.Seccional = s;
                 currentSeccionalAutoridad.AfiliadoNombre = a.Nombre;
                 currentSeccionalAutoridad.AfiliadoNumero = a.NroAfiliado;
@@ -43,15 +42,22 @@ namespace CleanArchitecture.Infrastructure.Repositories
                 return currentSeccionalAutoridad;
             });
 
-            if (soloVigentes == true)
-            {
-                seccionalAutoridades = seccionalAutoridades.Where(x => x.FechaVigenciaDesde <= DateTime.Now.Date && x.FechaVigenciaHasta >= DateTime.Now.Date).ToList();
-            }
-
+            // Comportamiento nuevo y mínimo:
+            // - Si el cliente solicita "SoloActivos = false" devolvemos TODOS los registros de la seccional (activos/históricos/futuros).
+            // - Si SoloActivos == true, aplicamos los filtros habituales (SoloVigentes y SoloActivos).
             if (soloActivos)
             {
+                if (soloVigentes)
+                {
+                    seccionalAutoridades = seccionalAutoridades
+                        .Where(x => (x.FechaVigenciaDesde ?? DateTime.MinValue).Date <= DateTime.Today
+                                 && (x.FechaVigenciaHasta ?? DateTime.MaxValue).Date >= DateTime.Today)
+                        .ToList();
+                }
+
                 seccionalAutoridades = seccionalAutoridades.Where(x => x.DeletedDate == null).ToList();
             }
+            // else: soloActivos == false => no aplicar filtros, devolver todo
 
             if (seccionalAutoridades.Any())
             {
@@ -63,7 +69,6 @@ namespace CleanArchitecture.Infrastructure.Repositories
                     item.RefCargosJerarquia = refCargo?.Jerarquia ?? 0;
                 }
             }
-
 
             return (IReadOnlyCollection<SeccionalAutoridad>)seccionalAutoridades;
         }
@@ -87,7 +92,6 @@ namespace CleanArchitecture.Infrastructure.Repositories
             var refCargo = await _dbComunes.QueryFirstOrDefaultAsync<RefCargo>("SELECT Id, Cargo, Jerarquia FROM RefCargos WHERE Id = @Id", new { Id = seccionalAutoridad.RefCargosId });
             seccionalAutoridad.RefCargosDescripcion = refCargo?.Cargo ?? string.Empty;
             seccionalAutoridad.RefCargosJerarquia = refCargo?.Jerarquia ?? 0;
-
 
             return seccionalAutoridad;
         }
